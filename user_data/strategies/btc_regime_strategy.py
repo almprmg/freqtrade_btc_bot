@@ -57,7 +57,16 @@ from freqtrade.strategy import (
     merge_informative_pair,
 )
 
-from .regime_detector import RegimeDetector
+# Freqtrade loads strategy files by file path (not as a package), so relative
+# imports like `from .regime_detector` raise
+# "attempted relative import with no known parent package". The bare import
+# below works in that context (Freqtrade puts user_data/strategies/ on
+# sys.path). pytest doesn't, so we fall back to the package path — both
+# branches MUST resolve to the SAME module so `isinstance` checks hold.
+try:
+    from regime_detector import RegimeDetector  # noqa: I001
+except ImportError:  # pragma: no cover — exercised under pytest
+    from user_data.strategies.regime_detector import RegimeDetector
 
 logger = logging.getLogger(__name__)
 

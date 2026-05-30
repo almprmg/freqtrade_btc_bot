@@ -178,6 +178,28 @@ By spec — and by deliberate choice — this bot has no:
 
 ## Troubleshooting
 
+### Windows: `Cannot connect to host api.binance.com:443 [Could not contact DNS servers]`
+`aiodns` (the C-based async DNS resolver) can't read Windows' DNS
+configuration, so it fails with this message — even though normal `requests`
+calls to the same host work. Fix:
+
+```bash
+pip uninstall -y aiodns
+```
+
+`aiohttp` then falls back to its `ThreadedResolver` which uses Python's
+`socket.getaddrinfo` (the same path `requests` uses) and resolves cleanly.
+Re-running `./backtest.sh` after this works.
+
+### `attempted relative import with no known parent package`
+Freqtrade loads strategy files by file path, not as a Python package, so
+relative imports like `from .regime_detector import RegimeDetector` fail.
+The shipped strategy uses a `try: bare import / except: package path`
+pattern so it loads under BOTH Freqtrade (bare) and pytest (package). If
+you add your own helper modules in `user_data/strategies/`, follow the
+same idiom.
+
+### Other gotchas
 - **`freqtrade lookahead-analysis` reports `False positive on …`:** an
   indicator is reading a future bar. Most common cause: using
   `dataframe.shift(-N)` anywhere. The shipped strategy uses no negative
@@ -187,3 +209,33 @@ By spec — and by deliberate choice — this bot has no:
 - **Telegram silent:** verify `FREQTRADE__TELEGRAM__TOKEN` is exported in
   the SAME shell where `freqtrade trade` runs, and that `telegram.enabled`
   is `true` in the config you passed via `--config`.
+- **Git Bash on Windows can't find `freqtrade`:** `PATH` set in PowerShell
+  doesn't propagate to bash. Export inside bash:
+  `export PATH="$PWD/.venv/Scripts:$PATH"` (note: forward slashes; bash on
+  Git Bash converts.) Then `bash backtest.sh`.
+
+## Initial backtest results (reference)
+
+Backtest run 2026-05-30 on BTC/USDT, 4h, `2022-08-05 → 2026-01-01`,
+dry-run wallet 10k USDT, with the shipped parameter defaults (no
+hyperopt). **Do NOT promote to live — these do not meet the spec's
+acceptance criteria.**
+
+| Metric         | Achieved | Spec target | Pass? |
+|----------------|---------:|------------:|:-----:|
+| Total trades   | 8        | > 150       | ❌    |
+| Win rate       | 0%       | > 58%       | ❌    |
+| Profit factor  | 0.00     | > 1.5       | ❌    |
+| Sharpe         | -0.14    | > 0.8       | ❌    |
+| Max drawdown   | 0.70%    | < 20%       | ✅ (only because trades are tiny) |
+| Total P&L      | -0.70%   | —           | —     |
+| Market change  | +283%    | —           | —     |
+
+The strategy implements the spec faithfully, but the combined filter
+requirements (8 conditions for mean-reversion, 10 for trend-pullback,
+all simultaneous) are too restrictive: 8 trades in 3.5 years. The
+trend-pullback exit `close < EMA50 × 0.99` is also structurally
+adjacent to the entry zone (between EMA21 and EMA50) — entries fill
+~1% from their own stop. Use `freqtrade hyperopt` to tune the exposed
+`IntParameter` / `DecimalParameter` fields before any further attempt
+to promote, or revisit the exit rules.
