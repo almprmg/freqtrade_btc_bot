@@ -1,0 +1,28 @@
+# Local virtualenvs / IDE state
+.venv/
+venv/
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Freqtrade runtime artifacts — re-downloadable or re-generated
+user_data/data/
+user_data/logs/
+user_data/backtest_results/
+user_data/hyperopt_results/
+user_data/notebooks/
+*.sqlite
+*.sqlite-journal
+
+# Secrets — never commit. Use FREQTRADE__SECTION__KEY env vars instead.
+.env
+.env.*
+!.env.*.example
+
+# OS noise
+.DS_Store
+Thumbs.db
