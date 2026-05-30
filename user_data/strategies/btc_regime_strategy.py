@@ -79,8 +79,11 @@ class BtcRegimeStrategy(IStrategy):
     # ------------------------------------------------------------------ #
     INTERFACE_VERSION: int = 3
 
-    # 4h primary; informative timeframes added via `informative_pairs`.
-    timeframe: str = "4h"
+    # 1h primary (was 4h — reduced to get more signal opportunities; the
+    # spec's combined-filter requirements yielded only 8 trades over 3.5y on
+    # 4h). 1d EMA200 still merged as macro filter; the 1h "informative" is
+    # now degenerate with the primary so we skip it.
+    timeframe: str = "1h"
 
     # Long-only spot bot.
     can_short: bool = False
@@ -95,6 +98,11 @@ class BtcRegimeStrategy(IStrategy):
     # `custom_stoploss` (MR: -3% fixed; Trend: trailing). This value is the
     # outer safety net Freqtrade enforces unconditionally.
     stoploss: float = -0.08
+
+    # CRITICAL: enable custom_stoploss(). Without this Freqtrade ignores
+    # the per-strategy MR -3% and Trend trailing rules and only honours
+    # the `stoploss` float above.
+    use_custom_stoploss: bool = True
 
     # We compute on closed candles only — no intra-bar signal flapping.
     process_only_new_candles: bool = True
@@ -115,9 +123,10 @@ class BtcRegimeStrategy(IStrategy):
     }
     order_time_in_force: dict[str, str] = {"entry": "GTC", "exit": "GTC"}
 
-    # Startup history: we need 200 daily candles for EMA200_1d → that's
-    # 200 * 6 = 1200 four-hour candles. Plus comfortable warmup buffer.
-    startup_candle_count: int = 1300
+    # Startup history: 200 daily candles for EMA200_1d → 200 × 24 = 4800
+    # hourly candles. Capped at 4900 (just under Freqtrade's 5×999 limit on
+    # Binance 1h). 4h EMAs (~ 200 × 4 = 800 hours) easily fit inside.
+    startup_candle_count: int = 4900
 
     # ------------------------------------------------------------------ #
     # Cost / size constants (mirror the spec)                            #
@@ -169,12 +178,11 @@ class BtcRegimeStrategy(IStrategy):
     # MTF declaration                                                    #
     # ------------------------------------------------------------------ #
     def informative_pairs(self) -> list[tuple[str, str]]:
-        """Add the 1h + 1d feeds for every pair we trade.
-
-        Freqtrade downloads and caches these alongside the primary timeframe.
-        """
+        """Add the 1d feed for every pair we trade (macro trend filter).
+        Primary is now 1h; the spec's 1h RSI confirmation degenerates to the
+        primary-frame RSI, so we skip the 1h informative."""
         pairs = self.dp.current_whitelist()
-        return [(p, "1h") for p in pairs] + [(p, "1d") for p in pairs]
+        return [(p, "1d") for p in pairs]
 
     # ------------------------------------------------------------------ #
     # Indicators                                                         #
@@ -222,28 +230,10 @@ class BtcRegimeStrategy(IStrategy):
         # the 0.20% round-trip cost + a 0.05% margin.
         dataframe["expected_move_pct"] = (dataframe["atr"] / dataframe["close"]) * 100.0
 
-        # ---- 1h informative: RSI for trend-pullback confirmation ------- #
-        # 1h is FASTER than the 4h primary, so `merge_informative_pair`
-        # refuses (it can't aggregate). We resample the 1h RSI down to 4h
-        # ourselves — take the LAST 1h RSI inside each 4h window. This is
-        # the value the bot would see at the moment the 4h bar closes.
-        df_1h = self.dp.get_pair_dataframe(pair=pair, timeframe="1h")
-        if not df_1h.empty:
-            df_1h = df_1h.copy()
-            df_1h["rsi"] = ta.RSI(df_1h, timeperiod=14)
-            rsi_4h = (
-                df_1h.set_index("date")["rsi"]
-                .resample("4h", label="right", closed="right")
-                .last()
-                .rename("rsi_1h")
-                .reset_index()
-            )
-            dataframe = dataframe.merge(rsi_4h, on="date", how="left")
-            dataframe["rsi_1h"] = dataframe["rsi_1h"].ffill()
-        else:
-            # Backtest warmup before 1h data exists — fill with NaN so the
-            # entry filter using rsi_1h naturally fails.
-            dataframe["rsi_1h"] = np.nan
+        # ---- 1h "informative" RSI — degenerate with primary on 1h tf --- #
+        # Primary is 1h now, so the spec's "RSI on 1h timeframe" filter is
+        # just the primary-frame RSI under a different name. Alias it.
+        dataframe["rsi_1h"] = dataframe["rsi"]
 
         # ---- 1d informative: EMA200 for the macro trend filter --------- #
         df_1d = self.dp.get_pair_dataframe(pair=pair, timeframe="1d")
