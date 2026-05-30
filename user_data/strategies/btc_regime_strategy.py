@@ -214,13 +214,23 @@ class BtcRegimeStrategy(IStrategy):
         dataframe["expected_move_pct"] = (dataframe["atr"] / dataframe["close"]) * 100.0
 
         # ---- 1h informative: RSI for trend-pullback confirmation ------- #
+        # 1h is FASTER than the 4h primary, so `merge_informative_pair`
+        # refuses (it can't aggregate). We resample the 1h RSI down to 4h
+        # ourselves — take the LAST 1h RSI inside each 4h window. This is
+        # the value the bot would see at the moment the 4h bar closes.
         df_1h = self.dp.get_pair_dataframe(pair=pair, timeframe="1h")
         if not df_1h.empty:
             df_1h = df_1h.copy()
             df_1h["rsi"] = ta.RSI(df_1h, timeperiod=14)
-            dataframe = merge_informative_pair(
-                dataframe, df_1h, self.timeframe, "1h", ffill=True
+            rsi_4h = (
+                df_1h.set_index("date")["rsi"]
+                .resample("4h", label="right", closed="right")
+                .last()
+                .rename("rsi_1h")
+                .reset_index()
             )
+            dataframe = dataframe.merge(rsi_4h, on="date", how="left")
+            dataframe["rsi_1h"] = dataframe["rsi_1h"].ffill()
         else:
             # Backtest warmup before 1h data exists — fill with NaN so the
             # entry filter using rsi_1h naturally fails.
