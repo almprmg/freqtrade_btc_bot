@@ -290,3 +290,54 @@ cp .env.dca.example .env.dca       # then fill exchange keys if you want live ti
 docker compose -f docker-compose.dca.yml --env-file .env.dca up -d
 docker compose -f docker-compose.dca.yml logs -f
 ```
+
+---
+
+## BtcRebalanceStrategy — Daily BTC/USDT rebalancing
+
+A third strategy in `user_data/strategies/btc_rebalance_strategy.py` that
+holds a target BTC % allocation and rebalances daily by buying/selling BTC
+to push the portfolio back to target. Monetises volatility.
+
+```bash
+bash rebalance_sweep.sh             # 6 modes at $500 + R1 winner at $100
+.venv/Scripts/python rebalance_report.py
+```
+
+### 5-year sweep results (2021-01-01 → 2026-01-01, $500 starting wallet)
+
+| Mode           | Logic                                          | Final     | ROI    |
+|----------------|------------------------------------------------|-----------|--------|
+| R1_DAILY_FULL  | 50/50 BTC/USDT, full daily rebalance           | $1,073    | +115%  |
+| R2_DAILY_5PCT  | 50/50, rebalance only when drift > 5%          | $1,063    | +113%  |
+| R3_DAILY_10PCT | 50/50, rebalance only when drift > 10%         | $1,039    | +108%  |
+| R4_25_BTC      | 25/75 BTC/USDT, defensive                      | $768      | +54%   |
+| **R5_75_BTC**  | **75/25 BTC/USDT, aggressive**                 | **$1,331**| **+166%** |
+| R6_HALFWAY     | 50/50, halve the drift each day (smoother)     | $1,101    | +120%  |
+
+**Winner: R5_75_BTC.** Higher BTC allocation captures more of the 2021-2026
+bull leg; daily rebalance still trims at local highs and re-buys at lows so
+it outperforms naive HODL. The defensive R4 lags by ~110 percentage points.
+
+### R5_75_BTC — Year-by-year ($500 portfolio)
+
+| Year | Buys | Sells | Cash | BTC qty | BTC value | BTC price | Portfolio | ROI |
+|------|------|-------|------|---------|-----------|-----------|-----------|-----|
+| 2021 | 69   | 58    | $189 | 0.0121  | $560      | $46k      | $749      | +50% |
+| 2022 | 23   | 18    | $91  | 0.0161  | $267      | $16.5k    | $358      | **-28%** |
+| 2023 | 7    | 24    | $186 | 0.0130  | $549      | $42k      | $735      | +47% |
+| 2024 | 66   | 50    | $346 | 0.0110  | $1,026    | $94k      | $1,372    | **+174%** |
+| 2025 | 74   | 47    | $339 | 0.0113  | $991      | $87k      | $1,330    | +166% |
+| End  | —    | —     | $1,331| 0      | $0        | $73k      | **$1,331**| **+166%** |
+
+### Scaling test ($100 wallet)
+Re-running R5_75_BTC at a $100 starting wallet gave $268 (+168%) — confirms
+near-linear scaling. The strategy works at small sizes; trade fees become a
+larger fraction (avg trade size ~$5-15) but ROI is preserved.
+
+### Run live
+```bash
+cp .env.rebalance.example .env.rebalance
+docker compose -f docker-compose.rebalance.yml --env-file .env.rebalance up -d
+docker compose -f docker-compose.rebalance.yml logs -f
+```

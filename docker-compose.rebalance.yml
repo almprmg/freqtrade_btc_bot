@@ -1,0 +1,25 @@
+# Freqtrade BTC/USDT rebalance bot — dry-run on Binance Spot.
+# Default mode R5_75_BTC (75/25 daily, won the 5-year sweep at +166%).
+#
+# Bring up:   docker compose -f docker-compose.rebalance.yml --env-file .env.rebalance up -d
+# Logs:       docker compose -f docker-compose.rebalance.yml logs -f
+# Stop:       docker compose -f docker-compose.rebalance.yml down
+
+services:
+  freqtrade_rebalance:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_rebalance
+    restart: unless-stopped
+    environment:
+      REBALANCE_MODE: ${FREQTRADE_REBALANCE_MODE:-R5_75_BTC}
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.rebalance.json:/freqtrade/config.rebalance.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_rebalance.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_rebalance.sqlite
+      --config /freqtrade/config.rebalance.json
+      --strategy BtcRebalanceStrategy
