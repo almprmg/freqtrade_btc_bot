@@ -1,5 +1,7 @@
 # Freqtrade BTC/USDT rebalance bot — dry-run on Binance Spot.
 # Default mode R5_75_BTC (75/25 daily, won the 5-year sweep at +166%).
+# Includes a sidecar bridge that mirrors Freqtrade trades into trad_pg so
+# the admin dashboard shows them under subscription BRIDGE_SUBSCRIPTION_ID.
 #
 # Bring up:   docker compose -f docker-compose.rebalance.yml --env-file .env.rebalance up -d
 # Logs:       docker compose -f docker-compose.rebalance.yml logs -f
@@ -23,3 +25,30 @@ services:
       --db-url sqlite:////freqtrade/user_data/tradesv3_rebalance.sqlite
       --config /freqtrade/config.rebalance.json
       --strategy BtcRebalanceStrategy
+    networks:
+      - default
+      - trad_system_trad
+
+  freqtrade_rebalance_bridge:
+    build:
+      context: ./bridge
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_rebalance_bridge
+    restart: unless-stopped
+    depends_on:
+      - freqtrade_rebalance
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SUBSCRIPTION_ID}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_rebalance.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks:
+      - default
+      - trad_system_trad
+
+networks:
+  trad_system_trad:
+    external: true
