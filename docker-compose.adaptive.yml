@@ -1,0 +1,46 @@
+# Freqtrade BTC/USDT Adaptive bot (regime-aware) — dry-run on Binance Spot.
+# Default mode ADAPT_AGGR_NOSTOP (winner of 12-variant 5-year sweep at +118.7%).
+
+services:
+  freqtrade_adaptive:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_adaptive
+    restart: unless-stopped
+    environment:
+      AD_MODE: ${FREQTRADE_AD_MODE:-ADAPT_AGGR_NOSTOP}
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.adaptive.json:/freqtrade/config.adaptive.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_adaptive.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_adaptive.sqlite
+      --config /freqtrade/config.adaptive.json
+      --strategy BtcAdaptiveStrategy
+    networks:
+      - default
+      - trad_system_trad
+
+  freqtrade_adaptive_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_adaptive_bridge
+    restart: unless-stopped
+    depends_on:
+      - freqtrade_adaptive
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADAPTIVE_SUBSCRIPTION_ID}
+      BRIDGE_USER_ID: ${BRIDGE_ADAPTIVE_USER_ID}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_adaptive.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks:
+      - default
+      - trad_system_trad
+
+networks:
+  trad_system_trad:
+    external: true
