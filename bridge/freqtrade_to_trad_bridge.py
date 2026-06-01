@@ -93,6 +93,12 @@ def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
     close_dt = to_dt(ft["close_date"])
     qty = float(ft["amount"] or 0)
     entry_px = float(ft["open_rate"] or 0)
+
+    # Skip half-formed trades — Freqtrade may have inserted the row before
+    # the entry order filled. Wait until amount > 0 and rate > 0; the next
+    # poll cycle will see the completed state.
+    if qty <= 0 or entry_px <= 0:
+        return
     exit_px = float(ft["close_rate"]) if ft.get("close_rate") else None
     pnl = float(ft["close_profit_abs"]) if ft.get("close_profit_abs") is not None else None
     stake = float(ft.get("stake_amount") or qty * entry_px)
