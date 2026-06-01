@@ -1,0 +1,46 @@
+# Freqtrade BTC/USDT Dynamic-Rebalance bot — dry-run on Binance Spot.
+# Default mode DR_PROFIT_20 (winner of 12-variant 5-year sweep at +170.4%).
+
+services:
+  freqtrade_dynrebal:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_dynrebal
+    restart: unless-stopped
+    environment:
+      DR_MODE: ${FREQTRADE_DR_MODE:-DR_PROFIT_20}
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.dynrebal.json:/freqtrade/config.dynrebal.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_dynrebal.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_dynrebal.sqlite
+      --config /freqtrade/config.dynrebal.json
+      --strategy BtcDynamicRebalanceStrategy
+    networks:
+      - default
+      - trad_system_trad
+
+  freqtrade_dynrebal_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_dynrebal_bridge
+    restart: unless-stopped
+    depends_on:
+      - freqtrade_dynrebal
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_DYNREBAL_SUBSCRIPTION_ID}
+      BRIDGE_USER_ID: ${BRIDGE_DYNREBAL_USER_ID}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks:
+      - default
+      - trad_system_trad
+
+networks:
+  trad_system_trad:
+    external: true
