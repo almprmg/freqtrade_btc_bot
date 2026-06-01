@@ -1,0 +1,87 @@
+# Multi-pair Dynamic-Rebalance — ETH ($1000) + SOL ($500) bots + bridges.
+# BTC version runs separately (docker-compose.dynrebal.yml).
+
+services:
+  freqtrade_dynrebal_eth:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_dynrebal_eth
+    restart: unless-stopped
+    environment:
+      DR_MODE: ${FREQTRADE_DR_MODE:-DR_PROFIT_20}
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.dynrebal-ETH.json:/freqtrade/config.dynrebal-ETH.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_dynrebal_eth.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_dynrebal_eth.sqlite
+      --config /freqtrade/config.dynrebal-ETH.json
+      --strategy BtcDynamicRebalanceStrategy
+    networks:
+      - default
+      - trad_system_trad
+
+  freqtrade_dynrebal_eth_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_dynrebal_eth_bridge
+    restart: unless-stopped
+    depends_on:
+      - freqtrade_dynrebal_eth
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ETH_SUBSCRIPTION_ID}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal_eth.sqlite
+      BRIDGE_SYMBOL: ETHUSDT
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks:
+      - default
+      - trad_system_trad
+
+  freqtrade_dynrebal_sol:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_dynrebal_sol
+    restart: unless-stopped
+    environment:
+      DR_MODE: ${FREQTRADE_DR_MODE:-DR_PROFIT_20}
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.dynrebal-SOL.json:/freqtrade/config.dynrebal-SOL.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_dynrebal_sol.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_dynrebal_sol.sqlite
+      --config /freqtrade/config.dynrebal-SOL.json
+      --strategy BtcDynamicRebalanceStrategy
+    networks:
+      - default
+      - trad_system_trad
+
+  freqtrade_dynrebal_sol_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_dynrebal_sol_bridge
+    restart: unless-stopped
+    depends_on:
+      - freqtrade_dynrebal_sol
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SOL_SUBSCRIPTION_ID}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal_sol.sqlite
+      BRIDGE_SYMBOL: SOLUSDT
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks:
+      - default
+      - trad_system_trad
+
+networks:
+  trad_system_trad:
+    external: true
