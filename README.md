@@ -239,3 +239,54 @@ adjacent to the entry zone (between EMA21 and EMA50) — entries fill
 ~1% from their own stop. Use `freqtrade hyperopt` to tune the exposed
 `IntParameter` / `DecimalParameter` fields before any further attempt
 to promote, or revisit the exit rules.
+
+---
+
+## BtcDcaHoldStrategy — End-of-day DCA HODL
+
+A second strategy in `user_data/strategies/btc_dca_hold_strategy.py` that
+accumulates BTC at each daily close via Freqtrade's position-adjustment hook.
+Designed to study DCA-vs-smart-DCA-vs-tiered over a 5-year window.
+
+```bash
+bash dca_sweep.sh           # backtest all 6 modes on 2021-2026
+.venv/Scripts/python yearly_report.py   # year-by-year breakdown
+```
+
+### 5-year sweep results (2021-01-01 → 2026-01-01, $200k dry wallet)
+
+| Mode          | Logic                                                    | Net PnL  | ROI on invested |
+|---------------|----------------------------------------------------------|----------|-----------------|
+| V1_BLIND      | $100 every daily close, never sell                       | +$32k    | +17%            |
+| V2_BLIND_TP   | V1 + take-profit at +100%                                | -$63k    | -35% ⚠          |
+| V3_RSI        | $100/day only when daily RSI(14) < 50                    | +$34k    | +39%            |
+| V4_BELOW_EMA  | $100/day only when close < EMA(200)                      | +$58k    | +89%            |
+| **V5_TIERED** | **$100 + $100 if RSI<30 + $100 if dd>30% from 90d high** | **+$81k**| **+40%**        |
+| V6_TIERED_TP  | V5 + take-profit at +100%                                | -$66k    | -31% ⚠          |
+
+**Winner: V5_TIERED.** Pure HODL with smart sizing on dips. The two TP
+modes systematically lost — selling at +100% missed the next +100% run
+on the same BTC. Smart-entry modes (V3/V4) buy fewer dollars total but
+get higher ROI per dollar — at the cost of accumulating less BTC.
+
+### V5_TIERED — Year-by-year
+
+| Year | Buys | Invested | Cum BTC | BTC price (year-end) | Mark value | Cum ROI |
+|------|-----:|---------:|--------:|---------------------:|-----------:|--------:|
+| 2021 | 365  | $46k     | 1.07    | $46k                 | $49k       | +7%     |
+| 2022 | 365  | $57k     | 3.31    | $16.5k               | $55k       | **-47%** (bear) |
+| 2023 | 365  | $38k     | 4.68    | $42k                 | $198k      | +40%    |
+| 2024 | 366  | $37k     | 5.27    | $94k                 | $493k      | **+177%** |
+| 2025 | 221  | $22k     | 5.50    | $87k                 | $482k      | +141%   |
+| End  | —    | $0       | 0       | $73k (close-all)     | $281k cash | **+40%** |
+
+The tiered logic doubled buys during the 2022 crash (RSI<30 + drawdown
+trigger both firing) which paid off heavily in the 2024 recovery.
+
+### Run live (dry-run by default)
+
+```bash
+cp .env.dca.example .env.dca       # then fill exchange keys if you want live ticks
+docker compose -f docker-compose.dca.yml --env-file .env.dca up -d
+docker compose -f docker-compose.dca.yml logs -f
+```

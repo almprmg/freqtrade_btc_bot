@@ -1,0 +1,32 @@
+# Freqtrade BTC DCA HODL bot — dry-run on Binance Spot. Mirror of local
+# `BtcDcaHoldStrategy` with the best-performing mode baked into DCA_MODE.
+#
+# Bring up:   docker compose -f docker-compose.dca.yml up -d
+# Logs:       docker compose -f docker-compose.dca.yml logs -f
+# Stop:       docker compose -f docker-compose.dca.yml down
+#
+# .env layout (alongside this file):
+#   FREQTRADE_DCA_MODE=V1_BLIND         # one of V1_BLIND/V2_BLIND_TP/V3_RSI/V4_BELOW_EMA/V5_TIERED/V6_TIERED_TP
+#   FREQTRADE__EXCHANGE__KEY=...        # leave blank for dry-run
+#   FREQTRADE__EXCHANGE__SECRET=...
+
+services:
+  freqtrade_dca:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_dca
+    restart: unless-stopped
+    environment:
+      DCA_MODE: ${FREQTRADE_DCA_MODE:-V1_BLIND}
+      # Allow Freqtrade env-var overrides for exchange keys without baking
+      # them into the config (FREQTRADE__SECTION__KEY convention).
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.dca.json:/freqtrade/config.dca.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_dca.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_dca.sqlite
+      --config /freqtrade/config.dca.json
+      --strategy BtcDcaHoldStrategy
