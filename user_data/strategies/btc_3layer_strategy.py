@@ -46,6 +46,13 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:
+    from _regime_shield import shield_indicators, apply_shield
+except ImportError:  # pragma: no cover
+    from user_data.strategies._regime_shield import shield_indicators, apply_shield
+
+WITH_SHIELD = os.environ.get("WITH_SHIELD", "false").lower() in ("true", "1", "yes")
+
 
 MODE = os.environ.get("L3_MODE", "L3_AGGR_WIDE_GRID").upper()
 
@@ -162,6 +169,8 @@ class Btc3LayerStrategy(IStrategy):
         dataframe["dd_from_high"] = (
             dataframe["rolling_high"] - dataframe["close"]
         ) / dataframe["rolling_high"]
+        if WITH_SHIELD:
+            dataframe = shield_indicators(dataframe)
         return dataframe
 
     # ---- Helpers --------------------------------------------------------- #
@@ -208,9 +217,13 @@ class Btc3LayerStrategy(IStrategy):
         # is in custom_stake_amount via Freqtrade's open-trade-on-signal flow.
         df.loc[ready, "enter_long"] = 1
         df.loc[ready, "enter_tag"] = "layer:auto"
+        if WITH_SHIELD:
+            df = apply_shield(df, "entry")
         return df
 
     def populate_exit_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        if WITH_SHIELD:
+            dataframe = apply_shield(dataframe, "exit")
         return dataframe
 
     def custom_stake_amount(

@@ -1,0 +1,238 @@
+# V2 bots — shielded variants of the 4 BTC strategies + Pure Shield on ETH and SOL.
+# Runs alongside the existing V1 bots (docker-compose.dca/rebalance/3layer/adaptive/dynrebal*/shield.yml).
+# Each V2 bot has its own SQLite DB so its trades don't mix with V1.
+#
+# Bring up:
+#   docker compose -f docker-compose.v2.yml --env-file .env.v2 up -d
+# Bring down:
+#   docker compose -f docker-compose.v2.yml down
+#
+# .env.v2 layout:
+#   FREQTRADE__EXCHANGE__KEY=...
+#   FREQTRADE__EXCHANGE__SECRET=...
+#   BRIDGE_USER_ID=10
+#   TRAD_PG_DSN=postgresql://trading:PW@trad_pg:5432/trading
+#   BRIDGE_REBAL_V2_SUB=...
+#   BRIDGE_DYNREBAL_V2_SUB=...
+#   BRIDGE_3LAYER_V2_SUB=...
+#   BRIDGE_ADAPTIVE_V2_SUB=...
+#   BRIDGE_SHIELD_ETH_SUB=...
+#   BRIDGE_SHIELD_SOL_SUB=...
+#   BRIDGE_POLL_INTERVAL=30
+
+services:
+  # ---- V2 BTC variants: original strategy + WITH_SHIELD overlay ---------- #
+
+  freqtrade_rebalance_v2:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_rebalance_v2
+    restart: unless-stopped
+    environment:
+      REBALANCE_MODE: R5_75_BTC
+      WITH_SHIELD: "true"
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.rebalance.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_rebalance_v2.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_rebalance_v2.sqlite
+      --config /freqtrade/config.json
+      --strategy BtcRebalanceStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_rebalance_v2_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_rebalance_v2_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_rebalance_v2]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_REBAL_V2_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_rebalance_v2.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+  freqtrade_dynrebal_v2:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_dynrebal_v2
+    restart: unless-stopped
+    environment:
+      DR_MODE: DR_PROFIT_20
+      WITH_SHIELD: "true"
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.dynrebal.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_dynrebal_v2.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_dynrebal_v2.sqlite
+      --config /freqtrade/config.json
+      --strategy BtcDynamicRebalanceStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_dynrebal_v2_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_dynrebal_v2_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_dynrebal_v2]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_DYNREBAL_V2_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal_v2.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+  freqtrade_3layer_v2:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_3layer_v2
+    restart: unless-stopped
+    environment:
+      L3_MODE: L3_AGGR_WIDE_GRID
+      WITH_SHIELD: "true"
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.3layer.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_3layer_v2.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_3layer_v2.sqlite
+      --config /freqtrade/config.json
+      --strategy Btc3LayerStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_3layer_v2_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_3layer_v2_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_3layer_v2]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_3LAYER_V2_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_3layer_v2.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+  freqtrade_adaptive_v2:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_adaptive_v2
+    restart: unless-stopped
+    environment:
+      AD_MODE: ADAPT_AGGR_NOSTOP
+      WITH_SHIELD: "true"
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.adaptive.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_adaptive_v2.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_adaptive_v2.sqlite
+      --config /freqtrade/config.json
+      --strategy BtcAdaptiveStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_adaptive_v2_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_adaptive_v2_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_adaptive_v2]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADAPTIVE_V2_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_adaptive_v2.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+  # ---- Pure Shield on ETH and SOL ---------------------------------------- #
+
+  freqtrade_shield_eth:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_shield_eth
+    restart: unless-stopped
+    environment:
+      RS_MODE: RS_AGGR
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.shield-ETH.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_shield_eth.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_shield_eth.sqlite
+      --config /freqtrade/config.json
+      --strategy BtcRegimeShieldStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_shield_eth_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_shield_eth_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_shield_eth]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SHIELD_ETH_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_shield_eth.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+  freqtrade_shield_sol:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_shield_sol
+    restart: unless-stopped
+    environment:
+      RS_MODE: RS_AGGR
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.shield-SOL.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_shield_sol.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_shield_sol.sqlite
+      --config /freqtrade/config.json
+      --strategy BtcRegimeShieldStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_shield_sol_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_shield_sol_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_shield_sol]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SHIELD_SOL_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_shield_sol.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true

@@ -48,6 +48,13 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:
+    from _regime_shield import shield_indicators, apply_shield, regime_allows_add
+except ImportError:  # pragma: no cover
+    from user_data.strategies._regime_shield import shield_indicators, apply_shield, regime_allows_add
+
+WITH_SHIELD = os.environ.get("WITH_SHIELD", "false").lower() in ("true", "1", "yes")
+
 
 MODE = os.environ.get("DR_MODE", "DR_PROFIT_20").upper()  # winner of 12-variant sweep
 
@@ -105,7 +112,7 @@ class BtcDynamicRebalanceStrategy(IStrategy):
 
     position_adjustment_enable: bool = True
     max_entry_position_adjustment: int = 5000
-    use_exit_signal: bool = False
+    use_exit_signal: bool = True  # shield needs this on so it can force a bear-exit
     exit_profit_only: bool = False
 
     startup_candle_count: int = max(int(P["ema_long"]) + 20, 220)
@@ -132,6 +139,8 @@ class BtcDynamicRebalanceStrategy(IStrategy):
 
         df["ema_short"] = ta.EMA(df, timeperiod=int(P["ema_short"]))
         df["ema_long"] = ta.EMA(df, timeperiod=int(P["ema_long"]))
+        if WITH_SHIELD:
+            df = shield_indicators(df)
         return df
 
     def populate_entry_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
@@ -139,9 +148,13 @@ class BtcDynamicRebalanceStrategy(IStrategy):
         ready = df["ema_long"].notna()
         df.loc[ready, "enter_long"] = 1
         df.loc[ready, "enter_tag"] = f"dynrebal:{MODE.lower()}"
+        if WITH_SHIELD:
+            df = apply_shield(df, "entry")
         return df
 
     def populate_exit_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        if WITH_SHIELD:
+            dataframe = apply_shield(dataframe, "exit")
         return dataframe
 
     def custom_stake_amount(
@@ -206,6 +219,9 @@ class BtcDynamicRebalanceStrategy(IStrategy):
         if df is None or df.empty:
             return None
         last = df.iloc[-1]
+
+        if WITH_SHIELD and not regime_allows_add(last):
+            return None  # bear → don't add; exit_signal handles the close
 
         btc_qty = float(trade.amount or 0)
         btc_value = btc_qty * float(current_rate)

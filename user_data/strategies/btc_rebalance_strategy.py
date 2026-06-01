@@ -29,6 +29,13 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:
+    from _regime_shield import shield_indicators, apply_shield, regime_allows_add
+except ImportError:  # pragma: no cover
+    from user_data.strategies._regime_shield import shield_indicators, apply_shield, regime_allows_add
+
+WITH_SHIELD = os.environ.get("WITH_SHIELD", "false").lower() in ("true", "1", "yes")
+
 
 MODE = os.environ.get("REBALANCE_MODE", "R5_75_BTC").upper()
 
@@ -66,7 +73,7 @@ class BtcRebalanceStrategy(IStrategy):
     position_adjustment_enable: bool = True
     max_entry_position_adjustment: int = 5000
 
-    use_exit_signal: bool = False
+    use_exit_signal: bool = True  # let the shield force an exit during bear
     exit_profit_only: bool = False
 
     startup_candle_count: int = 220  # for EMA(200) readiness
@@ -80,6 +87,8 @@ class BtcRebalanceStrategy(IStrategy):
 
     def populate_indicators(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
         dataframe["ema200"] = ta.EMA(dataframe, timeperiod=200)
+        if WITH_SHIELD:
+            dataframe = shield_indicators(dataframe)
         return dataframe
 
     def populate_entry_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
@@ -87,9 +96,13 @@ class BtcRebalanceStrategy(IStrategy):
         ready = df["ema200"].notna()
         df.loc[ready, "enter_long"] = 1
         df.loc[ready, "enter_tag"] = f"rebalance:{MODE.lower()}"
+        if WITH_SHIELD:
+            df = apply_shield(df, "entry")
         return df
 
     def populate_exit_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        if WITH_SHIELD:
+            dataframe = apply_shield(dataframe, "exit")
         return dataframe
 
     def custom_stake_amount(
@@ -137,6 +150,10 @@ class BtcRebalanceStrategy(IStrategy):
         btc_value, usdt_free, total = self._portfolio_state(trade, current_rate)
         if total <= 0:
             return None
+        if WITH_SHIELD:
+            df, _ = self.dp.get_analyzed_dataframe(pair=trade.pair, timeframe=self.timeframe)
+            if df is not None and not df.empty and not regime_allows_add(df.iloc[-1]):
+                return None  # don't add to position during BEAR — exit_signal will trigger close
 
         target_btc_value = TARGET_PCT * total
         drift_usdt = btc_value - target_btc_value  # positive => too much BTC

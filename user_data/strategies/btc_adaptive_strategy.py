@@ -41,6 +41,13 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:
+    from _regime_shield import shield_indicators, apply_shield, regime_allows_add
+except ImportError:  # pragma: no cover
+    from user_data.strategies._regime_shield import shield_indicators, apply_shield, regime_allows_add
+
+WITH_SHIELD = os.environ.get("WITH_SHIELD", "false").lower() in ("true", "1", "yes")
+
 
 MODE = os.environ.get("AD_MODE", "ADAPT_AGGR_NOSTOP").upper()  # winner of 12-variant sweep
 
@@ -125,7 +132,7 @@ class BtcAdaptiveStrategy(IStrategy):
 
     position_adjustment_enable: bool = True
     max_entry_position_adjustment: int = 5000
-    use_exit_signal: bool = False
+    use_exit_signal: bool = True
     exit_profit_only: bool = False
 
     startup_candle_count: int = max(int(P["ema_long"]) + 20, 220)
@@ -149,6 +156,8 @@ class BtcAdaptiveStrategy(IStrategy):
         # Rolling low for rally trim trigger
         df["low_90d"] = df["low"].rolling(90, min_periods=1).min()
         df["rally_from_low"] = (df["close"] - df["low_90d"]) / df["low_90d"]
+        if WITH_SHIELD:
+            df = shield_indicators(df)
         return df
 
     @staticmethod
@@ -177,9 +186,13 @@ class BtcAdaptiveStrategy(IStrategy):
         ready = df["ema_long"].notna() & df["atr_z"].notna()
         df.loc[ready, "enter_long"] = 1
         df.loc[ready, "enter_tag"] = f"adapt:{MODE.lower()}"
+        if WITH_SHIELD:
+            df = apply_shield(df, "entry")
         return df
 
     def populate_exit_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        if WITH_SHIELD:
+            dataframe = apply_shield(dataframe, "exit")
         return dataframe
 
     def custom_stake_amount(
