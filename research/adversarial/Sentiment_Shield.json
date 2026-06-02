@@ -1,0 +1,27 @@
+{
+  "candidate": "Sentiment_Shield",
+  "strategy": "BtcSentimentShieldStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 11.91,
+      "max_dd": 4.41,
+      "n_trades": 2,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-06-02T23:24:58.906772+00:00"
+}
