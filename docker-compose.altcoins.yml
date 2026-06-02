@@ -1,0 +1,135 @@
+# 4 altcoin bots — each runs its mega-sweep winning strategy on its pair.
+#   AVAX -> Meta_REL    (+26.4%/yr, -16% worst)
+#   BNB  -> Sh_SLOW     (+59.6%/yr, -27% worst, 4/6 positive years)
+#   DOGE -> Sh_DEF      (+66.4%/yr, -21% worst — picked over higher-return
+#                        Dyn_REG which has -45% DD)
+#   ADA  -> Meta_BAL    (+31.8%/yr, -22% worst)
+
+services:
+  freqtrade_avax:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_avax
+    restart: unless-stopped
+    environment:
+      MA_MODE: MA_RELAX
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.AVAX.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_avax.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_avax.sqlite
+      --config /freqtrade/config.json --strategy BtcMetaAdaptiveStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_avax_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_avax_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_avax]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_AVAX_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_avax.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+  freqtrade_bnb:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_bnb
+    restart: unless-stopped
+    environment:
+      RS_MODE: RS_SLOW
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.BNB.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_bnb.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_bnb.sqlite
+      --config /freqtrade/config.json --strategy BtcRegimeShieldStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_bnb_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_bnb_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_bnb]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_BNB_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_bnb.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+  freqtrade_doge:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_doge
+    restart: unless-stopped
+    environment:
+      RS_MODE: RS_DEFENSIVE
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.DOGE.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_doge.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_doge.sqlite
+      --config /freqtrade/config.json --strategy BtcRegimeShieldStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_doge_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_doge_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_doge]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_DOGE_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_doge.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+  freqtrade_ada:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_ada
+    restart: unless-stopped
+    environment:
+      MA_MODE: MA_BAL
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.ADA.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_ada.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_ada.sqlite
+      --config /freqtrade/config.json --strategy BtcMetaAdaptiveStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_ada_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_ada_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_ada]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADA_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_ada.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true
