@@ -1,18 +1,18 @@
 {
-  "candidate": "AI_Shield",
-  "strategy": "BtcAiShieldStrategy",
+  "candidate": "SOL_Shield",
+  "strategy": "BtcRegimeShieldStrategy",
   "env": {},
   "windows": {
     "BEAR_2022": {
-      "roi": 0.0,
-      "max_dd": 0.0,
-      "n_trades": 0,
+      "roi": -31.67,
+      "max_dd": 31.67,
+      "n_trades": 1,
       "timerange": "20220101-20230101"
     },
     "SIDEWAYS_2025": {
-      "roi": 12.27,
-      "max_dd": 4.02,
-      "n_trades": 2,
+      "roi": -43.11,
+      "max_dd": 43.11,
+      "n_trades": 3,
       "timerange": "20250101-20260101"
     },
     "BEAR_2026Q12": {
@@ -22,6 +22,6 @@
       "timerange": "20260101-20260601"
     }
   },
-  "verdict": "PASS",
-  "evaluated_at": "2026-06-02T23:07:04.993058+00:00"
+  "verdict": "CATASTROPHIC",
+  "evaluated_at": "2026-06-02T23:07:14.626803+00:00"
 }

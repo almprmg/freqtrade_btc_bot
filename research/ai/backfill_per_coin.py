@@ -34,8 +34,10 @@ ADV = [
 RUNS = [
     ("ETH_DynRebal",  "config.dynrebal-ETH.json", "BtcDynamicRebalanceStrategy", "ETH/USDT"),
     ("SOL_DynRebal",  "config.dynrebal-SOL.json", "BtcDynamicRebalanceStrategy", "SOL/USDT"),
-    # AVAX 3Layer A/B candidate
     ("AVAX_3Layer",   "config.AVAX.json",         "Btc3LayerStrategy",           "AVAX/USDT"),
+    # Idea K — Shield port to ETH/SOL
+    ("ETH_Shield",    "config.shield-ETH.json",   "BtcRegimeShieldStrategy",     "ETH/USDT"),
+    ("SOL_Shield",    "config.shield-SOL.json",   "BtcRegimeShieldStrategy",     "SOL/USDT"),
 ]
 
 
