@@ -1,0 +1,37 @@
+# AI-Shield bot — Pure Shield + Halving Cycle + Anomaly Detection.
+# Backtest +30.6%/yr vs Pure Shield's +27%/yr (over 5y).
+
+services:
+  freqtrade_ai_shield:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_ai_shield
+    restart: unless-stopped
+    environment:
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.ai_shield.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_ai_shield.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_ai_shield.sqlite
+      --config /freqtrade/config.json --strategy BtcAiShieldStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_ai_shield_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_ai_shield_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_ai_shield]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_AI_SHIELD_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_ai_shield.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true
