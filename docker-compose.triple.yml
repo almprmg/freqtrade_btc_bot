@@ -1,0 +1,38 @@
+# Triple Regime Consensus bot — defensive sleeve.
+# +10.5%/yr backtest, 5/5 positive years, max DD ~6%, passed Adversarial.
+
+services:
+  freqtrade_triple:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_triple
+    restart: unless-stopped
+    environment:
+      TR_MODE: TR_STRICT
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.triple.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_triple.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_triple.sqlite
+      --config /freqtrade/config.json --strategy BtcTripleRegimeStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_triple_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_triple_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_triple]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_TRIPLE_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_triple.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true

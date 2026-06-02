@@ -1,0 +1,29 @@
+{
+  "candidate": "Pure_Shield",
+  "strategy": "BtcRegimeShieldStrategy",
+  "env": {
+    "RS_MODE": "RS_AGGR"
+  },
+  "windows": {
+    "BEAR_2022": {
+      "roi": -13.39,
+      "max_dd": 13.39,
+      "n_trades": 1,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 9.01,
+      "max_dd": 0.0,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "WARN",
+  "evaluated_at": "2026-06-02T21:49:48.207705+00:00"
+}

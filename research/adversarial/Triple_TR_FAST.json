@@ -1,0 +1,29 @@
+{
+  "candidate": "Triple_TR_FAST",
+  "strategy": "BtcTripleRegimeStrategy",
+  "env": {
+    "TR_MODE": "TR_FAST"
+  },
+  "windows": {
+    "BEAR_2022": {
+      "roi": -7.5,
+      "max_dd": 7.5,
+      "n_trades": 4,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": -6.06,
+      "max_dd": 11.6,
+      "n_trades": 7,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -6.73,
+      "max_dd": 6.73,
+      "n_trades": 3,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "WARN",
+  "evaluated_at": "2026-06-02T21:50:16.714700+00:00"
+}
