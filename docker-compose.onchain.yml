@@ -1,0 +1,46 @@
+# Freqtrade BTC On-Chain bot — blockchain.com data + price Shield.
+# Default mode OC_AGGR. Experimental: outperformed Pure Shield in 2023
+# (+122% vs +74%) and current 2026 YTD (+7% vs 0%), but lost MORE in
+# 2022 bear (-43% vs -13%). Deployed with smaller wallet ($2K) for that
+# tail risk while still observing live behavior.
+#
+# Bring up:  docker compose -f docker-compose.onchain.yml --env-file .env.onchain up -d
+
+services:
+  freqtrade_onchain:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_onchain
+    restart: unless-stopped
+    environment:
+      OC_MODE: ${FREQTRADE_OC_MODE:-OC_AGGR}
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.onchain.json:/freqtrade/config.json:ro
+    command: >
+      trade
+      --logfile /freqtrade/user_data/logs/freqtrade_onchain.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_onchain.sqlite
+      --config /freqtrade/config.json
+      --strategy BtcOnChainStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_onchain_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_onchain_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_onchain]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ONCHAIN_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_onchain.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes:
+      - ./user_data:/data/freqtrade:ro
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true
