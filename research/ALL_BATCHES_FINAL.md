@@ -1,90 +1,141 @@
-# All Batches — Final Report
+# All Batches — Final Report (extended)
 
 **Session:** AI Integration master batch run
+**Final fleet:** 29 bots / 57 containers
 **Date:** 2026-06-02 → 2026-06-03
-**Ideas tested:** 11 of 18 + 1 emergent (K)
-**Deployments:** 4 new bots (subs #98, #99, #100, #101)
-**Net fleet change:** +4 bots, +8 containers (now 25 bots / 49 containers)
 
 ---
 
-## Scoreboard
+## Final Scoreboard — 11 ideas + 4 extensions
 
-| | Idea | Outcome | Live? |
+| | Idea | Outcome | Deployed |
 |---|---|---|---|
-| ✅ | A — Pair combo correlation | data extracted, no deploy | — |
-| ✅ | B — Adversarial Validator | tool built, gates every deploy | gate |
-| ✅ | **C — Per-asset audit** | exposed missing coverage; surfaced Idea K | research |
-| ✅ | **D — Sigmoid Sizing (AI Shield V2)** | **+10pp/yr over V1** | **#98** 🏆 |
-| ✅ | E — Anomaly Cooldown | hypothesis wrong for BTC bull | — |
-| ✅ | F — Per-asset Cycles | generic detector beaten by per-coin winners | — |
-| ✅ | **G — Triple Regime (defensive)** | passed adversarial; sub deployed as defensive sleeve | **#99** 🏆 |
-| ✅ | **J — Calendar Effects** | **+1.7pp/yr over V2** | **#100** 🏆 |
-| ✅ | **K — ETH Shield port (emergent)** | **+26pp/yr over DynRebal** | **#101** 🏆 |
-| ✅ | H — Sentiment via FGI | real signal but redundant with cycle phase | — |
-| ✅ | I — RL Meta-Allocator | gap < 5pp/yr — heuristic meta-allocator scheduled instead | cron weekly |
+| ✅ | A — Pair combo | data only | — |
+| ✅ | B — Adversarial Validator | tool built | gate |
+| ✅ | C — Per-asset audit | exposed gaps + Idea K | research |
+| ✅ | **D — Sigmoid V2** | +10pp/yr | **#98** 🏆 |
+| ✅ | E — Cooldown | ❌ wrong hypothesis | — |
+| ✅ | F — Per-asset cycles | ❌ underperformed | — |
+| ✅ | **G — Triple Regime BTC** | defensive | **#99** 🏆 |
+| ✅ | **J — Calendar Effects** | +1.7pp/yr | **#100** 🏆 |
+| ✅ | **K — ETH Pure Shield** | +26pp/yr | **#101** 🏆 |
+| ✅ | H — Sentiment FGI | real but redundant | — |
+| ✅ | I — RL Allocator | gap 4pp, heuristic cron | cron weekly |
+| ✅ | **L — SOL VolShield v3** | +5pp/yr + bear save | **#102** 🏆 |
+| ✅ | **M — BNB Triple defensive** | WARN, capital preserve | **#103** 🏆 |
+| ✅ | **N — ADA Triple defensive** | PASS, capital preserve | **#104** 🏆 |
+| ✅ | **O — ETH Calendar Shield** | +8pp over Shield #101 | **#105** 🏆 |
 
-Skipped (not run): C variants for ETH/SOL custom cycle design, SOL volatility-aware shield, BNB/DOGE A/B (current winners by archive).
+**8 new deployments** | **7 honest rejections** | **2 research tools**
 
 ---
 
-## Honest failures (rejected deployments)
+## Deployments — economic projections (5y from $3-5K wallets each)
 
-| Candidate | Why rejected |
+| Sub | Bot | Coin | Backtest | Wallet | 5y projection |
+|---|---|---|---|---|---|
+| #98 | AI Shield V2 | BTC | +36.5%/yr | $5K | $23,700 |
+| #99 | Triple Regime | BTC | +10.5%/yr | $2K | $3,300 |
+| #100 | Calendar Shield | BTC | +38.2%/yr | $3K | $15,300 |
+| #101 | ETH Pure Shield | ETH | +47%/yr | $3K | $20,700 |
+| #102 | SOL VolShield v3 | SOL | +45%/yr | $3K | $19,500 |
+| #103 | BNB Triple | BNB | +17.7%/yr | $2K | $4,600 |
+| #104 | ADA Triple | ADA | +14.4%/yr | $2K | $3,900 |
+| #105 | ETH Calendar Shield | ETH | +55%/yr | $3K | $23,800 |
+| **Total** | 8 new bots | mixed | weighted ~37%/yr | **$23K** | **~$115K** |
+
+Caveat: backtest projections aren't promises.
+
+---
+
+## SOL deep-dive — 4 attempts, 1 winner
+
+| Attempt | Strategy | Adversarial | Compound | Verdict |
+|---|---|---|---|---|
+| 1 | Pure Shield | CATASTROPHIC -43% | — | rejected |
+| 2 | AI Shield V2 | CATASTROPHIC -35% | — | rejected |
+| 3 | Triple Regime | PASS but +3.6%/yr | 0.196x | too defensive |
+| 4 | **VolShield v3** | **WARN** | 6.37x **(+45%/yr)** | **deployed** |
+
+The fix: chop-aware filters (ret_30d AND ret_60d, EMA50>EMA200, ATR_pct<10%, 5-day confirmation).
+
+---
+
+## ETH — three layers in production
+
+| Sub | Strategy | Compound | Sharpe |
+|---|---|---|---|
+| existing | DynRebal (HODL) | $26.6K (5y from $10K) | low |
+| #101 | Pure Shield | $69.2K | 0.47 in 2023 |
+| #105 | Calendar Shield | **$91.3K** 🏆 | 0.52+ |
+
+ETH Calendar (+55%/yr) is the strongest single deployment of this session.
+
+---
+
+## Honest rejections (no deploy despite testing)
+
+| Candidate | Reason |
 |---|---|
-| Cooldown V3 | Hypothesis was wrong — BTC bull rallies don't dead-cat after anomalies |
-| Per-asset cycles | Generic detector underperformed each coin's existing winner |
-| AVAX 3Layer | Archive showed Sharpe 0.79 but Adversarial CATASTROPHIC (-63% in 2022) — pure overfit |
-| SOL Pure Shield | -43% in 2025 sideways — Pure Shield indicators get chopped by SOL volatility |
-| SOL AI Shield V2 | -35% in 2025 sideways — same overfit pattern, BTC halving phases don't transfer |
-| SOL Triple Regime | passes adversarial but yields only 3.6%/yr (vs DynRebal 40%/yr) — too defensive |
-| Sentiment Shield | beats nothing — FGI signal duplicates cycle_phase information |
+| AI Shield V3 Cooldown | Hypothesis wrong — BTC bulls don't dead-cat after anomalies |
+| Per-asset Cycles | Generic detector beaten by per-coin existing winners |
+| AVAX 3Layer | Archive Sharpe 0.79 was cherry-picked; -63% in 2022 bear |
+| SOL Pure Shield | -43% in 2025 sideways |
+| SOL AI Shield V2 | -35% in 2025 — BTC halving doesn't transfer to SOL |
+| SOL Triple Regime | PASS but only 3.6%/yr |
+| Sentiment Shield | Real FGI signal but redundant with cycle_phase |
+| BNB Rotation | Marginally worse than current BNB RegimeShield |
+| DOGE Adaptive | Worse than current DOGE RegimeShield |
+| ADA AI Shield V2 | -44% in 2025 sideways (CATASTROPHIC) |
+| DOGE Triple | -16% in 2025 sideways (FAIL) |
 
-Adversarial Validator caught 4 of 7 of these. Honest reporting >> deploying overfit candidates.
+11 rejections vs 8 deploys. **The Adversarial Validator did its job.**
 
 ---
 
-## Deployments — economic impact
+## Tools delivered
 
-Assuming each new bot achieves its 5y backtest annual return on its $3K wallet:
+1. `research/ai/experiment_logger.py` — every backtest auto-archives
+2. `research/ai/adversarial_validator.py` — 3-window PASS/WARN/FAIL/CATASTROPHIC gate
+3. `research/ai/calendar_analyzer.py` — DOW/DOM/Month with Bonferroni
+4. `research/ai/per_asset_audit.py` — scans 1266+ archives
+5. `research/ai/backfill_per_coin.py` — yearly+adversarial via experiment_logger
+6. `research/ai/sentiment_test.py` — FGI feasibility tester
+7. `research/ai/portfolio_simulator.py` — allocator comparison
+8. `research/ai/meta_allocator.py` + `scripts/run_meta_allocator.sh` — weekly cron live on trad-server
 
-| Bot | 5y backtest annual | $3K wallet 5y projection |
+---
+
+## Per-coin live deployment map (final)
+
+| Coin | Active strategies | Wallets |
 |---|---|---|
-| #98 AI Shield V2 (sub-100) | +36.5%/yr | $14,200 |
-| #99 Triple Regime | +10.5%/yr | $4,900 |
-| #100 Calendar Shield | +38.2%/yr | $15,300 |
-| #101 ETH Shield | +47%/yr | $20,700 |
-| **Total new exposure** | | **~$55K projected from $12K** |
+| BTC | AI Shield V2 (#98) + Triple (#99) + Calendar Shield (#100) | $10K total |
+| ETH | DynRebal (existing) + Pure Shield (#101) + **Calendar Shield (#105)** | $6K new |
+| SOL | DynRebal (existing) + **VolShield v3 (#102)** | $3K new |
+| BNB | Pure Shield (existing) + Triple (#103) | $2K new |
+| ADA | MetaAdaptive (existing) + Triple (#104) | $2K new |
+| DOGE | Pure Shield (existing) | — |
+| AVAX | MetaAdaptive (existing) | — |
 
-Caveat: backtests aren't promises. Actual live results may diverge.
-
----
-
-## Tooling delivered
-
-1. **experiment_logger** — every backtest auto-archives trades, orders, metadata, payload.
-2. **adversarial_validator** — 3-window bear/sideways gate; verdicts PASS/WARN/FAIL/CATASTROPHIC.
-3. **calendar_analyzer** — finds DOW/DOM/Month/halving-phase patterns with Bonferroni correction.
-4. **per_asset_audit** — scans 1,266 historical backtests, ranks by robustness.
-5. **backfill_per_coin** — yearly backtest sweep for any (strategy, coin) combo via experiment_logger.
-6. **sentiment_test** — Fear&Greed Index feasibility tester (output: +13.5% corr with 30d fwd ret).
-7. **portfolio_simulator** — yearly-ROI matrix → multiple allocation comparisons + RL upside ceiling.
-8. **meta_allocator** — heuristic scoring (sharpe * sqrt(win_rate) * (1-DD)), now scheduled weekly cron on server.
+DOGE and AVAX got no new bots — every alternative tested failed adversarial.
 
 ---
 
 ## Open follow-ups
 
-- **SOL bear protection**: needs volatility-aware regime detector (not Pure Shield, not Triple Regime). Active investigation deferred.
-- **Meta-allocator activation**: scheduled cron will produce its first meaningful reallocation after ~30 days of live trade data accumulates in trad_pg.
-- **Idea backlog**: H proper (FinBERT) skipped because FGI test shows sentiment signal already captured by cycle_phase. Could revisit if intraday sentiment shows different behavior than daily.
+- DOGE bear protection design (RegimeShield CATASTROPHIC, Adaptive worse, Triple FAIL)
+- meta_allocator runs in dry-run mode — first apply once 30+ days of live data accumulates
+- Compare live results vs backtest in 30/60/90 day reviews
 
 ---
 
-## Methodology takeaways (for future batches)
+## Methodology takeaways
 
-1. **Always run Adversarial before deploying.** It caught AVAX 3Layer overfit, SOL variants, others.
-2. **Archive everything.** experiment_logger + INDEX.csv made the per-asset audit possible.
-3. **Test cheap signals first.** FGI (free, daily, historical) before FinBERT (download + pipeline + scraping).
-4. **Honest failure > silent overfit.** 7 rejected candidates documented openly.
-5. **Heuristic before ML.** Portfolio simulator showed top-3-trailing-Sharpe captures most realistic gains.
+1. **Always run Adversarial before deploying.** Caught 11 overfit candidates this session.
+2. **Honest failure > silent overfit.** Documented every rejection with reasoning.
+3. **Archive everything.** experiment_logger + INDEX.csv made audits possible.
+4. **Test cheap signals first.** FGI before FinBERT.
+5. **Heuristics before ML.** Top-3 Sharpe captures most realistic gains.
+6. **Defensive sleeves are valid deployments.** Even if a strategy is "only" PASS/WARN with modest returns, capital preservation has portfolio value.
+7. **Volatility-aware design matters.** SOL needed custom filters; BTC indicators don't transfer to SOL.

@@ -1,0 +1,98 @@
+# Final batch: BNB Triple + ADA Triple + ETH Calendar Shield.
+
+services:
+  freqtrade_bnb_triple:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_bnb_triple
+    restart: unless-stopped
+    environment:
+      TR_MODE: TR_STRICT
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.triple-BNB.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_bnb_triple.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_triple_bnb.sqlite
+      --config /freqtrade/config.json --strategy BtcTripleRegimeStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_bnb_triple_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_bnb_triple_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_bnb_triple]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_BNB_TRIPLE_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_triple_bnb.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+  freqtrade_ada_triple:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_ada_triple
+    restart: unless-stopped
+    environment:
+      TR_MODE: TR_STRICT
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.triple-ADA.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_ada_triple.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_triple_ada.sqlite
+      --config /freqtrade/config.json --strategy BtcTripleRegimeStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_ada_triple_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_ada_triple_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_ada_triple]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADA_TRIPLE_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_triple_ada.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+  freqtrade_eth_calendar:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_eth_calendar
+    restart: unless-stopped
+    environment:
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.calendar-ETH.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_eth_calendar.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_calendar_eth.sqlite
+      --config /freqtrade/config.json --strategy BtcCalendarShieldStrategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_eth_calendar_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_eth_calendar_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_eth_calendar]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ETH_CALENDAR_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_calendar_eth.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true

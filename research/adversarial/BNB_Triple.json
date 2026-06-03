@@ -1,0 +1,27 @@
+{
+  "candidate": "BNB_Triple",
+  "strategy": "BtcTripleRegimeStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 1.35,
+      "max_dd": 0.0,
+      "n_trades": 1,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 11.52,
+      "max_dd": 1.93,
+      "n_trades": 3,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -5.81,
+      "max_dd": 5.81,
+      "n_trades": 1,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "WARN",
+  "evaluated_at": "2026-06-02T23:45:26.345462+00:00"
+}

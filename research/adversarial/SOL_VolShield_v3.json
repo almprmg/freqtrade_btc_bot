@@ -1,0 +1,27 @@
+{
+  "candidate": "SOL_VolShield_v3",
+  "strategy": "SolVolShieldStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": -12.81,
+      "max_dd": 12.81,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "WARN",
+  "evaluated_at": "2026-06-02T23:37:52.388012+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "candidate": "rot-BNB",
+  "strategy": "BtcRotationStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": -15.39,
+      "max_dd": 15.39,
+      "n_trades": 2,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 2.49,
+      "max_dd": 0.0,
+      "n_trades": 2,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -3.6,
+      "max_dd": 3.79,
+      "n_trades": 2,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "FAIL",
+  "evaluated_at": "2026-06-02T23:44:33.165981+00:00"
+}

@@ -1,0 +1,27 @@
+{
+  "candidate": "adapt-DOGE",
+  "strategy": "BtcAdaptiveStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": -23.78,
+      "max_dd": 23.78,
+      "n_trades": 1,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": -27.24,
+      "max_dd": 27.24,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -12.42,
+      "max_dd": 12.42,
+      "n_trades": 1,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "FAIL",
+  "evaluated_at": "2026-06-02T23:44:45.042239+00:00"
+}

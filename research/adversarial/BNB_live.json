@@ -1,0 +1,27 @@
+{
+  "candidate": "BNB_live",
+  "strategy": "BtcRegimeShieldStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": -20.32,
+      "max_dd": 20.32,
+      "n_trades": 2,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 23.43,
+      "max_dd": 0.0,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -16.26,
+      "max_dd": 16.26,
+      "n_trades": 1,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "FAIL",
+  "evaluated_at": "2026-06-02T23:40:32.241827+00:00"
+}
