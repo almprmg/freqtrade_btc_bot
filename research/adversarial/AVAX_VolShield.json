@@ -1,0 +1,27 @@
+{
+  "candidate": "AVAX_VolShield",
+  "strategy": "SolVolShieldStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": -4.87,
+      "max_dd": 4.87,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-06-03T17:15:12.152433+00:00"
+}

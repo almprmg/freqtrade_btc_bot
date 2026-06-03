@@ -1,0 +1,27 @@
+{
+  "candidate": "BNB_Calendar",
+  "strategy": "BtcCalendarShieldStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": -1.54,
+      "max_dd": 1.54,
+      "n_trades": 2,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 34.92,
+      "max_dd": 11.79,
+      "n_trades": 2,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-06-03T17:15:02.504849+00:00"
+}
