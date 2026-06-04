@@ -1,0 +1,27 @@
+{
+  "candidate": "ETH_Futures",
+  "strategy": "CalendarFuturesStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 37.41,
+      "max_dd": 4.57,
+      "n_trades": 4,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 29.02,
+      "max_dd": 0.0,
+      "n_trades": 2,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.41,
+      "max_dd": 0.0,
+      "n_trades": 2,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-06-04T11:12:36.792249+00:00"
+}

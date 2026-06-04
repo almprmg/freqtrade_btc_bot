@@ -1,0 +1,27 @@
+{
+  "candidate": "BTC_Futures",
+  "strategy": "CalendarFuturesStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 18.4,
+      "max_dd": 2.83,
+      "n_trades": 4,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 1.68,
+      "max_dd": 8.48,
+      "n_trades": 4,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.5,
+      "max_dd": 0.0,
+      "n_trades": 1,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-06-04T11:12:26.504420+00:00"
+}

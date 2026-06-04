@@ -1,0 +1,27 @@
+{
+  "candidate": "BNB_Futures",
+  "strategy": "CalendarFuturesStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": 19.4,
+      "max_dd": 1.43,
+      "n_trades": 6,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 36.25,
+      "max_dd": 2.35,
+      "n_trades": 3,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -0.6,
+      "max_dd": 0.6,
+      "n_trades": 1,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-06-04T11:12:46.467592+00:00"
+}
