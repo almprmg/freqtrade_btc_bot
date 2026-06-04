@@ -80,8 +80,8 @@ def main():
     for h in HALVINGS:
         print(f"  {h.date()}")
 
-    # Generate per-day cycle bias from 2019 to 2027
-    dates = pd.date_range("2019-01-01", "2027-12-31", freq="D", tz="UTC")
+    # Generate per-day cycle bias from 2017 to 2027 (extended for full Binance USDT history)
+    dates = pd.date_range("2017-01-01", "2027-12-31", freq="D", tz="UTC")
     rows = []
     for d in dates:
         days = days_since_last_halving(d)
