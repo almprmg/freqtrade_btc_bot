@@ -1,0 +1,46 @@
+# BTC Macro V2 — sweep-tuned macro shield. Beats Calendar by +$17K/9y.
+# 9y backtest: $10K -> $130K (33.0%/yr). Adversarial PASS.
+
+services:
+  freqtrade_btc_macro_v2:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: freqtrade_btc_macro_v2
+    restart: unless-stopped
+    environment:
+      FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
+      FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      MV_W_MACRO: "0.20"
+      MV_W_VIX: "0.00"
+      MV_W_SPY: "0.10"
+      MV_W_QQQ: "0.00"
+      MV_W_DXY: "0.00"
+      MV_W_RATES: "0.00"
+      MV_EXIT_THR: "-0.70"
+      MV_MODE: "tilt"
+      MV_COIN: "BTC"
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.macrov2.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/freqtrade_btc_macro_v2.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_btc_macro_v2.sqlite
+      --config /freqtrade/config.json --strategy BtcMacroV2Strategy
+    networks: [default, trad_system_trad]
+
+  freqtrade_btc_macro_v2_bridge:
+    image: freqtrade-bridge:latest
+    container_name: freqtrade_btc_macro_v2_bridge
+    restart: unless-stopped
+    depends_on: [freqtrade_btc_macro_v2]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_BTC_MACRO_V2_SUB}
+      BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_btc_macro_v2.sqlite
+      TRAD_PG_DSN: ${TRAD_PG_DSN}
+      POLL_INTERVAL_SECONDS: ${BRIDGE_POLL_INTERVAL:-30}
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [default, trad_system_trad]
+
+networks:
+  trad_system_trad:
+    external: true
