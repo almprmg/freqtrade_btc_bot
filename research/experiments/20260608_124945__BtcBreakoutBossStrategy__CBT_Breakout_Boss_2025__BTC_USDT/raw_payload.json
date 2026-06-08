@@ -1,0 +1,1430 @@
+{
+  "strategy": {
+    "BtcBreakoutBossStrategy": {
+      "trades": [
+        {
+          "pair": "BTC/USDT",
+          "stake_amount": 9999.8543124,
+          "max_stake_amount": 9999.8543124,
+          "amount": 0.09684,
+          "open_date": "2025-05-09 00:00:00+00:00",
+          "close_date": "2025-07-08 00:00:00+00:00",
+          "open_rate": 103261.61,
+          "close_rate": 108262.94,
+          "fee_open": 0.001,
+          "fee_close": 0.001,
+          "trade_duration": 86400,
+          "profit_ratio": 0.04633881293920424,
+          "profit_abs": 463.84475978,
+          "exit_reason": "max_hold",
+          "initial_stop_loss_abs": 87772.37,
+          "initial_stop_loss_ratio": -0.15,
+          "stop_loss_abs": 95183.0,
+          "stop_loss_ratio": -0.15,
+          "min_rate": 98200.0,
+          "max_rate": 111980.0,
+          "is_open": false,
+          "enter_tag": "breakout:enter",
+          "leverage": 1.0,
+          "is_short": false,
+          "open_timestamp": 1746748800000,
+          "close_timestamp": 1751932800000,
+          "orders": [
+            {
+              "amount": 0.09684,
+              "safe_price": 103261.61,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1746748800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "breakout:enter",
+              "cost": 10009.854166712397
+            },
+            {
+              "amount": 0.09684,
+              "safe_price": 108262.94,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1751932800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "max_hold",
+              "cost": 10494.667292709599
+            }
+          ],
+          "funding_fees": 0.0,
+          "weekday": 1
+        },
+        {
+          "pair": "BTC/USDT",
+          "stake_amount": 10463.3325527,
+          "max_stake_amount": 10463.3325527,
+          "amount": 0.08731,
+          "open_date": "2025-07-15 00:00:00+00:00",
+          "close_date": "2025-08-26 00:00:00+00:00",
+          "open_rate": 119841.17,
+          "close_rate": 110111.98,
+          "fee_open": 0.001,
+          "fee_close": 0.001,
+          "trade_duration": 60480,
+          "profit_ratio": -0.08301983330172763,
+          "profit_abs": -869.53278843,
+          "exit_reason": "breakout:exit",
+          "initial_stop_loss_abs": 101865.0,
+          "initial_stop_loss_ratio": -0.15,
+          "stop_loss_abs": 105802.9,
+          "stop_loss_ratio": -0.15,
+          "min_rate": 108666.66,
+          "max_rate": 124474.0,
+          "is_open": false,
+          "enter_tag": "breakout:enter",
+          "leverage": 1.0,
+          "is_short": false,
+          "open_timestamp": 1752537600000,
+          "close_timestamp": 1756166400000,
+          "orders": [
+            {
+              "amount": 0.08731,
+              "safe_price": 119841.17,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1752537600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "breakout:enter",
+              "cost": 10473.795885252699
+            },
+            {
+              "amount": 0.08731,
+              "safe_price": 110111.98,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1756166400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "breakout:exit",
+              "cost": 9623.490850773798
+            }
+          ],
+          "funding_fees": 0.0,
+          "weekday": 1
+        }
+      ],
+      "locks": [],
+      "best_pair": {
+        "key": "BTC/USDT",
+        "trades": 2,
+        "profit_mean": -0.018340510181261694,
+        "profit_mean_pct": -1.83,
+        "profit_total_abs": -405.68802865,
+        "profit_total": -0.040568802864999996,
+        "profit_total_pct": -4.06,
+        "duration_avg": "51 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "winrate": 0.5,
+        "cagr": -0.040568802864999975,
+        "expectancy": -202.844014325,
+        "expectancy_ratio": -0.2332793162305571,
+        "sortino": -100.0,
+        "sharpe": -0.03185096668065847,
+        "calmar": -2.555354072893211,
+        "sqn": -0.3043,
+        "profit_factor": 0.5334413675388859,
+        "max_drawdown_account": 0.08309878523544553,
+        "max_drawdown_abs": 869.53278843
+      },
+      "worst_pair": {
+        "key": "BTC/USDT",
+        "trades": 2,
+        "profit_mean": -0.018340510181261694,
+        "profit_mean_pct": -1.83,
+        "profit_total_abs": -405.68802865,
+        "profit_total": -0.040568802864999996,
+        "profit_total_pct": -4.06,
+        "duration_avg": "51 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 1,
+        "winrate": 0.5,
+        "cagr": -0.040568802864999975,
+        "expectancy": -202.844014325,
+        "expectancy_ratio": -0.2332793162305571,
+        "sortino": -100.0,
+        "sharpe": -0.03185096668065847,
+        "calmar": -2.555354072893211,
+        "sqn": -0.3043,
+        "profit_factor": 0.5334413675388859,
+        "max_drawdown_account": 0.08309878523544553,
+        "max_drawdown_abs": 869.53278843
+      },
+      "results_per_pair": [
+        {
+          "key": "BTC/USDT",
+          "trades": 2,
+          "profit_mean": -0.018340510181261694,
+          "profit_mean_pct": -1.83,
+          "profit_total_abs": -405.68802865,
+          "profit_total": -0.040568802864999996,
+          "profit_total_pct": -4.06,
+          "duration_avg": "51 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.5,
+          "cagr": -0.040568802864999975,
+          "expectancy": -202.844014325,
+          "expectancy_ratio": -0.2332793162305571,
+          "sortino": -100.0,
+          "sharpe": -0.03185096668065847,
+          "calmar": -2.555354072893211,
+          "sqn": -0.3043,
+          "profit_factor": 0.5334413675388859,
+          "max_drawdown_account": 0.08309878523544553,
+          "max_drawdown_abs": 869.53278843
+        },
+        {
+          "key": "TOTAL",
+          "trades": 2,
+          "profit_mean": -0.018340510181261694,
+          "profit_mean_pct": -1.83,
+          "profit_total_abs": -405.68802865,
+          "profit_total": -0.040568802864999996,
+          "profit_total_pct": -4.06,
+          "duration_avg": "51 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.5,
+          "cagr": -0.040568802864999975,
+          "expectancy": -202.844014325,
+          "expectancy_ratio": -0.2332793162305571,
+          "sortino": -100.0,
+          "sharpe": -0.03185096668065847,
+          "calmar": -2.555354072893211,
+          "sqn": -0.3043,
+          "profit_factor": 0.5334413675388859,
+          "max_drawdown_account": 0.08309878523544553,
+          "max_drawdown_abs": 869.53278843
+        }
+      ],
+      "results_per_enter_tag": [
+        {
+          "key": "breakout:enter",
+          "trades": 2,
+          "profit_mean": -0.018340510181261694,
+          "profit_mean_pct": -1.83,
+          "profit_total_abs": -405.68802865,
+          "profit_total": -0.040568802864999996,
+          "profit_total_pct": -4.06,
+          "duration_avg": "51 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.5,
+          "cagr": -0.040568802864999975,
+          "expectancy": -202.844014325,
+          "expectancy_ratio": -0.2332793162305571,
+          "sortino": -100.0,
+          "sharpe": -0.03185096668065847,
+          "calmar": -2.555354072893211,
+          "sqn": -0.3043,
+          "profit_factor": 0.5334413675388859,
+          "max_drawdown_account": 0.08309878523544553,
+          "max_drawdown_abs": 869.53278843
+        },
+        {
+          "key": "TOTAL",
+          "trades": 2,
+          "profit_mean": -0.018340510181261694,
+          "profit_mean_pct": -1.83,
+          "profit_total_abs": -405.68802865,
+          "profit_total": -0.040568802864999996,
+          "profit_total_pct": -4.06,
+          "duration_avg": "51 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.5,
+          "cagr": -0.040568802864999975,
+          "expectancy": -202.844014325,
+          "expectancy_ratio": -0.2332793162305571,
+          "sortino": -100.0,
+          "sharpe": -0.03185096668065847,
+          "calmar": -2.555354072893211,
+          "sqn": -0.3043,
+          "profit_factor": 0.5334413675388859,
+          "max_drawdown_account": 0.08309878523544553,
+          "max_drawdown_abs": 869.53278843
+        }
+      ],
+      "exit_reason_summary": [
+        {
+          "key": "max_hold",
+          "trades": 1,
+          "profit_mean": 0.04633881293920424,
+          "profit_mean_pct": 4.63,
+          "profit_total_abs": 463.84475978,
+          "profit_total": 0.046384475978,
+          "profit_total_pct": 4.64,
+          "duration_avg": "60 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.046384475978000106,
+          "expectancy": 463.84475978,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "breakout:exit",
+          "trades": 1,
+          "profit_mean": -0.08301983330172763,
+          "profit_mean_pct": -8.3,
+          "profit_total_abs": -869.53278843,
+          "profit_total": -0.086953278843,
+          "profit_total_pct": -8.7,
+          "duration_avg": "42 days, 0:00:00",
+          "wins": 0,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.0,
+          "cagr": -0.08695327884300008,
+          "expectancy": -869.53278843,
+          "expectancy_ratio": -1.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -5.234239225902134,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.08695327884300004,
+          "max_drawdown_abs": 869.53278843
+        },
+        {
+          "key": "TOTAL",
+          "trades": 2,
+          "profit_mean": -0.018340510181261694,
+          "profit_mean_pct": -1.83,
+          "profit_total_abs": -405.68802865,
+          "profit_total": -0.040568802864999996,
+          "profit_total_pct": -4.06,
+          "duration_avg": "51 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.5,
+          "cagr": -0.040568802864999975,
+          "expectancy": -202.844014325,
+          "expectancy_ratio": -0.2332793162305571,
+          "sortino": -100.0,
+          "sharpe": -0.03185096668065847,
+          "calmar": -2.555354072893211,
+          "sqn": -0.3043,
+          "profit_factor": 0.5334413675388859,
+          "max_drawdown_account": 0.08309878523544553,
+          "max_drawdown_abs": 869.53278843
+        }
+      ],
+      "mix_tag_stats": [
+        {
+          "key": [
+            "breakout:enter",
+            "max_hold"
+          ],
+          "trades": 1,
+          "profit_mean": 0.04633881293920424,
+          "profit_mean_pct": 4.63,
+          "profit_total_abs": 463.84475978,
+          "profit_total": 0.046384475978,
+          "profit_total_pct": 4.64,
+          "duration_avg": "60 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.046384475978000106,
+          "expectancy": 463.84475978,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": [
+            "breakout:enter",
+            "breakout:exit"
+          ],
+          "trades": 1,
+          "profit_mean": -0.08301983330172763,
+          "profit_mean_pct": -8.3,
+          "profit_total_abs": -869.53278843,
+          "profit_total": -0.086953278843,
+          "profit_total_pct": -8.7,
+          "duration_avg": "42 days, 0:00:00",
+          "wins": 0,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.0,
+          "cagr": -0.08695327884300008,
+          "expectancy": -869.53278843,
+          "expectancy_ratio": -1.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -5.234239225902134,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.08695327884300004,
+          "max_drawdown_abs": 869.53278843
+        },
+        {
+          "key": "TOTAL",
+          "trades": 2,
+          "profit_mean": -0.018340510181261694,
+          "profit_mean_pct": -1.83,
+          "profit_total_abs": -405.68802865,
+          "profit_total": -0.040568802864999996,
+          "profit_total_pct": -4.06,
+          "duration_avg": "51 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 1,
+          "winrate": 0.5,
+          "cagr": -0.040568802864999975,
+          "expectancy": -202.844014325,
+          "expectancy_ratio": -0.2332793162305571,
+          "sortino": -100.0,
+          "sharpe": -0.03185096668065847,
+          "calmar": -2.555354072893211,
+          "sqn": -0.3043,
+          "profit_factor": 0.5334413675388859,
+          "max_drawdown_account": 0.08309878523544553,
+          "max_drawdown_abs": 869.53278843
+        }
+      ],
+      "left_open_trades": [
+        {
+          "key": "TOTAL",
+          "trades": 0,
+          "profit_mean": 0.0,
+          "profit_mean_pct": 0.0,
+          "profit_total_abs": 0.0,
+          "profit_total": 0.0,
+          "profit_total_pct": 0.0,
+          "duration_avg": "0:00",
+          "wins": 0,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 0.0,
+          "cagr": 0.0,
+          "expectancy": 0.0,
+          "expectancy_ratio": 100.0,
+          "sortino": 0,
+          "sharpe": 0,
+          "calmar": 0.0,
+          "sqn": 0.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "total_trades": 2,
+      "trade_count_long": 2,
+      "trade_count_short": 0,
+      "total_volume": 40601.808195448495,
+      "avg_stake_amount": 10231.59343255,
+      "profit_mean": -0.018340510181261694,
+      "profit_median": -0.018340510181261694,
+      "profit_total": -0.040568802864999996,
+      "profit_total_long": -0.040568802864999996,
+      "profit_total_short": 0.0,
+      "profit_total_abs": -405.68802865,
+      "profit_total_long_abs": -405.68802865,
+      "profit_total_short_abs": 0.0,
+      "cagr": -0.040568802864999975,
+      "expectancy": -202.844014325,
+      "expectancy_ratio": -0.2332793162305571,
+      "sortino": -100.0,
+      "sharpe": -0.03185096668065847,
+      "calmar": -2.555354072893211,
+      "sqn": -0.3043,
+      "wallet_stats": {
+        "start_balance": 10000.0,
+        "end_balance": 9594.31197135,
+        "high_balance": 10816.8076324,
+        "low_balance": 9594.31197135,
+        "sharpe": -0.1779474085923672,
+        "sortino": -0.16124273903986938,
+        "calmar": -1.8840352357503738,
+        "low_date": "2025-08-27 00:00:00",
+        "low_ts": 1756252800000,
+        "high_date": "2025-05-23 00:00:00",
+        "high_ts": 1747958400000,
+        "max_drawdown_account": 0.11301815679777934,
+        "max_relative_drawdown": 0.11301815679777934,
+        "max_drawdown_abs": 1222.4956610499994,
+        "drawdown_start": "2025-05-23 00:00:00",
+        "drawdown_start_ts": 1747958400000,
+        "drawdown_end": "2025-08-27 00:00:00",
+        "drawdown_end_ts": 1756252800000,
+        "drawdown_duration": "96 days 00:00:00",
+        "drawdown_duration_s": 8294400.0,
+        "max_drawdown_low": -405.68802865,
+        "max_drawdown_high": 816.8076323999994
+      },
+      "profit_factor": 0.5334413675388859,
+      "backtest_start": "2025-01-01 00:00:00",
+      "backtest_start_ts": 1735689600000,
+      "backtest_end": "2026-01-01 00:00:00",
+      "backtest_end_ts": 1767225600000,
+      "backtest_days": 365,
+      "backtest_run_start_ts": 1780922984,
+      "backtest_run_end_ts": 1780922984,
+      "trades_per_day": 0.01,
+      "market_change": -0.06081658883926396,
+      "pairlist": [
+        "BTC/USDT"
+      ],
+      "stake_amount": "unlimited",
+      "stake_currency": "USDT",
+      "stake_currency_decimals": 3,
+      "starting_balance": 10000.0,
+      "dry_run_wallet": 10000.0,
+      "final_balance": 9594.31197135,
+      "rejected_signals": 0,
+      "timedout_entry_orders": 0,
+      "timedout_exit_orders": 0,
+      "canceled_trade_entries": 0,
+      "canceled_entry_orders": 0,
+      "replaced_entry_orders": 0,
+      "max_open_trades": 1,
+      "max_open_trades_setting": 1,
+      "timeframe": "1d",
+      "timeframe_detail": "",
+      "timerange": "20250101-20260101",
+      "enable_protections": false,
+      "strategy_name": "BtcBreakoutBossStrategy",
+      "freqaimodel": null,
+      "freqai_identifier": null,
+      "stoploss": -0.15,
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false,
+      "use_custom_stoploss": true,
+      "minimal_roi": {
+        "0": 10.0
+      },
+      "use_exit_signal": true,
+      "exit_profit_only": false,
+      "exit_profit_offset": 0.0,
+      "ignore_roi_if_entry_signal": false,
+      "trading_mode": "spot",
+      "margin_mode": "",
+      "periodic_breakdown": {
+        "day": [
+          {
+            "date": "08/07/2025",
+            "date_ts": 1751932800000,
+            "profit_abs": 463.84475978,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "09/07/2025",
+            "date_ts": 1752019200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "10/07/2025",
+            "date_ts": 1752105600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "11/07/2025",
+            "date_ts": 1752192000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "12/07/2025",
+            "date_ts": 1752278400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "13/07/2025",
+            "date_ts": 1752364800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "14/07/2025",
+            "date_ts": 1752451200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "15/07/2025",
+            "date_ts": 1752537600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "16/07/2025",
+            "date_ts": 1752624000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "17/07/2025",
+            "date_ts": 1752710400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "18/07/2025",
+            "date_ts": 1752796800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "19/07/2025",
+            "date_ts": 1752883200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "20/07/2025",
+            "date_ts": 1752969600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "21/07/2025",
+            "date_ts": 1753056000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "22/07/2025",
+            "date_ts": 1753142400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "23/07/2025",
+            "date_ts": 1753228800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "24/07/2025",
+            "date_ts": 1753315200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "25/07/2025",
+            "date_ts": 1753401600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "26/07/2025",
+            "date_ts": 1753488000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "27/07/2025",
+            "date_ts": 1753574400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "28/07/2025",
+            "date_ts": 1753660800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "29/07/2025",
+            "date_ts": 1753747200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "30/07/2025",
+            "date_ts": 1753833600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "31/07/2025",
+            "date_ts": 1753920000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "01/08/2025",
+            "date_ts": 1754006400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "02/08/2025",
+            "date_ts": 1754092800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "03/08/2025",
+            "date_ts": 1754179200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "04/08/2025",
+            "date_ts": 1754265600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "05/08/2025",
+            "date_ts": 1754352000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "06/08/2025",
+            "date_ts": 1754438400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "07/08/2025",
+            "date_ts": 1754524800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "08/08/2025",
+            "date_ts": 1754611200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "09/08/2025",
+            "date_ts": 1754697600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "10/08/2025",
+            "date_ts": 1754784000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "11/08/2025",
+            "date_ts": 1754870400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "12/08/2025",
+            "date_ts": 1754956800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "13/08/2025",
+            "date_ts": 1755043200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "14/08/2025",
+            "date_ts": 1755129600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "15/08/2025",
+            "date_ts": 1755216000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "16/08/2025",
+            "date_ts": 1755302400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "17/08/2025",
+            "date_ts": 1755388800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "18/08/2025",
+            "date_ts": 1755475200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "19/08/2025",
+            "date_ts": 1755561600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "20/08/2025",
+            "date_ts": 1755648000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "21/08/2025",
+            "date_ts": 1755734400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "22/08/2025",
+            "date_ts": 1755820800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "23/08/2025",
+            "date_ts": 1755907200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "24/08/2025",
+            "date_ts": 1755993600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "25/08/2025",
+            "date_ts": 1756080000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "26/08/2025",
+            "date_ts": 1756166400000,
+            "profit_abs": -869.53278843,
+            "wins": 0,
+            "draws": 0,
+            "losses": 1,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "week": [
+          {
+            "date": "14/07/2025",
+            "date_ts": 1752451200000,
+            "profit_abs": 463.84475978,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "21/07/2025",
+            "date_ts": 1753056000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "28/07/2025",
+            "date_ts": 1753660800000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "04/08/2025",
+            "date_ts": 1754265600000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "11/08/2025",
+            "date_ts": 1754870400000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "18/08/2025",
+            "date_ts": 1755475200000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "25/08/2025",
+            "date_ts": 1756080000000,
+            "profit_abs": 0.0,
+            "wins": 0,
+            "draws": 0,
+            "losses": 0,
+            "trades": 0,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "01/09/2025",
+            "date_ts": 1756684800000,
+            "profit_abs": -869.53278843,
+            "wins": 0,
+            "draws": 0,
+            "losses": 1,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "month": [
+          {
+            "date": "31/07/2025",
+            "date_ts": 1753920000000,
+            "profit_abs": 463.84475978,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          },
+          {
+            "date": "31/08/2025",
+            "date_ts": 1756598400000,
+            "profit_abs": -869.53278843,
+            "wins": 0,
+            "draws": 0,
+            "losses": 1,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "year": [
+          {
+            "date": "31/12/2025",
+            "date_ts": 1767139200000,
+            "profit_abs": -405.68802865,
+            "wins": 1,
+            "draws": 0,
+            "losses": 1,
+            "trades": 2,
+            "profit_factor": 0.53344137
+          }
+        ],
+        "weekday": [
+          {
+            "date": "Tuesday",
+            "date_ts": 1,
+            "profit_abs": -405.68802865,
+            "wins": 1,
+            "draws": 0,
+            "losses": 1,
+            "trades": 2,
+            "profit_factor": 0.53344137
+          }
+        ]
+      },
+      "backtest_best_day": 0.04633881293920424,
+      "backtest_worst_day": -0.08301983330172763,
+      "backtest_best_day_abs": 463.84475978,
+      "backtest_worst_day_abs": -869.53278843,
+      "winning_days": 1,
+      "draw_days": 48,
+      "losing_days": 1,
+      "daily_profit": [
+        [
+          "2025-07-08",
+          463.84475978
+        ],
+        [
+          "2025-07-09",
+          0.0
+        ],
+        [
+          "2025-07-10",
+          0.0
+        ],
+        [
+          "2025-07-11",
+          0.0
+        ],
+        [
+          "2025-07-12",
+          0.0
+        ],
+        [
+          "2025-07-13",
+          0.0
+        ],
+        [
+          "2025-07-14",
+          0.0
+        ],
+        [
+          "2025-07-15",
+          0.0
+        ],
+        [
+          "2025-07-16",
+          0.0
+        ],
+        [
+          "2025-07-17",
+          0.0
+        ],
+        [
+          "2025-07-18",
+          0.0
+        ],
+        [
+          "2025-07-19",
+          0.0
+        ],
+        [
+          "2025-07-20",
+          0.0
+        ],
+        [
+          "2025-07-21",
+          0.0
+        ],
+        [
+          "2025-07-22",
+          0.0
+        ],
+        [
+          "2025-07-23",
+          0.0
+        ],
+        [
+          "2025-07-24",
+          0.0
+        ],
+        [
+          "2025-07-25",
+          0.0
+        ],
+        [
+          "2025-07-26",
+          0.0
+        ],
+        [
+          "2025-07-27",
+          0.0
+        ],
+        [
+          "2025-07-28",
+          0.0
+        ],
+        [
+          "2025-07-29",
+          0.0
+        ],
+        [
+          "2025-07-30",
+          0.0
+        ],
+        [
+          "2025-07-31",
+          0.0
+        ],
+        [
+          "2025-08-01",
+          0.0
+        ],
+        [
+          "2025-08-02",
+          0.0
+        ],
+        [
+          "2025-08-03",
+          0.0
+        ],
+        [
+          "2025-08-04",
+          0.0
+        ],
+        [
+          "2025-08-05",
+          0.0
+        ],
+        [
+          "2025-08-06",
+          0.0
+        ],
+        [
+          "2025-08-07",
+          0.0
+        ],
+        [
+          "2025-08-08",
+          0.0
+        ],
+        [
+          "2025-08-09",
+          0.0
+        ],
+        [
+          "2025-08-10",
+          0.0
+        ],
+        [
+          "2025-08-11",
+          0.0
+        ],
+        [
+          "2025-08-12",
+          0.0
+        ],
+        [
+          "2025-08-13",
+          0.0
+        ],
+        [
+          "2025-08-14",
+          0.0
+        ],
+        [
+          "2025-08-15",
+          0.0
+        ],
+        [
+          "2025-08-16",
+          0.0
+        ],
+        [
+          "2025-08-17",
+          0.0
+        ],
+        [
+          "2025-08-18",
+          0.0
+        ],
+        [
+          "2025-08-19",
+          0.0
+        ],
+        [
+          "2025-08-20",
+          0.0
+        ],
+        [
+          "2025-08-21",
+          0.0
+        ],
+        [
+          "2025-08-22",
+          0.0
+        ],
+        [
+          "2025-08-23",
+          0.0
+        ],
+        [
+          "2025-08-24",
+          0.0
+        ],
+        [
+          "2025-08-25",
+          0.0
+        ],
+        [
+          "2025-08-26",
+          -869.53278843
+        ]
+      ],
+      "wins": 1,
+      "losses": 1,
+      "draws": 0,
+      "winrate": 0.5,
+      "holding_avg": "51 days, 0:00:00",
+      "holding_avg_s": 4406400.0,
+      "winner_holding_min": "60d 00:00",
+      "winner_holding_min_s": 5184000.0,
+      "winner_holding_max": "60d 00:00",
+      "winner_holding_max_s": 5184000.0,
+      "winner_holding_avg": "60d 00:00",
+      "winner_holding_avg_s": 5184000.0,
+      "loser_holding_min": "42d 00:00",
+      "loser_holding_min_s": 3628800.0,
+      "loser_holding_max": "42d 00:00",
+      "loser_holding_max_s": 3628800.0,
+      "loser_holding_avg": "42d 00:00",
+      "loser_holding_avg_s": 3628800.0,
+      "max_consecutive_wins": 1,
+      "max_consecutive_losses": 1,
+      "max_drawdown_account": 0.08309878523544553,
+      "max_relative_drawdown": 0.08309878523544553,
+      "max_drawdown_abs": 869.53278843,
+      "drawdown_start": "2025-07-08 00:00:00",
+      "drawdown_start_ts": 1751932800000.0,
+      "drawdown_end": "2025-08-26 00:00:00",
+      "drawdown_end_ts": 1756166400000.0,
+      "drawdown_duration": "49 days 00:00:00",
+      "drawdown_duration_s": 4233600.0,
+      "max_drawdown_low": -405.68802865,
+      "max_drawdown_high": 463.84475978,
+      "csum_min": 9594.31197135,
+      "csum_max": 10463.84475978
+    }
+  },
+  "strategy_comparison": [
+    {
+      "key": "BtcBreakoutBossStrategy",
+      "trades": 2,
+      "profit_mean": -0.018340510181261694,
+      "profit_mean_pct": -1.83,
+      "profit_total_abs": -405.68802865,
+      "profit_total": -0.040568802864999996,
+      "profit_total_pct": -4.06,
+      "duration_avg": "51 days, 0:00:00",
+      "wins": 1,
+      "draws": 0,
+      "losses": 1,
+      "winrate": 0.5,
+      "cagr": -0.040568802864999975,
+      "expectancy": -202.844014325,
+      "expectancy_ratio": -0.2332793162305571,
+      "sortino": -100.0,
+      "sharpe": -0.03185096668065847,
+      "calmar": -2.555354072893211,
+      "sqn": -0.3043,
+      "profit_factor": 0.5334413675388859,
+      "max_drawdown_account": 0.08309878523544553,
+      "max_drawdown_abs": "869.533"
+    }
+  ]
+}
