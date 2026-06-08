@@ -1,0 +1,2621 @@
+{
+  "strategy": {
+    "BtcDynamicRebalanceStrategy": {
+      "trades": [
+        {
+          "pair": "SOL/USDT",
+          "stake_amount": 44588.52839562,
+          "max_stake_amount": 92539.767001,
+          "amount": 325.543,
+          "open_date": "2021-03-20 00:00:00+00:00",
+          "close_date": "2022-01-01 00:00:00+00:00",
+          "open_rate": 136.9666,
+          "close_rate": 170.01,
+          "fee_open": 0.001,
+          "fee_close": 0.001,
+          "trade_duration": 413280,
+          "profit_ratio": 0.6876025536165594,
+          "profit_abs": 63694.210681069984,
+          "exit_reason": "force_exit",
+          "initial_stop_loss_abs": 0.1416,
+          "initial_stop_loss_ratio": -0.99,
+          "stop_loss_abs": 1.3697,
+          "stop_loss_ratio": -0.99,
+          "min_rate": 12.3043,
+          "max_rate": 259.9,
+          "is_open": false,
+          "enter_tag": "dynrebal:dr_profit_20",
+          "leverage": 1.0,
+          "is_short": false,
+          "open_timestamp": 1616198400000,
+          "close_timestamp": 1640995200000,
+          "orders": [
+            {
+              "amount": 529.705,
+              "safe_price": 14.1588,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1616198400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 7507.487141154
+            },
+            {
+              "amount": 36.528,
+              "safe_price": 18.0645,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1616976000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 660.5199160559999
+            },
+            {
+              "amount": 1.717,
+              "safe_price": 18.9504,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1617062400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 32.5703746368
+            },
+            {
+              "amount": 0.995,
+              "safe_price": 19.0645,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1617148800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 18.988146677499994
+            },
+            {
+              "amount": 2.422,
+              "safe_price": 19.3818,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1617235200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 46.989662319599994
+            },
+            {
+              "amount": 2.835,
+              "safe_price": 19.0443,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1617321600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 54.04458109049999
+            },
+            {
+              "amount": 6.15,
+              "safe_price": 19.7513,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1617408000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 121.591965495
+            },
+            {
+              "amount": 20.944,
+              "safe_price": 22.4672,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1617494400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 471.0235898367999
+            },
+            {
+              "amount": 0.827,
+              "safe_price": 23.7755,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1617580800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 19.6820008385
+            },
+            {
+              "amount": 4.011,
+              "safe_price": 22.9876,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1617667200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 92.29546686359998
+            },
+            {
+              "amount": 17.066,
+              "safe_price": 25.0548,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1617753600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 428.0128020167999
+            },
+            {
+              "amount": 0.547,
+              "safe_price": 26.537,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1617840000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 14.530254738999998
+            },
+            {
+              "amount": 3.095,
+              "safe_price": 26.9261,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1617926400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 83.4196157795
+            },
+            {
+              "amount": 2.758,
+              "safe_price": 27.6194,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1618012800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 76.25047950519999
+            },
+            {
+              "amount": 4.806,
+              "safe_price": 26.7993,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618099200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 128.92623323579997
+            },
+            {
+              "amount": 8.343,
+              "safe_price": 27.8598,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1618185600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 232.66674571139995
+            },
+            {
+              "amount": 1.307,
+              "safe_price": 28.5266,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618272000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 37.321550466199994
+            },
+            {
+              "amount": 4.358,
+              "safe_price": 27.4571,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618358400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 119.77769984179997
+            },
+            {
+              "amount": 4.442,
+              "safe_price": 26.4182,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618444800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 117.4669940444
+            },
+            {
+              "amount": 10.663,
+              "safe_price": 27.7946,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1618531200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 296.67019361979993
+            },
+            {
+              "amount": 16.516,
+              "safe_price": 25.2926,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618617600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 418.1503141815999
+            },
+            {
+              "amount": 2.05,
+              "safe_price": 24.8517,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618704000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 50.99693098499999
+            },
+            {
+              "amount": 57.32,
+              "safe_price": 32.3324,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1618790400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1855.1464611679996
+            },
+            {
+              "amount": 33.77,
+              "safe_price": 31.5303,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1618876800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1065.843009231
+            },
+            {
+              "amount": 1.098,
+              "safe_price": 31.6939,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1618963200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 34.834702102200005
+            },
+            {
+              "amount": 5.026,
+              "safe_price": 32.5965,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619049600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 163.99383900899997
+            },
+            {
+              "amount": 36.611,
+              "safe_price": 38.8718,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619136000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1424.5586052698
+            },
+            {
+              "amount": 26.201,
+              "safe_price": 37.3018,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1619222400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 978.3218062617999
+            },
+            {
+              "amount": 21.276,
+              "safe_price": 40.8525,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619308800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 870.0469677899998
+            },
+            {
+              "amount": 9.439,
+              "safe_price": 47.395,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619395200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 447.808766405
+            },
+            {
+              "amount": 14.246,
+              "safe_price": 43.884,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1619481600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 625.7966354639999
+            },
+            {
+              "amount": 1.74,
+              "safe_price": 43.147,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1619568000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 75.15085577999999
+            },
+            {
+              "amount": 9.208,
+              "safe_price": 44.831,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619654400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 413.21665184799997
+            },
+            {
+              "amount": 11.26,
+              "safe_price": 42.452,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1619740800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 478.4875295199999
+            },
+            {
+              "amount": 1.772,
+              "safe_price": 42.786,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619827200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 75.892608792
+            },
+            {
+              "amount": 34.145,
+              "safe_price": 49.646,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619913600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1696.8578326699999
+            },
+            {
+              "amount": 27.439,
+              "safe_price": 46.926,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620000000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1288.890116514
+            },
+            {
+              "amount": 2.173,
+              "safe_price": 45.935,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620086400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 99.91657175499999
+            },
+            {
+              "amount": 7.837,
+              "safe_price": 42.636,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620172800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 334.47247033199994
+            },
+            {
+              "amount": 11.041,
+              "safe_price": 44.965,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1620259200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 496.95502356500003
+            },
+            {
+              "amount": 9.266,
+              "safe_price": 43.496,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620345600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 403.43696993599997
+            },
+            {
+              "amount": 0.815,
+              "safe_price": 43.154,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620432000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 35.20568050999999
+            },
+            {
+              "amount": 11.441,
+              "safe_price": 45.632,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1620518400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 522.5977877119999
+            },
+            {
+              "amount": 8.948,
+              "safe_price": 44.33,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620604800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 397.06150484
+            },
+            {
+              "amount": 3.491,
+              "safe_price": 42.868,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620691200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 149.801840188
+            },
+            {
+              "amount": 7.694,
+              "safe_price": 44.579,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1620777600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 343.333816826
+            },
+            {
+              "amount": 6.591,
+              "safe_price": 43.394,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620864000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 286.295863854
+            },
+            {
+              "amount": 5.877,
+              "safe_price": 41.051,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620950400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 241.497983727
+            },
+            {
+              "amount": 7.303,
+              "safe_price": 42.697,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1621036800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 312.128007191
+            },
+            {
+              "amount": 1.405,
+              "safe_price": 43.462,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1621123200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 61.12517411
+            },
+            {
+              "amount": 14.779,
+              "safe_price": 46.85,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1621209600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 693.08854615
+            },
+            {
+              "amount": 7.551,
+              "safe_price": 46.747,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1621296000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 353.339583597
+            },
+            {
+              "amount": 38.813,
+              "safe_price": 55.969,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1621382400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2174.497121797
+            },
+            {
+              "amount": 90.204,
+              "safe_price": 34.987,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1621468800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 3159.123315348
+            },
+            {
+              "amount": 40.813,
+              "safe_price": 44.367,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1621555200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1812.561121371
+            },
+            {
+              "amount": 33.504,
+              "safe_price": 38.925,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1621641600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1305.4473431999995
+            },
+            {
+              "amount": 11.076,
+              "safe_price": 35.427,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1622073600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 392.781841452
+            },
+            {
+              "amount": 5.672,
+              "safe_price": 33.761,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1622160000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 191.68388439199998
+            },
+            {
+              "amount": 0.987,
+              "safe_price": 33.994,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1622678400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 33.585630078
+            },
+            {
+              "amount": 23.495,
+              "safe_price": 39.599,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1622764800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 931.3088835049998
+            },
+            {
+              "amount": 14.242,
+              "safe_price": 37.356,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1622851200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 532.556176152
+            },
+            {
+              "amount": 9.463,
+              "safe_price": 39.663,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1622937600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 375.7062999689999
+            },
+            {
+              "amount": 6.141,
+              "safe_price": 42.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1623024000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 259.4093502
+            },
+            {
+              "amount": 13.823,
+              "safe_price": 38.2,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1623110400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 528.5666386
+            },
+            {
+              "amount": 12.301,
+              "safe_price": 41.245,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1623196800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 507.8620997449999
+            },
+            {
+              "amount": 1.779,
+              "safe_price": 42.032,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1623283200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 74.84970292799999
+            },
+            {
+              "amount": 2.535,
+              "safe_price": 41.091,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1623369600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 104.269850685
+            },
+            {
+              "amount": 15.288,
+              "safe_price": 36.131,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1623456000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 552.9230987279999
+            },
+            {
+              "amount": 1.461,
+              "safe_price": 36.492,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1623542400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 53.36812681199999
+            },
+            {
+              "amount": 8.553,
+              "safe_price": 38.713,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1623628800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 331.443401289
+            },
+            {
+              "amount": 0.839,
+              "safe_price": 39.7,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1623715200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 33.3416083
+            },
+            {
+              "amount": 0.77,
+              "safe_price": 39.513,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1623801600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 30.45543501
+            },
+            {
+              "amount": 0.858,
+              "safe_price": 39.73,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1623888000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 34.12242833999999
+            },
+            {
+              "amount": 1.593,
+              "safe_price": 39.259,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1623974400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 62.602126586999994
+            },
+            {
+              "amount": 7.534,
+              "safe_price": 36.802,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1624060800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 277.5435342679999
+            },
+            {
+              "amount": 5.238,
+              "safe_price": 35.195,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1624147200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 184.53576141
+            },
+            {
+              "amount": 0.213,
+              "safe_price": 35.248,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1624233600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7.515331823999999
+            },
+            {
+              "amount": 1.01,
+              "safe_price": 35.51,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1625097600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 35.90096509999999
+            },
+            {
+              "amount": 4.425,
+              "safe_price": 36.667,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1625702400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 162.41372647499998
+            },
+            {
+              "amount": 0.716,
+              "safe_price": 36.742,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1627776000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 26.333579271999994
+            },
+            {
+              "amount": 3.163,
+              "safe_price": 35.757,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1628121600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 113.21249039099997
+            },
+            {
+              "amount": 6.414,
+              "safe_price": 37.354,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1628208000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 239.82814455599996
+            },
+            {
+              "amount": 6.608,
+              "safe_price": 39.502,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1628294400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 261.290245216
+            },
+            {
+              "amount": 1.924,
+              "safe_price": 39.454,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1628380800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 75.985405496
+            },
+            {
+              "amount": 5.396,
+              "safe_price": 37.653,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1628467200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 203.37876358799994
+            },
+            {
+              "amount": 3.918,
+              "safe_price": 38.646,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1628553600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 151.56644302799998
+            },
+            {
+              "amount": 6.489,
+              "safe_price": 40.639,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1628640000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 263.970177471
+            },
+            {
+              "amount": 1.164,
+              "safe_price": 41.619,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1628726400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 48.49296051599999
+            },
+            {
+              "amount": 1.748,
+              "safe_price": 41.105,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1628812800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 71.92339154
+            },
+            {
+              "amount": 14.472,
+              "safe_price": 44.859,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1628899200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 649.8486474479998
+            },
+            {
+              "amount": 6.991,
+              "safe_price": 44.124,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1628985600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 308.779354884
+            },
+            {
+              "amount": 35.305,
+              "safe_price": 53.515,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1629072000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1891.2364220749996
+            },
+            {
+              "amount": 7.432,
+              "safe_price": 64.135,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1629244800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 477.12797132000003
+            },
+            {
+              "amount": 20.065,
+              "safe_price": 72.659,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1629331200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1459.3607378350002
+            },
+            {
+              "amount": 11.769,
+              "safe_price": 72.8,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1629417600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 857.6399831999998
+            },
+            {
+              "amount": 18.704,
+              "safe_price": 78.684,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1629504000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1473.1772415359999
+            },
+            {
+              "amount": 18.219,
+              "safe_price": 73.852,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1629590400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1346.855097588
+            },
+            {
+              "amount": 1.467,
+              "safe_price": 72.751,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1629676800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 106.832442717
+            },
+            {
+              "amount": 8.612,
+              "safe_price": 75.647,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1629763200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 652.123435964
+            },
+            {
+              "amount": 12.152,
+              "safe_price": 70.519,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1629849600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 857.803834888
+            },
+            {
+              "amount": 4.237,
+              "safe_price": 71.982,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1629936000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 305.29272173399994
+            },
+            {
+              "amount": 3.671,
+              "safe_price": 74.92,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630022400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 275.30635132
+            },
+            {
+              "amount": 32.649,
+              "safe_price": 87.98,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630108800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2875.3314790199997
+            },
+            {
+              "amount": 10.83,
+              "safe_price": 96.17,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1630195200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1042.5626211
+            },
+            {
+              "amount": 1.869,
+              "safe_price": 94.23,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1630281600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 176.29198587
+            },
+            {
+              "amount": 40.574,
+              "safe_price": 110.26,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630368000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 4478.162929239999
+            },
+            {
+              "amount": 29.259,
+              "safe_price": 108.27,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1630454400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 3171.0398019299996
+            },
+            {
+              "amount": 5.132,
+              "safe_price": 110.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630540800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 568.7318837199998
+            },
+            {
+              "amount": 27.893,
+              "safe_price": 128.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630627200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3579.4584825999996
+            },
+            {
+              "amount": 6.452,
+              "safe_price": 146.36,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1630713600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 945.2590347199999
+            },
+            {
+              "amount": 4.404,
+              "safe_price": 138.88,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1630800000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 612.23914752
+            },
+            {
+              "amount": 5.664,
+              "safe_price": 141.98,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630886400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 804.9788947199997
+            },
+            {
+              "amount": 27.85,
+              "safe_price": 164.19,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1630972800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 4577.2641914999995
+            },
+            {
+              "amount": 15.059,
+              "safe_price": 173.49,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631059200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 2615.1984959099996
+            },
+            {
+              "amount": 26.636,
+              "safe_price": 191.02,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1631145600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 5093.096728719999
+            },
+            {
+              "amount": 20.945,
+              "safe_price": 187.89,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631232000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 3939.2914060499993
+            },
+            {
+              "amount": 3.547,
+              "safe_price": 179.6,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631318400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 637.6782411999999
+            },
+            {
+              "amount": 0.238,
+              "safe_price": 179.05,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631404800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 42.65651389999999
+            },
+            {
+              "amount": 2.116,
+              "safe_price": 174.31,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631491200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 369.20879995999996
+            },
+            {
+              "amount": 2.203,
+              "safe_price": 169.54,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631577600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 373.8701166199999
+            },
+            {
+              "amount": 5.377,
+              "safe_price": 158.72,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631664000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 854.2908774399998
+            },
+            {
+              "amount": 3.381,
+              "safe_price": 152.3,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631836800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 515.4412262999999
+            },
+            {
+              "amount": 2.587,
+              "safe_price": 147.59,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631923200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 382.19714532999996
+            },
+            {
+              "amount": 26.421,
+              "safe_price": 169.22,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1632009600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 4475.43258162
+            },
+            {
+              "amount": 25.747,
+              "safe_price": 152.78,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632096000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 3937.5602866599993
+            },
+            {
+              "amount": 12.289,
+              "safe_price": 132.77,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632182400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1633.24214053
+            },
+            {
+              "amount": 5.765,
+              "safe_price": 124.3,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632268800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 717.3060894999999
+            },
+            {
+              "amount": 26.636,
+              "safe_price": 148.02,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1632355200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3946.6033807199997
+            },
+            {
+              "amount": 11.66,
+              "safe_price": 149.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632441600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1749.5818339999998
+            },
+            {
+              "amount": 6.384,
+              "safe_price": 139.11,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632528000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 888.9663182400001
+            },
+            {
+              "amount": 1.887,
+              "safe_price": 136.05,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632614400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 256.98307635
+            },
+            {
+              "amount": 0.218,
+              "safe_price": 135.7,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632700800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 29.612182599999993
+            },
+            {
+              "amount": 0.669,
+              "safe_price": 136.34,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1632787200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 91.30267146
+            },
+            {
+              "amount": 2.906,
+              "safe_price": 132.22,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1632873600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 384.61555132
+            },
+            {
+              "amount": 3.162,
+              "safe_price": 135.24,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1632960000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 428.05650887999997
+            },
+            {
+              "amount": 4.27,
+              "safe_price": 141.38,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1633046400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 604.2962925999999
+            },
+            {
+              "amount": 17.573,
+              "safe_price": 161.62,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1633132800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2842.9884082599997
+            },
+            {
+              "amount": 4.909,
+              "safe_price": 169.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633219200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 830.4506209999998
+            },
+            {
+              "amount": 3.865,
+              "safe_price": 172.99,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1633305600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 669.2749563499999
+            },
+            {
+              "amount": 4.857,
+              "safe_price": 167.13,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633392000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 812.5621604099999
+            },
+            {
+              "amount": 1.214,
+              "safe_price": 164.64,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633478400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 200.07283295999994
+            },
+            {
+              "amount": 5.618,
+              "safe_price": 153.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633564800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 865.4748102
+            },
+            {
+              "amount": 0.344,
+              "safe_price": 154.26,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1633651200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 53.11850543999999
+            },
+            {
+              "amount": 4.156,
+              "safe_price": 158.88,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1633737600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 660.9655852799998
+            },
+            {
+              "amount": 3.017,
+              "safe_price": 156.8,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633824000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 473.53866559999994
+            },
+            {
+              "amount": 5.107,
+              "safe_price": 147.56,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633910400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 754.34250892
+            },
+            {
+              "amount": 1.584,
+              "safe_price": 144.79,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633996800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 229.57670735999997
+            },
+            {
+              "amount": 7.216,
+              "safe_price": 152.35,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1634083200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1100.4569576
+            },
+            {
+              "amount": 5.532,
+              "safe_price": 148.05,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1634169600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 819.8316126
+            },
+            {
+              "amount": 1.839,
+              "safe_price": 150.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1634256000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 276.14425838999995
+            },
+            {
+              "amount": 10.984,
+              "safe_price": 163.15,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1634342400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1793.8316395999998
+            },
+            {
+              "amount": 8.048,
+              "safe_price": 157.54,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1634428800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1269.1498019199998
+            },
+            {
+              "amount": 2.333,
+              "safe_price": 160.11,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1634515200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 373.91016663
+            },
+            {
+              "amount": 2.581,
+              "safe_price": 157.12,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1634601600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 405.93224671999997
+            },
+            {
+              "amount": 0.708,
+              "safe_price": 155.77,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1634688000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 110.39544516
+            },
+            {
+              "amount": 18.932,
+              "safe_price": 176.72,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1634774400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3349.0087030399995
+            },
+            {
+              "amount": 2.98,
+              "safe_price": 190.46,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1634860800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 568.1383708
+            },
+            {
+              "amount": 4.958,
+              "safe_price": 196.29,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1634947200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 974.1790258199999
+            },
+            {
+              "amount": 2.055,
+              "safe_price": 197.75,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1635033600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 406.78262624999996
+            },
+            {
+              "amount": 3.678,
+              "safe_price": 202.15,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1635120000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 744.2512076999999
+            },
+            {
+              "amount": 1.889,
+              "safe_price": 209.73,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1635206400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 396.5761499699999
+            },
+            {
+              "amount": 4.844,
+              "safe_price": 199.87,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1635292800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 969.1384502799999
+            },
+            {
+              "amount": 6.433,
+              "safe_price": 184.45,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1635379200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1187.75341685
+            },
+            {
+              "amount": 8.955,
+              "safe_price": 195.37,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1635465600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1751.2878883499998
+            },
+            {
+              "amount": 2.54,
+              "safe_price": 200.36,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1635552000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 509.4233144
+            },
+            {
+              "amount": 1.837,
+              "safe_price": 195.69,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1635638400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 359.84201253
+            },
+            {
+              "amount": 5.446,
+              "safe_price": 202.53,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1635724800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1104.08135838
+            },
+            {
+              "amount": 2.291,
+              "safe_price": 203.91,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1635811200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 467.62496780999993
+            },
+            {
+              "amount": 13.209,
+              "safe_price": 220.81,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1635897600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2919.5959692899996
+            },
+            {
+              "amount": 0.362,
+              "safe_price": 243.37,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1635984000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 88.18803994
+            },
+            {
+              "amount": 2.221,
+              "safe_price": 247.06,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1636070400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 549.26898026
+            },
+            {
+              "amount": 4.792,
+              "safe_price": 236.04,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636156800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1132.2347836799997
+            },
+            {
+              "amount": 16.481,
+              "safe_price": 258.41,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1636243200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 4263.11406521
+            },
+            {
+              "amount": 12.88,
+              "safe_price": 249.62,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636329600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 3218.3207056
+            },
+            {
+              "amount": 0.396,
+              "safe_price": 248.27,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636416000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 98.41323492000001
+            },
+            {
+              "amount": 2.816,
+              "safe_price": 239.06,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636502400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 673.8661529599999
+            },
+            {
+              "amount": 1.899,
+              "safe_price": 233.06,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636588800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 443.02352093999997
+            },
+            {
+              "amount": 0.188,
+              "safe_price": 233.34,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1636675200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 43.911787919999995
+            },
+            {
+              "amount": 1.686,
+              "safe_price": 228.46,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636761600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 385.56874356
+            },
+            {
+              "amount": 8.918,
+              "safe_price": 241.58,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1636848000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2156.5648504399996
+            },
+            {
+              "amount": 5.81,
+              "safe_price": 238.63,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1636934400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1387.8267402999998
+            },
+            {
+              "amount": 0.14,
+              "safe_price": 238.18,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637020800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 33.378545200000005
+            },
+            {
+              "amount": 6.438,
+              "safe_price": 219.09,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637107200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1411.91192142
+            },
+            {
+              "amount": 0.066,
+              "safe_price": 218.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637193600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 14.4618474
+            },
+            {
+              "amount": 9.172,
+              "safe_price": 195.19,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637280000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1792.0729626799998
+            },
+            {
+              "amount": 13.334,
+              "safe_price": 215.25,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1637366400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2873.0136435
+            },
+            {
+              "amount": 5.183,
+              "safe_price": 217.64,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637452800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1129.15614812
+            },
+            {
+              "amount": 8.241,
+              "safe_price": 230.56,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1637539200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1901.9450049599998
+            },
+            {
+              "amount": 9.385,
+              "safe_price": 215.58,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637625600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 2025.2415182999998
+            },
+            {
+              "amount": 3.86,
+              "safe_price": 221.76,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1637712000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 856.8495935999998
+            },
+            {
+              "amount": 7.71,
+              "safe_price": 205.76,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637798400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1587.9960095999998
+            },
+            {
+              "amount": 2.599,
+              "safe_price": 209.94,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1637884800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 546.17969406
+            },
+            {
+              "amount": 8.134,
+              "safe_price": 192.37,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1637971200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1566.3023175800001
+            },
+            {
+              "amount": 0.229,
+              "safe_price": 192.74,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1638057600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 44.18159746
+            },
+            {
+              "amount": 4.849,
+              "safe_price": 200.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1638144000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 974.21603279
+            },
+            {
+              "amount": 0.496,
+              "safe_price": 204.1,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638230400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 101.33483359999998
+            },
+            {
+              "amount": 2.714,
+              "safe_price": 208.52,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1638316800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 566.48920328
+            },
+            {
+              "amount": 11.183,
+              "safe_price": 229.81,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1638403200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2572.5351952299993
+            },
+            {
+              "amount": 3.774,
+              "safe_price": 233.59,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638489600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 882.4502286599999
+            },
+            {
+              "amount": 7.746,
+              "safe_price": 211.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638576000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1641.0803408999998
+            },
+            {
+              "amount": 4.191,
+              "safe_price": 200.68,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638662400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 841.8909298799999
+            },
+            {
+              "amount": 1.657,
+              "safe_price": 196.49,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638748800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 325.90951392999995
+            },
+            {
+              "amount": 1.178,
+              "safe_price": 193.57,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638835200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 228.25348545999995
+            },
+            {
+              "amount": 1.373,
+              "safe_price": 190.24,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638921600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 261.46071952
+            },
+            {
+              "amount": 2.625,
+              "safe_price": 194.61,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1639008000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 511.36210124999997
+            },
+            {
+              "amount": 6.753,
+              "safe_price": 181.08,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639094400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1224.05607324
+            },
+            {
+              "amount": 6.526,
+              "safe_price": 167.39,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639180800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1093.4795271399996
+            },
+            {
+              "amount": 2.917,
+              "safe_price": 172.15,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1639267200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 502.6637115499999
+            },
+            {
+              "amount": 0.341,
+              "safe_price": 172.83,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639353600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 58.993965030000005
+            },
+            {
+              "amount": 5.801,
+              "safe_price": 161.25,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639526400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 936.3466612499999
+            },
+            {
+              "amount": 10.653,
+              "safe_price": 178.53,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1639612800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1903.78197009
+            },
+            {
+              "amount": 3.443,
+              "safe_price": 176.89,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639699200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 609.6413022699999
+            },
+            {
+              "amount": 0.646,
+              "safe_price": 175.48,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639785600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 113.47344007999999
+            },
+            {
+              "amount": 4.392,
+              "safe_price": 182.78,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1639872000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 803.57252976
+            },
+            {
+              "amount": 2.459,
+              "safe_price": 179.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1639958400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 442.8164741
+            },
+            {
+              "amount": 2.764,
+              "safe_price": 173.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640044800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 481.1402595999999
+            },
+            {
+              "amount": 3.432,
+              "safe_price": 179.62,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1640131200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 617.0722958399999
+            },
+            {
+              "amount": 1.416,
+              "safe_price": 178.38,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640217600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 252.83866607999997
+            },
+            {
+              "amount": 6.968,
+              "safe_price": 190.08,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1640304000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1325.80191744
+            },
+            {
+              "amount": 1.894,
+              "safe_price": 190.37,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640390400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 360.9213407799999
+            },
+            {
+              "amount": 1.554,
+              "safe_price": 193.03,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1640476800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 300.26858861999995
+            },
+            {
+              "amount": 2.142,
+              "safe_price": 197.85,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1640563200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 424.21849469999995
+            },
+            {
+              "amount": 1.549,
+              "safe_price": 195.68,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640649600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 303.41142831999997
+            },
+            {
+              "amount": 8.146,
+              "safe_price": 177.28,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640736000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 1445.56700288
+            },
+            {
+              "amount": 3.129,
+              "safe_price": 170.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640822400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 534.49781385
+            },
+            {
+              "amount": 1.116,
+              "safe_price": 172.53,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1640908800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 192.73602348
+            },
+            {
+              "amount": 1.433,
+              "safe_price": 170.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1640995200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "dynrebal:dr_profit_20",
+              "cost": 243.86795432999995
+            },
+            {
+              "amount": 325.543,
+              "safe_price": 170.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1640995200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "force_exit",
+              "cost": 55400.910995429986
+            }
+          ],
+          "funding_fees": 0.0,
+          "weekday": 5
+        }
+      ],
+      "locks": [],
+      "best_pair": {
+        "key": "SOL/USDT",
+        "trades": 1,
+        "profit_mean": 0.6876025536165594,
+        "profit_mean_pct": 68.76,
+        "profit_total_abs": 63694.210681069984,
+        "profit_total": 6.369421068106998,
+        "profit_total_pct": 636.94,
+        "duration_avg": "287 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 0,
+        "winrate": 1.0,
+        "cagr": 11.57046437697859,
+        "expectancy": 63694.210681069984,
+        "expectancy_ratio": 100.0,
+        "sortino": -100.0,
+        "sharpe": -100.0,
+        "calmar": -100.0,
+        "sqn": -100.0,
+        "profit_factor": 0.0,
+        "max_drawdown_account": 0.0,
+        "max_drawdown_abs": 0.0
+      },
+      "worst_pair": {
+        "key": "SOL/USDT",
+        "trades": 1,
+        "profit_mean": 0.6876025536165594,
+        "profit_mean_pct": 68.76,
+        "profit_total_abs": 63694.210681069984,
+        "profit_total": 6.369421068106998,
+        "profit_total_pct": 636.94,
+        "duration_avg": "287 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 0,
+        "winrate": 1.0,
+        "cagr": 11.57046437697859,
+        "expectancy": 63694.210681069984,
+        "expectancy_ratio": 100.0,
+        "sortino": -100.0,
+        "sharpe": -100.0,
+        "calmar": -100.0,
+        "sqn": -100.0,
+        "profit_factor": 0.0,
+        "max_drawdown_account": 0.0,
+        "max_drawdown_abs": 0.0
+      },
+      "results_per_pair": [
+        {
+          "key": "SOL/USDT",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "results_per_enter_tag": [
+        {
+          "key": "dynrebal:dr_profit_20",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "exit_reason_summary": [
+        {
+          "key": "force_exit",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "mix_tag_stats": [
+        {
+          "key": [
+            "dynrebal:dr_profit_20",
+            "force_exit"
+          ],
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "left_open_trades": [
+        {
+          "key": "SOL/USDT",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.6876025536165594,
+          "profit_mean_pct": 68.76,
+          "profit_total_abs": 63694.210681069984,
+          "profit_total": 6.369421068106998,
+          "profit_total_pct": 636.94,
+          "duration_avg": "287 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 11.57046437697859,
+          "expectancy": 63694.210681069984,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "total_trades": 1,
+      "trade_count_long": 1,
+      "trade_count_short": 0,
+      "total_volume": 249271.7902180506,
+      "avg_stake_amount": 44588.52839562,
+      "profit_mean": 0.6876025536165594,
+      "profit_median": 0.6876025536165594,
+      "profit_total": 6.369421068106998,
+      "profit_total_long": 6.369421068106998,
+      "profit_total_short": 0.0,
+      "profit_total_abs": 63694.210681069984,
+      "profit_total_long_abs": 63694.210681069984,
+      "profit_total_short_abs": 0.0,
+      "cagr": 11.57046437697859,
+      "expectancy": 63694.210681069984,
+      "expectancy_ratio": 100.0,
+      "sortino": -100.0,
+      "sharpe": -100.0,
+      "calmar": -100.0,
+      "sqn": -100.0,
+      "wallet_stats": {
+        "start_balance": 10000.0,
+        "end_balance": 73794.1447748915,
+        "high_balance": 99613.04943993952,
+        "low_balance": 9375.001070499999,
+        "sharpe": 2.8639753551226654,
+        "sortino": 4.5683531804011555,
+        "calmar": 137.12307046987453,
+        "low_date": "2021-03-26 00:00:00",
+        "low_ts": 1616716800000,
+        "high_date": "2021-11-07 00:00:00",
+        "high_ts": 1636243200000,
+        "max_drawdown_account": 0.30969545063516046,
+        "max_relative_drawdown": 0.43290050493343524,
+        "max_drawdown_abs": 30849.70823544459,
+        "drawdown_start": "2021-11-07 00:00:00",
+        "drawdown_start_ts": 1636243200000,
+        "drawdown_end": "2021-12-14 00:00:00",
+        "drawdown_end_ts": 1639440000000,
+        "drawdown_duration": "37 days 00:00:00",
+        "drawdown_duration_s": 3196800.0,
+        "max_drawdown_low": 58763.34120449494,
+        "max_drawdown_high": 89613.04943993952
+      },
+      "profit_factor": 0.0,
+      "backtest_start": "2021-03-19 00:00:00",
+      "backtest_start_ts": 1616112000000,
+      "backtest_end": "2022-01-01 00:00:00",
+      "backtest_end_ts": 1640995200000,
+      "backtest_days": 288,
+      "backtest_run_start_ts": 1780926345,
+      "backtest_run_end_ts": 1780926347,
+      "trades_per_day": 0.0,
+      "market_change": 11.649768283033795,
+      "pairlist": [
+        "SOL/USDT"
+      ],
+      "stake_amount": "unlimited",
+      "stake_currency": "USDT",
+      "stake_currency_decimals": 3,
+      "starting_balance": 10000.0,
+      "dry_run_wallet": 10000.0,
+      "final_balance": 73694.21068106999,
+      "rejected_signals": 0,
+      "timedout_entry_orders": 0,
+      "timedout_exit_orders": 0,
+      "canceled_trade_entries": 0,
+      "canceled_entry_orders": 0,
+      "replaced_entry_orders": 0,
+      "max_open_trades": 1,
+      "max_open_trades_setting": 1,
+      "timeframe": "1d",
+      "timeframe_detail": "",
+      "timerange": "20210101-20220101",
+      "enable_protections": false,
+      "strategy_name": "BtcDynamicRebalanceStrategy",
+      "freqaimodel": null,
+      "freqai_identifier": null,
+      "stoploss": -0.99,
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false,
+      "use_custom_stoploss": false,
+      "minimal_roi": {
+        "0": 10.0
+      },
+      "use_exit_signal": true,
+      "exit_profit_only": false,
+      "exit_profit_offset": 0.0,
+      "ignore_roi_if_entry_signal": false,
+      "trading_mode": "spot",
+      "margin_mode": "",
+      "periodic_breakdown": {
+        "day": [
+          {
+            "date": "01/01/2022",
+            "date_ts": 1640995200000,
+            "profit_abs": 63694.21068107,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "week": [
+          {
+            "date": "03/01/2022",
+            "date_ts": 1641168000000,
+            "profit_abs": 63694.21068107,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "month": [
+          {
+            "date": "31/01/2022",
+            "date_ts": 1643587200000,
+            "profit_abs": 63694.21068107,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "year": [
+          {
+            "date": "31/12/2022",
+            "date_ts": 1672444800000,
+            "profit_abs": 63694.21068107,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "weekday": [
+          {
+            "date": "Saturday",
+            "date_ts": 5,
+            "profit_abs": 63694.21068107,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ]
+      },
+      "backtest_best_day": 0.6876025536165594,
+      "backtest_worst_day": 0.6876025536165594,
+      "backtest_best_day_abs": 63694.21068107,
+      "backtest_worst_day_abs": 63694.21068107,
+      "winning_days": 1,
+      "draw_days": 0,
+      "losing_days": 0,
+      "daily_profit": [
+        [
+          "2022-01-01",
+          63694.21068107
+        ]
+      ],
+      "wins": 1,
+      "losses": 0,
+      "draws": 0,
+      "winrate": 1.0,
+      "holding_avg": "287 days, 0:00:00",
+      "holding_avg_s": 24796800.0,
+      "winner_holding_min": "287d 00:00",
+      "winner_holding_min_s": 24796800.0,
+      "winner_holding_max": "287d 00:00",
+      "winner_holding_max_s": 24796800.0,
+      "winner_holding_avg": "287d 00:00",
+      "winner_holding_avg_s": 24796800.0,
+      "loser_holding_min": "0d 00:00",
+      "loser_holding_min_s": 0.0,
+      "loser_holding_max": "0d 00:00",
+      "loser_holding_max_s": 0.0,
+      "loser_holding_avg": "0d 00:00",
+      "loser_holding_avg_s": 0.0,
+      "max_consecutive_wins": 1,
+      "max_consecutive_losses": 0,
+      "max_drawdown_account": 0.0,
+      "max_relative_drawdown": 0.0,
+      "max_drawdown_abs": 0.0,
+      "drawdown_start": "2022-01-01 00:00:00",
+      "drawdown_start_ts": 1640995200000.0,
+      "drawdown_end": "2022-01-01 00:00:00",
+      "drawdown_end_ts": 1640995200000.0,
+      "drawdown_duration": "0 days 00:00:00",
+      "drawdown_duration_s": 0.0,
+      "max_drawdown_low": 0.0,
+      "max_drawdown_high": 0.0,
+      "csum_min": 73694.21068106999,
+      "csum_max": 73694.21068106999
+    }
+  },
+  "strategy_comparison": [
+    {
+      "key": "BtcDynamicRebalanceStrategy",
+      "trades": 1,
+      "profit_mean": 0.6876025536165594,
+      "profit_mean_pct": 68.76,
+      "profit_total_abs": 63694.210681069984,
+      "profit_total": 6.369421068106998,
+      "profit_total_pct": 636.94,
+      "duration_avg": "287 days, 0:00:00",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "winrate": 1.0,
+      "cagr": 11.57046437697859,
+      "expectancy": 63694.210681069984,
+      "expectancy_ratio": 100.0,
+      "sortino": -100.0,
+      "sharpe": -100.0,
+      "calmar": -100.0,
+      "sqn": -100.0,
+      "profit_factor": 0.0,
+      "max_drawdown_account": 0.0,
+      "max_drawdown_abs": "0"
+    }
+  ]
+}

@@ -1,0 +1,3431 @@
+{
+  "strategy": {
+    "BtcRebalanceStrategy": {
+      "trades": [
+        {
+          "pair": "BTC/USDT",
+          "stake_amount": 8850.30739418,
+          "max_stake_amount": 19424.650267,
+          "amount": 0.363,
+          "open_date": "2023-01-02 00:00:00+00:00",
+          "close_date": "2024-01-01 00:00:00+00:00",
+          "open_rate": 24381.01,
+          "close_rate": 42283.58,
+          "fee_open": 0.001,
+          "fee_close": 0.001,
+          "trade_duration": 524160,
+          "profit_ratio": 0.5374032875938295,
+          "profit_abs": 10449.30978476,
+          "exit_reason": "force_exit",
+          "initial_stop_loss_abs": 166.18,
+          "initial_stop_loss_ratio": -0.99,
+          "stop_loss_abs": 243.82,
+          "stop_loss_ratio": -0.99,
+          "min_rate": 16548.7,
+          "max_rate": 44700.0,
+          "is_open": false,
+          "enter_tag": "rebalance:r5_75_btc",
+          "leverage": 1.0,
+          "is_short": false,
+          "open_timestamp": 1672617600000,
+          "close_timestamp": 1704067200000,
+          "orders": [
+            {
+              "amount": 0.60178,
+              "safe_price": 16617.17,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1672617600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 10009.880443162598
+            },
+            {
+              "amount": 0.15043,
+              "safe_price": 16617.17,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1672617600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2502.2206039830994
+            },
+            {
+              "amount": 0.00061,
+              "safe_price": 16672.78,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1672704000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10.180566195799999
+            },
+            {
+              "amount": 0.0012,
+              "safe_price": 16850.36,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1672876800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 20.240652431999997
+            },
+            {
+              "amount": 0.00066,
+              "safe_price": 16950.31,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673049600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11.1983918046
+            },
+            {
+              "amount": 0.00119,
+              "safe_price": 17127.83,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673222400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 20.4024998177
+            },
+            {
+              "amount": 0.00207,
+              "safe_price": 17440.64,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673395200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 36.138226924799994
+            },
+            {
+              "amount": 0.00327,
+              "safe_price": 17943.26,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673481600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 58.73313466019999
+            },
+            {
+              "amount": 0.00576,
+              "safe_price": 18846.62,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673568000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 108.66508773119999
+            },
+            {
+              "amount": 0.00635,
+              "safe_price": 19930.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673654400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 126.68211906349998
+            },
+            {
+              "amount": 0.00536,
+              "safe_price": 20952.76,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673740800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 112.41910039359998
+            },
+            {
+              "amount": 0.0015,
+              "safe_price": 20872.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1673827200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 31.340794485
+            },
+            {
+              "amount": 0.00199,
+              "safe_price": 21185.65,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1673913600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 42.2016029435
+            },
+            {
+              "amount": 0.00068,
+              "safe_price": 21132.29,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674000000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 14.3843271572
+            },
+            {
+              "amount": 0.00234,
+              "safe_price": 20677.47,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674086400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 48.4336650798
+            },
+            {
+              "amount": 0.00252,
+              "safe_price": 21071.59,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1674172800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 53.15350720679999
+            },
+            {
+              "amount": 0.0095,
+              "safe_price": 22666.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1674259200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 215.54232699999997
+            },
+            {
+              "amount": 0.00195,
+              "safe_price": 22783.35,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674345600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 44.47196003249999
+            },
+            {
+              "amount": 0.00035,
+              "safe_price": 22706.02,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674432000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.955054106999999
+            },
+            {
+              "amount": 0.00131,
+              "safe_price": 22917.81,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1674518400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 30.0523534311
+            },
+            {
+              "amount": 0.00167,
+              "safe_price": 22631.94,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674604800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 37.8331351398
+            },
+            {
+              "amount": 0.00267,
+              "safe_price": 23060.42,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1674691200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 61.63289272139999
+            },
+            {
+              "amount": 0.00095,
+              "safe_price": 23009.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674777600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 21.8810266675
+            },
+            {
+              "amount": 0.00039,
+              "safe_price": 23074.16,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1674864000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 9.007921322399998
+            },
+            {
+              "amount": 0.00034,
+              "safe_price": 23021.4,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1674950400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.835103276000001
+            },
+            {
+              "amount": 0.00448,
+              "safe_price": 23743.37,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1675036800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 106.47666789759998
+            },
+            {
+              "amount": 0.00549,
+              "safe_price": 22827.38,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675123200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 125.44763851619999
+            },
+            {
+              "amount": 0.00183,
+              "safe_price": 23125.13,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1675209600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 42.3613068879
+            },
+            {
+              "amount": 0.00306,
+              "safe_price": 23731.41,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1675296000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 72.69073271459999
+            },
+            {
+              "amount": 0.00195,
+              "safe_price": 23489.33,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675382400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 45.8499976935
+            },
+            {
+              "amount": 0.00025,
+              "safe_price": 23431.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675468800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 5.863832975
+            },
+            {
+              "amount": 0.00047,
+              "safe_price": 23327.66,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675555200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 10.974964200199999
+            },
+            {
+              "amount": 0.00178,
+              "safe_price": 22932.91,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675641600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 40.861400379799996
+            },
+            {
+              "amount": 0.00078,
+              "safe_price": 22762.52,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675728000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 17.7725203656
+            },
+            {
+              "amount": 0.00295,
+              "safe_price": 23242.42,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1675814400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 68.63370413899997
+            },
+            {
+              "amount": 0.00207,
+              "safe_price": 22961.85,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675900800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 47.57856052949999
+            },
+            {
+              "amount": 0.00556,
+              "safe_price": 21797.83,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1675987200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 121.31713073479999
+            },
+            {
+              "amount": 0.00085,
+              "safe_price": 21625.19,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1676073600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 18.399792911499997
+            },
+            {
+              "amount": 0.00147,
+              "safe_price": 21862.02,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1676160000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 32.16930656939999
+            },
+            {
+              "amount": 0.0007,
+              "safe_price": 21782.37,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1676246400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 15.262906658999997
+            },
+            {
+              "amount": 0.00257,
+              "safe_price": 22199.84,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1676419200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 57.11064238879999
+            },
+            {
+              "amount": 0.01232,
+              "safe_price": 24322.87,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1676505600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 299.95741615839995
+            },
+            {
+              "amount": 0.00729,
+              "safe_price": 23517.72,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1676592000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 171.6156229788
+            },
+            {
+              "amount": 0.00635,
+              "safe_price": 24568.24,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1676678400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 156.164332324
+            },
+            {
+              "amount": 0.00164,
+              "safe_price": 24632.05,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1676764800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 40.436958561999994
+            },
+            {
+              "amount": 0.00152,
+              "safe_price": 24272.51,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1676851200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 36.93110941519999
+            },
+            {
+              "amount": 0.00341,
+              "safe_price": 24843.89,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1676937600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 84.80238256489999
+            },
+            {
+              "amount": 0.00269,
+              "safe_price": 24450.67,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677024000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 65.83807460229998
+            },
+            {
+              "amount": 0.00115,
+              "safe_price": 24182.21,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677110400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 27.837351041499996
+            },
+            {
+              "amount": 0.00104,
+              "safe_price": 23940.2,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677196800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 24.922705807999996
+            },
+            {
+              "amount": 0.00336,
+              "safe_price": 23184.04,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677283200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 77.9762727744
+            },
+            {
+              "amount": 0.00221,
+              "safe_price": 23554.85,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1677456000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 52.10827471849999
+            },
+            {
+              "amount": 0.00085,
+              "safe_price": 23492.09,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677542400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 19.988244776499997
+            },
+            {
+              "amount": 0.00157,
+              "safe_price": 23141.57,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677628800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 36.368597164899995
+            },
+            {
+              "amount": 0.00292,
+              "safe_price": 23629.76,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1677715200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 69.0678980992
+            },
+            {
+              "amount": 0.0015,
+              "safe_price": 23465.32,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677801600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 35.23317798
+            },
+            {
+              "amount": 0.00516,
+              "safe_price": 22354.34,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1677888000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 115.46374279439998
+            },
+            {
+              "amount": 0.00045,
+              "safe_price": 22430.24,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1678060800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10.103701607999998
+            },
+            {
+              "amount": 0.00119,
+              "safe_price": 22198.56,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678233600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 26.4427026864
+            },
+            {
+              "amount": 0.00239,
+              "safe_price": 21704.37,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678320000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 51.925317744299996
+            },
+            {
+              "amount": 0.00698,
+              "safe_price": 20362.21,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678406400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 142.27035402579997
+            },
+            {
+              "amount": 0.00113,
+              "safe_price": 20150.69,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678492800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 22.793049979699994
+            },
+            {
+              "amount": 0.00186,
+              "safe_price": 20455.73,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1678579200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 38.085705457799996
+            },
+            {
+              "amount": 0.00915,
+              "safe_price": 21998.05,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1678665600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 201.48343965749996
+            },
+            {
+              "amount": 0.01037,
+              "safe_price": 24112.27,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1678752000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 250.29428413990001
+            },
+            {
+              "amount": 0.00043,
+              "safe_price": 24670.41,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678838400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 10.6188845763
+            },
+            {
+              "amount": 0.00163,
+              "safe_price": 24285.66,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678924800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 39.62521142579999
+            },
+            {
+              "amount": 0.00418,
+              "safe_price": 24998.78,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1679011200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 104.59939530039998
+            },
+            {
+              "amount": 0.01216,
+              "safe_price": 27395.13,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1679097600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 333.4579055808
+            },
+            {
+              "amount": 0.00621,
+              "safe_price": 26907.49,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1679184000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 167.2626084129
+            },
+            {
+              "amount": 0.00603,
+              "safe_price": 27972.87,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1679270400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 168.84508250609997
+            },
+            {
+              "amount": 0.00313,
+              "safe_price": 27717.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1679356800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 86.84099554129998
+            },
+            {
+              "amount": 0.00218,
+              "safe_price": 28107.81,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1679443200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 61.336300825799995
+            },
+            {
+              "amount": 0.00394,
+              "safe_price": 27250.97,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1679529600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 107.4761906218
+            },
+            {
+              "amount": 0.00585,
+              "safe_price": 28295.42,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1679616000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 165.69373520699997
+            },
+            {
+              "amount": 0.00523,
+              "safe_price": 27454.46,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1679702400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 143.7304126258
+            },
+            {
+              "amount": 0.00284,
+              "safe_price": 27968.05,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1679875200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 79.50869126199999
+            },
+            {
+              "amount": 0.00412,
+              "safe_price": 27124.9,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1679961600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 111.866342588
+            },
+            {
+              "amount": 0.00074,
+              "safe_price": 27261.06,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1680048000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 20.193357584399998
+            },
+            {
+              "amount": 0.00565,
+              "safe_price": 28348.6,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1680134400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 160.32975958999995
+            },
+            {
+              "amount": 0.00318,
+              "safe_price": 28028.53,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680220800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 89.2198561254
+            },
+            {
+              "amount": 0.00238,
+              "safe_price": 28465.36,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1680307200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 67.8153043568
+            },
+            {
+              "amount": 0.00089,
+              "safe_price": 28452.74,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680393600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 25.3482615386
+            },
+            {
+              "amount": 0.00099,
+              "safe_price": 28171.87,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680480000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 27.918041451299995
+            },
+            {
+              "amount": 0.00133,
+              "safe_price": 27800.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680566400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 37.010974
+            },
+            {
+              "amount": 0.00198,
+              "safe_price": 28165.47,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1680652800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 55.8233982306
+            },
+            {
+              "amount": 0.00067,
+              "safe_price": 28170.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680739200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 18.892780606699997
+            },
+            {
+              "amount": 0.00048,
+              "safe_price": 28033.83,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680825600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 13.4696946384
+            },
+            {
+              "amount": 0.00046,
+              "safe_price": 27906.34,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1680912000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 12.849753316399998
+            },
+            {
+              "amount": 0.00227,
+              "safe_price": 28323.76,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1681084800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 64.3592301352
+            },
+            {
+              "amount": 0.00588,
+              "safe_price": 29637.35,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1681171200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 174.441885618
+            },
+            {
+              "amount": 0.00037,
+              "safe_price": 30200.43,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1681257600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 11.1853332591
+            },
+            {
+              "amount": 0.00102,
+              "safe_price": 29888.07,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1681344000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 30.5163172314
+            },
+            {
+              "amount": 0.00258,
+              "safe_price": 30373.84,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1681430400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 78.44287170719998
+            },
+            {
+              "amount": 0.00071,
+              "safe_price": 30466.93,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1681516800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 21.6531518203
+            },
+            {
+              "amount": 0.00056,
+              "safe_price": 30295.1,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1681603200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 16.982221255999995
+            },
+            {
+              "amount": 0.00287,
+              "safe_price": 29430.27,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1681776000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 84.5493397749
+            },
+            {
+              "amount": 0.00506,
+              "safe_price": 30380.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1681862400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 153.87657345059998
+            },
+            {
+              "amount": 0.00742,
+              "safe_price": 28797.1,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1681948800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 213.888156482
+            },
+            {
+              "amount": 0.00194,
+              "safe_price": 28243.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682035200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 54.847473681000004
+            },
+            {
+              "amount": 0.00358,
+              "safe_price": 27262.84,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682121600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 97.6985681672
+            },
+            {
+              "amount": 0.00294,
+              "safe_price": 27816.85,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1682208000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 81.86332053899999
+            },
+            {
+              "amount": 0.00177,
+              "safe_price": 27590.59,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682294400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 48.8841796443
+            },
+            {
+              "amount": 0.00029,
+              "safe_price": 27510.93,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682380800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.9861478697
+            },
+            {
+              "amount": 0.0042,
+              "safe_price": 28300.8,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1682467200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 118.98222335999998
+            },
+            {
+              "amount": 0.00099,
+              "safe_price": 28415.29,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682553600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 28.159268237099997
+            },
+            {
+              "amount": 0.00557,
+              "safe_price": 29472.77,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1682640000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 164.32749222889998
+            },
+            {
+              "amount": 0.00255,
+              "safe_price": 29311.69,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682726400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 74.81955430949999
+            },
+            {
+              "amount": 0.00027,
+              "safe_price": 29230.45,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682812800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.9001137214999995
+            },
+            {
+              "amount": 0.00409,
+              "safe_price": 28068.26,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682985600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 114.91398258339997
+            },
+            {
+              "amount": 0.00315,
+              "safe_price": 28669.85,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1683072000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 90.40033752749999
+            },
+            {
+              "amount": 0.00047,
+              "safe_price": 28838.16,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683244800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 13.567489135199999
+            },
+            {
+              "amount": 0.00347,
+              "safe_price": 29505.6,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1683331200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 102.48681643199998
+            },
+            {
+              "amount": 0.00349,
+              "safe_price": 28848.19,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683417600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 100.78086328309998
+            },
+            {
+              "amount": 0.00145,
+              "safe_price": 28430.09,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683504000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 41.26485413049999
+            },
+            {
+              "amount": 0.00274,
+              "safe_price": 27668.8,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683590400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 75.88832451199998
+            },
+            {
+              "amount": 0.00025,
+              "safe_price": 27598.74,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683763200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.906584685
+            },
+            {
+              "amount": 0.00234,
+              "safe_price": 26968.61,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683849600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 63.16965394739999
+            },
+            {
+              "amount": 0.00066,
+              "safe_price": 26795.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1683936000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 17.702391306599996
+            },
+            {
+              "amount": 0.00063,
+              "safe_price": 26917.61,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684108800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 16.9750523943
+            },
+            {
+              "amount": 0.00103,
+              "safe_price": 27162.15,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684195200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 28.0049915145
+            },
+            {
+              "amount": 0.00077,
+              "safe_price": 27033.85,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1684281600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 20.836880564499996
+            },
+            {
+              "amount": 0.00194,
+              "safe_price": 27405.62,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684368000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 53.2200697028
+            },
+            {
+              "amount": 0.00276,
+              "safe_price": 26821.28,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1684454400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 74.10075953279998
+            },
+            {
+              "amount": 0.00145,
+              "safe_price": 27102.42,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684627200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 39.337807508999994
+            },
+            {
+              "amount": 0.00174,
+              "safe_price": 26747.78,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1684713600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 46.587678337199996
+            },
+            {
+              "amount": 0.00051,
+              "safe_price": 26849.28,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684800000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13.7068259328
+            },
+            {
+              "amount": 0.00174,
+              "safe_price": 27219.61,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684886400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 47.40948352139999
+            },
+            {
+              "amount": 0.00391,
+              "safe_price": 26329.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1684972800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 103.04933639
+            },
+            {
+              "amount": 0.00075,
+              "safe_price": 26473.8,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1685059200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 19.875205349999998
+            },
+            {
+              "amount": 0.00094,
+              "safe_price": 26705.93,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1685145600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 25.128677774199996
+            },
+            {
+              "amount": 0.00042,
+              "safe_price": 26854.28,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1685232000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11.2900763976
+            },
+            {
+              "amount": 0.00612,
+              "safe_price": 28065.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1685318400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 171.92961906119996
+            },
+            {
+              "amount": 0.00306,
+              "safe_price": 27736.39,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1685404800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 84.95822675339998
+            },
+            {
+              "amount": 0.00194,
+              "safe_price": 27210.36,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1685577600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 52.840886498399996
+            },
+            {
+              "amount": 0.00147,
+              "safe_price": 26817.93,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1685664000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 39.46177945709999
+            },
+            {
+              "amount": 0.00218,
+              "safe_price": 27242.59,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1685750400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 59.4482350462
+            },
+            {
+              "amount": 0.00125,
+              "safe_price": 27069.22,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1685836800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 33.870361525
+            },
+            {
+              "amount": 0.00525,
+              "safe_price": 25728.2,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1686009600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 135.20812305
+            },
+            {
+              "amount": 0.00778,
+              "safe_price": 27230.07,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1686096000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 212.06179454459996
+            },
+            {
+              "amount": 0.0056,
+              "safe_price": 26339.34,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1686182400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 147.64780430399998
+            },
+            {
+              "amount": 0.0008,
+              "safe_price": 26498.62,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1686268800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 21.220094896
+            },
+            {
+              "amount": 0.00027,
+              "safe_price": 26477.8,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1686355200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.156155005999999
+            },
+            {
+              "amount": 0.0025,
+              "safe_price": 25841.22,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1686441600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 64.66765305
+            },
+            {
+              "amount": 0.00043,
+              "safe_price": 25925.54,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1686528000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11.159130182199998
+            },
+            {
+              "amount": 0.00333,
+              "safe_price": 25128.6,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1686787200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 83.76191623799998
+            },
+            {
+              "amount": 0.00242,
+              "safe_price": 25598.49,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1686873600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 62.01029414579999
+            },
+            {
+              "amount": 0.00315,
+              "safe_price": 26345.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1686960000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 83.06976828149999
+            },
+            {
+              "amount": 0.00079,
+              "safe_price": 26339.98,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687132800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 20.829392784199996
+            },
+            {
+              "amount": 0.00257,
+              "safe_price": 26844.35,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1687219200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 69.05896947949998
+            },
+            {
+              "amount": 0.00654,
+              "safe_price": 28308.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1687305600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 185.31945431999998
+            },
+            {
+              "amount": 0.00565,
+              "safe_price": 29993.89,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1687392000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 169.63494397849996
+            },
+            {
+              "amount": 0.00226,
+              "safe_price": 29884.92,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687478400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 67.60745911919997
+            },
+            {
+              "amount": 0.00396,
+              "safe_price": 30688.51,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1687564800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 121.64802609959997
+            },
+            {
+              "amount": 0.0019,
+              "safe_price": 30527.44,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687651200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 58.06013813599999
+            },
+            {
+              "amount": 0.00021,
+              "safe_price": 30462.67,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687737600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.403557860699999
+            },
+            {
+              "amount": 0.00063,
+              "safe_price": 30267.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687824000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 19.0879025337
+            },
+            {
+              "amount": 0.00207,
+              "safe_price": 30692.44,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1687910400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 63.59688415079999
+            },
+            {
+              "amount": 0.00272,
+              "safe_price": 30077.4,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687996800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 81.892338528
+            },
+            {
+              "amount": 0.0018,
+              "safe_price": 30447.31,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1688083200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 54.85996315799999
+            },
+            {
+              "amount": 0.00052,
+              "safe_price": 30471.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1688169600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 15.861280234799997
+            },
+            {
+              "amount": 0.00054,
+              "safe_price": 30585.9,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1688256000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 16.532902386
+            },
+            {
+              "amount": 0.0025,
+              "safe_price": 31156.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1688428800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 77.9683905
+            },
+            {
+              "amount": 0.00212,
+              "safe_price": 30766.52,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1688515200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 65.29024742239999
+            },
+            {
+              "amount": 0.00084,
+              "safe_price": 30504.8,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1688601600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 25.649656031999996
+            },
+            {
+              "amount": 0.002,
+              "safe_price": 29895.42,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1688688000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 59.85063083999999
+            },
+            {
+              "amount": 0.00218,
+              "safe_price": 30344.7,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1688774400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 66.217597446
+            },
+            {
+              "amount": 0.00091,
+              "safe_price": 30284.63,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1688860800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 27.586572313299996
+            },
+            {
+              "amount": 0.00041,
+              "safe_price": 30160.71,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1688947200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 12.378256991099997
+            },
+            {
+              "amount": 0.00121,
+              "safe_price": 30411.57,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1689033600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 36.8347976997
+            },
+            {
+              "amount": 0.00041,
+              "safe_price": 30622.1,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1689120000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 12.567616060999997
+            },
+            {
+              "amount": 0.00091,
+              "safe_price": 30380.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1689206400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 27.6734458
+            },
+            {
+              "amount": 0.00519,
+              "safe_price": 31454.23,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1689292800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 163.4107011537
+            },
+            {
+              "amount": 0.00555,
+              "safe_price": 30312.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1689379200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 168.3998316
+            },
+            {
+              "amount": 0.00026,
+              "safe_price": 30232.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1689552000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.868180319999999
+            },
+            {
+              "amount": 0.0003,
+              "safe_price": 30138.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1689638400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 9.050444402999998
+            },
+            {
+              "amount": 0.00092,
+              "safe_price": 29859.14,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1689724800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 27.497879208799997
+            },
+            {
+              "amount": 0.0002,
+              "safe_price": 29800.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1689897600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 5.965959999999999
+            },
+            {
+              "amount": 0.00048,
+              "safe_price": 29901.72,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1689984000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 14.367178425599999
+            },
+            {
+              "amount": 0.0005,
+              "safe_price": 29793.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1690070400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 14.911891995
+            },
+            {
+              "amount": 0.00139,
+              "safe_price": 30083.75,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1690156800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 41.858228912499996
+            },
+            {
+              "amount": 0.0035,
+              "safe_price": 29176.5,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1690243200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 102.21986774999999
+            },
+            {
+              "amount": 0.00083,
+              "safe_price": 29351.95,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1690416000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 24.3864806185
+            },
+            {
+              "amount": 0.00068,
+              "safe_price": 29222.78,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1690502400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 19.891361890399995
+            },
+            {
+              "amount": 0.00043,
+              "safe_price": 29314.14,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1690588800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 12.617685280199998
+            },
+            {
+              "amount": 0.00023,
+              "safe_price": 29281.09,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1690761600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.7413853507
+            },
+            {
+              "amount": 0.00203,
+              "safe_price": 29705.99,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1690934400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 60.3634628597
+            },
+            {
+              "amount": 0.00238,
+              "safe_price": 29186.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1691020800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 69.53214267999999
+            },
+            {
+              "amount": 0.00024,
+              "safe_price": 29114.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1691193600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.994347359999999
+            },
+            {
+              "amount": 0.00045,
+              "safe_price": 29211.06,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1691452800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13.158121976999999
+            },
+            {
+              "amount": 0.0025,
+              "safe_price": 29770.41,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1691539200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 74.50045102499999
+            },
+            {
+              "amount": 0.00139,
+              "safe_price": 29581.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1691625600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 41.160085066099995
+            },
+            {
+              "amount": 0.00042,
+              "safe_price": 29455.76,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1691712000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 12.3837906192
+            },
+            {
+              "amount": 0.00051,
+              "safe_price": 29303.85,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1691971200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 14.959908463499998
+            },
+            {
+              "amount": 0.00059,
+              "safe_price": 29430.92,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1692057600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 17.3816070428
+            },
+            {
+              "amount": 0.00095,
+              "safe_price": 29200.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692144000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 27.767749509499996
+            },
+            {
+              "amount": 0.00162,
+              "safe_price": 28730.51,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692230400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 46.58996962619999
+            },
+            {
+              "amount": 0.00787,
+              "safe_price": 26623.41,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692316800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 209.73576293669998
+            },
+            {
+              "amount": 0.00221,
+              "safe_price": 26054.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692403200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 57.63691934
+            },
+            {
+              "amount": 0.00065,
+              "safe_price": 26190.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1692576000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 17.040523499999995
+            },
+            {
+              "amount": 0.00037,
+              "safe_price": 26126.92,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692662400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 9.676627360399998
+            },
+            {
+              "amount": 0.00028,
+              "safe_price": 26055.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692748800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.302972877199999
+            },
+            {
+              "amount": 0.00183,
+              "safe_price": 26432.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1692835200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 48.420231159299995
+            },
+            {
+              "amount": 0.00135,
+              "safe_price": 26180.05,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1692921600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 35.3784105675
+            },
+            {
+              "amount": 0.00047,
+              "safe_price": 26060.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1693008000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 12.260448199999997
+            },
+            {
+              "amount": 0.00028,
+              "safe_price": 26120.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1693267200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7.320913599999998
+            },
+            {
+              "amount": 0.00772,
+              "safe_price": 27716.34,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1693353600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 214.1841149448
+            },
+            {
+              "amount": 0.00344,
+              "safe_price": 27299.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1693440000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 94.00587756559999
+            },
+            {
+              "amount": 0.00528,
+              "safe_price": 25940.77,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1693526400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 137.10423286559998
+            },
+            {
+              "amount": 0.00054,
+              "safe_price": 25805.04,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1693612800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 13.9486563216
+            },
+            {
+              "amount": 0.0003,
+              "safe_price": 25869.52,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1693699200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7.768616855999999
+            },
+            {
+              "amount": 0.00043,
+              "safe_price": 25971.21,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1693785600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11.178787920299998
+            },
+            {
+              "amount": 0.00065,
+              "safe_price": 25826.03,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1693872000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 16.8037064195
+            },
+            {
+              "amount": 0.00026,
+              "safe_price": 25759.95,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1694044800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.704284586999999
+            },
+            {
+              "amount": 0.0024,
+              "safe_price": 26255.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1694131200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 63.07501199999999
+            },
+            {
+              "amount": 0.00183,
+              "safe_price": 25910.5,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1694217600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 47.46363121499999
+            },
+            {
+              "amount": 0.00027,
+              "safe_price": 25841.6,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1694390400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.9842092319999995
+            },
+            {
+              "amount": 0.00276,
+              "safe_price": 25162.53,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1694476800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 69.51803138279999
+            },
+            {
+              "amount": 0.0033,
+              "safe_price": 25840.1,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1694563200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 85.35760232999999
+            },
+            {
+              "amount": 0.00111,
+              "safe_price": 26222.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1694649600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 29.13552642
+            },
+            {
+              "amount": 0.00118,
+              "safe_price": 26522.73,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1694736000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 31.3281182214
+            },
+            {
+              "amount": 0.00086,
+              "safe_price": 26762.5,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1695081600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 23.03876575
+            },
+            {
+              "amount": 0.00192,
+              "safe_price": 27210.25,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1695168000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 52.29592368
+            },
+            {
+              "amount": 0.00074,
+              "safe_price": 27125.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1695254400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 20.092579907399998
+            },
+            {
+              "amount": 0.00212,
+              "safe_price": 26568.08,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1695340800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 56.380653929599994
+            },
+            {
+              "amount": 0.00124,
+              "safe_price": 26248.39,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1695600000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 32.5805516036
+            },
+            {
+              "amount": 0.00059,
+              "safe_price": 26373.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1695859200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 15.575630069999999
+            },
+            {
+              "amount": 0.00298,
+              "safe_price": 27021.39,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1695945600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 80.60426594219999
+            },
+            {
+              "amount": 0.00107,
+              "safe_price": 26906.96,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696032000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 28.819237647199994
+            },
+            {
+              "amount": 0.00519,
+              "safe_price": 27992.58,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1696204800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 145.42677169019998
+            },
+            {
+              "amount": 0.00309,
+              "safe_price": 27494.51,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696291200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 85.04299393589997
+            },
+            {
+              "amount": 0.00025,
+              "safe_price": 27426.45,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696377600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 6.8634691125
+            },
+            {
+              "amount": 0.00166,
+              "safe_price": 27778.57,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1696464000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 46.1585386262
+            },
+            {
+              "amount": 0.00173,
+              "safe_price": 27410.39,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696550400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 47.46739467469999
+            },
+            {
+              "amount": 0.00246,
+              "safe_price": 27931.1,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1696636800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 68.77921650599998
+            },
+            {
+              "amount": 0.00049,
+              "safe_price": 27956.67,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696723200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 13.712467068299997
+            },
+            {
+              "amount": 0.00133,
+              "safe_price": 27590.12,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696896000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 36.7315544596
+            },
+            {
+              "amount": 0.00074,
+              "safe_price": 27390.12,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696982400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 20.288957488799998
+            },
+            {
+              "amount": 0.00193,
+              "safe_price": 26875.52,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1697068800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 51.9216233536
+            },
+            {
+              "amount": 0.00043,
+              "safe_price": 26759.63,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1697155200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 11.5181475409
+            },
+            {
+              "amount": 0.00047,
+              "safe_price": 26862.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1697241600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 12.637765139999999
+            },
+            {
+              "amount": 0.00127,
+              "safe_price": 27154.14,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1697414400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 34.5202435578
+            },
+            {
+              "amount": 0.00604,
+              "safe_price": 28500.77,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1697500800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 172.31679545080002
+            },
+            {
+              "amount": 0.00189,
+              "safe_price": 28395.91,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1697587200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 53.72193816989999
+            },
+            {
+              "amount": 0.00026,
+              "safe_price": 28320.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1697673600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.3705631999999985
+            },
+            {
+              "amount": 0.00183,
+              "safe_price": 28713.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1697760000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 52.59863538929999
+            },
+            {
+              "amount": 0.00383,
+              "safe_price": 29669.05,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1697846400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 113.7460939615
+            },
+            {
+              "amount": 0.00026,
+              "safe_price": 29909.8,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1697932800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 7.784324547999998
+            },
+            {
+              "amount": 0.00037,
+              "safe_price": 29992.46,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698019200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11.108307410199998
+            },
+            {
+              "amount": 0.01406,
+              "safe_price": 33069.99,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698105600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 465.4290234593999
+            },
+            {
+              "amount": 0.00245,
+              "safe_price": 33922.73,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1698192000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 83.1937991885
+            },
+            {
+              "amount": 0.00255,
+              "safe_price": 34496.05,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698278400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 88.05289242750001
+            },
+            {
+              "amount": 0.00192,
+              "safe_price": 34151.66,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1698364800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 65.6367583872
+            },
+            {
+              "amount": 0.00073,
+              "safe_price": 33892.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1698451200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 24.765908467299997
+            },
+            {
+              "amount": 0.00082,
+              "safe_price": 34081.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698537600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 27.974374628199996
+            },
+            {
+              "amount": 0.0015,
+              "safe_price": 34525.88,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698624000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 51.840608819999986
+            },
+            {
+              "amount": 0.0007,
+              "safe_price": 34474.74,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1698710400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 24.156450317999994
+            },
+            {
+              "amount": 0.00072,
+              "safe_price": 34639.78,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698796800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 24.965582241599996
+            },
+            {
+              "amount": 0.00302,
+              "safe_price": 35421.43,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1698883200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 107.0796913186
+            },
+            {
+              "amount": 0.00249,
+              "safe_price": 34941.58,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1698969600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 87.0915387342
+            },
+            {
+              "amount": 0.00061,
+              "safe_price": 34716.78,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1699056000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 21.198413035799994
+            },
+            {
+              "amount": 0.0015,
+              "safe_price": 35062.06,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1699142400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 52.64568308999999
+            },
+            {
+              "amount": 0.0007,
+              "safe_price": 35011.89,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1699228800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 24.532831322999996
+            },
+            {
+              "amount": 0.00168,
+              "safe_price": 35399.13,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1699401600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 59.53000893839999
+            },
+            {
+              "amount": 0.00462,
+              "safe_price": 36701.1,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1699574400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 169.72864108199997
+            },
+            {
+              "amount": 0.00035,
+              "safe_price": 37301.63,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1699660800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 13.068626070499997
+            },
+            {
+              "amount": 0.00043,
+              "safe_price": 37129.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1699747200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 15.981861595699998
+            },
+            {
+              "amount": 0.00016,
+              "safe_price": 37064.13,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1699833600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 5.9361910608
+            },
+            {
+              "amount": 0.00155,
+              "safe_price": 36462.93,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1699920000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 56.57405904149999
+            },
+            {
+              "amount": 0.00241,
+              "safe_price": 35551.2,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700006400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 85.76407039199998
+            },
+            {
+              "amount": 0.00998,
+              "safe_price": 37858.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1700092800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 378.2026608359999
+            },
+            {
+              "amount": 0.00871,
+              "safe_price": 36163.51,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700179200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 315.2991562721
+            },
+            {
+              "amount": 0.00189,
+              "safe_price": 36613.91,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1700265600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 69.2694901899
+            },
+            {
+              "amount": 0.00085,
+              "safe_price": 36568.11,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700352000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 31.113976393499993
+            },
+            {
+              "amount": 0.00334,
+              "safe_price": 37359.85,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1700438400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 124.90668089899998
+            },
+            {
+              "amount": 0.00112,
+              "safe_price": 37448.79,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700524800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 41.98458744479999
+            },
+            {
+              "amount": 0.00446,
+              "safe_price": 35741.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700611200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 159.567166759
+            },
+            {
+              "amount": 0.00701,
+              "safe_price": 37408.35,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1700697600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 262.49476603349996
+            },
+            {
+              "amount": 0.00308,
+              "safe_price": 37294.27,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700784000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 114.98121795159997
+            },
+            {
+              "amount": 0.00172,
+              "safe_price": 37713.57,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1700870400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 64.9322077404
+            },
+            {
+              "amount": 0.00052,
+              "safe_price": 37780.67,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1700956800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 19.665594348399996
+            },
+            {
+              "amount": 0.00083,
+              "safe_price": 37447.42,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1701043200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 31.112439958599996
+            },
+            {
+              "amount": 0.00051,
+              "safe_price": 37242.7,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1701129600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 19.012770777
+            },
+            {
+              "amount": 0.00237,
+              "safe_price": 37818.88,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1701216000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 89.72037634559999
+            },
+            {
+              "amount": 0.00085,
+              "safe_price": 37854.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1701302400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 32.20862895249999
+            },
+            {
+              "amount": 0.00032,
+              "safe_price": 37723.97,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1701388800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 12.083742070400001
+            },
+            {
+              "amount": 0.00393,
+              "safe_price": 38682.51,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1701475200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 152.1742865643
+            },
+            {
+              "amount": 0.00035,
+              "safe_price": 39450.35,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1701561600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13.821430122499997
+            },
+            {
+              "amount": 0.00187,
+              "safe_price": 39972.26,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1701648000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 74.8228743262
+            },
+            {
+              "amount": 0.00675,
+              "safe_price": 41991.1,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1701734400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 283.72336492499994
+            },
+            {
+              "amount": 0.00254,
+              "safe_price": 44073.82,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1701820800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 112.0594503028
+            },
+            {
+              "amount": 0.00187,
+              "safe_price": 43762.69,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1701907200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 81.91806653029998
+            },
+            {
+              "amount": 0.00102,
+              "safe_price": 43273.15,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1701993600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 44.182751613
+            },
+            {
+              "amount": 0.00354,
+              "safe_price": 44171.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1702080000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 156.52170533999998
+            },
+            {
+              "amount": 0.00265,
+              "safe_price": 43713.59,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1702166400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 115.95685451349998
+            },
+            {
+              "amount": 0.00028,
+              "safe_price": 43789.5,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1702252800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 12.273321059999997
+            },
+            {
+              "amount": 0.00566,
+              "safe_price": 41253.41,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1702339200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 233.7277949006
+            },
+            {
+              "amount": 0.00092,
+              "safe_price": 41492.38,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1702425600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 38.211162589599994
+            },
+            {
+              "amount": 0.00467,
+              "safe_price": 42869.03,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1702512000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 200.39856847009995
+            },
+            {
+              "amount": 0.00179,
+              "safe_price": 43022.26,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1702598400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 77.08685524539999
+            },
+            {
+              "amount": 0.00233,
+              "safe_price": 41940.29,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1702684800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 97.8185965757
+            },
+            {
+              "amount": 0.00129,
+              "safe_price": 42278.02,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1702771200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 54.593184445799984
+            },
+            {
+              "amount": 0.00256,
+              "safe_price": 41374.64,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1702857600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 106.0249974784
+            },
+            {
+              "amount": 0.00495,
+              "safe_price": 42657.8,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1702944000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 211.36726611000003
+            },
+            {
+              "amount": 0.00303,
+              "safe_price": 42275.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703030400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 128.22434594969997
+            },
+            {
+              "amount": 0.00531,
+              "safe_price": 43668.92,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1703116800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 232.11384716519993
+            },
+            {
+              "amount": 0.002,
+              "safe_price": 43861.79,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703203200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 87.81130357999999
+            },
+            {
+              "amount": 0.00038,
+              "safe_price": 43969.04,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1703289600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 16.7249434352
+            },
+            {
+              "amount": 0.00071,
+              "safe_price": 43702.15,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703376000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 31.0595550265
+            },
+            {
+              "amount": 0.00149,
+              "safe_price": 42991.5,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703462400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 64.12139233499998
+            },
+            {
+              "amount": 0.00219,
+              "safe_price": 43576.12,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1703548800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 95.5271345028
+            },
+            {
+              "amount": 0.00326,
+              "safe_price": 42508.93,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703635200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 138.7176909118
+            },
+            {
+              "amount": 0.00344,
+              "safe_price": 43428.86,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1703721600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 149.5446736784
+            },
+            {
+              "amount": 0.00337,
+              "safe_price": 42563.76,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703808000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 143.5833110712
+            },
+            {
+              "amount": 0.00107,
+              "safe_price": 42066.94,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1703894400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "rebalance:r5_75_btc",
+              "cost": 45.0566374258
+            },
+            {
+              "amount": 0.00026,
+              "safe_price": 42140.29,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1703980800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10.967431875399997
+            },
+            {
+              "amount": 0.00035,
+              "safe_price": 42283.58,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1704067200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 14.814052252999998
+            },
+            {
+              "amount": 0.363,
+              "safe_price": 42283.58,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1704067200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "force_exit",
+              "cost": 15364.288479539997
+            }
+          ],
+          "funding_fees": 0.0,
+          "weekday": 0
+        }
+      ],
+      "locks": [],
+      "best_pair": {
+        "key": "BTC/USDT",
+        "trades": 1,
+        "profit_mean": 0.5374032875938295,
+        "profit_mean_pct": 53.74,
+        "profit_total_abs": 10449.30978476,
+        "profit_total": 1.044930978476,
+        "profit_total_pct": 104.49,
+        "duration_avg": "364 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 0,
+        "winrate": 1.0,
+        "cagr": 1.0449309784760001,
+        "expectancy": 10449.30978476,
+        "expectancy_ratio": 100.0,
+        "sortino": -100.0,
+        "sharpe": -100.0,
+        "calmar": -100.0,
+        "sqn": -100.0,
+        "profit_factor": 0.0,
+        "max_drawdown_account": 0.0,
+        "max_drawdown_abs": 0.0
+      },
+      "worst_pair": {
+        "key": "BTC/USDT",
+        "trades": 1,
+        "profit_mean": 0.5374032875938295,
+        "profit_mean_pct": 53.74,
+        "profit_total_abs": 10449.30978476,
+        "profit_total": 1.044930978476,
+        "profit_total_pct": 104.49,
+        "duration_avg": "364 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 0,
+        "winrate": 1.0,
+        "cagr": 1.0449309784760001,
+        "expectancy": 10449.30978476,
+        "expectancy_ratio": 100.0,
+        "sortino": -100.0,
+        "sharpe": -100.0,
+        "calmar": -100.0,
+        "sqn": -100.0,
+        "profit_factor": 0.0,
+        "max_drawdown_account": 0.0,
+        "max_drawdown_abs": 0.0
+      },
+      "results_per_pair": [
+        {
+          "key": "BTC/USDT",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "results_per_enter_tag": [
+        {
+          "key": "rebalance:r5_75_btc",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "exit_reason_summary": [
+        {
+          "key": "force_exit",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "mix_tag_stats": [
+        {
+          "key": [
+            "rebalance:r5_75_btc",
+            "force_exit"
+          ],
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "left_open_trades": [
+        {
+          "key": "BTC/USDT",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.5374032875938295,
+          "profit_mean_pct": 53.74,
+          "profit_total_abs": 10449.30978476,
+          "profit_total": 1.044930978476,
+          "profit_total_pct": 104.49,
+          "duration_avg": "364 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 1.0449309784760001,
+          "expectancy": 10449.30978476,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "total_trades": 1,
+      "trade_count_long": 1,
+      "trade_count_short": 0,
+      "total_volume": 49397.306235377066,
+      "avg_stake_amount": 8850.30739418,
+      "profit_mean": 0.5374032875938295,
+      "profit_median": 0.5374032875938295,
+      "profit_total": 1.044930978476,
+      "profit_total_long": 1.044930978476,
+      "profit_total_short": 0.0,
+      "profit_total_abs": 10449.30978476,
+      "profit_total_long_abs": 10449.30978476,
+      "profit_total_short_abs": 0.0,
+      "cagr": 1.0449309784760001,
+      "expectancy": 10449.30978476,
+      "expectancy_ratio": 100.0,
+      "sortino": -100.0,
+      "sharpe": -100.0,
+      "calmar": -100.0,
+      "sqn": -100.0,
+      "wallet_stats": {
+        "start_balance": 10000.0,
+        "end_balance": 20473.532364293325,
+        "high_balance": 21133.180389811325,
+        "low_balance": 10000.0,
+        "sharpe": 2.3429107705364447,
+        "sortino": 3.9469236705492774,
+        "calmar": 36.04066607699341,
+        "low_date": "2023-01-02 00:00:00",
+        "low_ts": 1672617600000,
+        "high_date": "2023-12-09 00:00:00",
+        "high_ts": 1702080000000,
+        "max_drawdown_account": 0.15252654012762729,
+        "max_relative_drawdown": 0.15252654012762729,
+        "max_drawdown_abs": 2486.159738019309,
+        "drawdown_start": "2023-07-14 00:00:00",
+        "drawdown_start_ts": 1689292800000,
+        "drawdown_end": "2023-09-12 00:00:00",
+        "drawdown_end_ts": 1694476800000,
+        "drawdown_duration": "60 days 00:00:00",
+        "drawdown_duration_s": 5184000.0,
+        "max_drawdown_low": 3813.690346687281,
+        "max_drawdown_high": 6299.85008470659
+      },
+      "profit_factor": 0.0,
+      "backtest_start": "2023-01-01 00:00:00",
+      "backtest_start_ts": 1672531200000,
+      "backtest_end": "2024-01-01 00:00:00",
+      "backtest_end_ts": 1704067200000,
+      "backtest_days": 365,
+      "backtest_run_start_ts": 1780926429,
+      "backtest_run_end_ts": 1780926435,
+      "trades_per_day": 0.0,
+      "market_change": 1.6587359140626177,
+      "pairlist": [
+        "BTC/USDT"
+      ],
+      "stake_amount": "unlimited",
+      "stake_currency": "USDT",
+      "stake_currency_decimals": 3,
+      "starting_balance": 10000.0,
+      "dry_run_wallet": 10000.0,
+      "final_balance": 20449.30978476,
+      "rejected_signals": 0,
+      "timedout_entry_orders": 0,
+      "timedout_exit_orders": 0,
+      "canceled_trade_entries": 0,
+      "canceled_entry_orders": 0,
+      "replaced_entry_orders": 0,
+      "max_open_trades": 1,
+      "max_open_trades_setting": 1,
+      "timeframe": "1d",
+      "timeframe_detail": "",
+      "timerange": "20230101-20240101",
+      "enable_protections": false,
+      "strategy_name": "BtcRebalanceStrategy",
+      "freqaimodel": null,
+      "freqai_identifier": null,
+      "stoploss": -0.99,
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false,
+      "use_custom_stoploss": false,
+      "minimal_roi": {
+        "0": 10.0
+      },
+      "use_exit_signal": true,
+      "exit_profit_only": false,
+      "exit_profit_offset": 0.0,
+      "ignore_roi_if_entry_signal": false,
+      "trading_mode": "spot",
+      "margin_mode": "",
+      "periodic_breakdown": {
+        "day": [
+          {
+            "date": "01/01/2024",
+            "date_ts": 1704067200000,
+            "profit_abs": 10449.30978476,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "week": [
+          {
+            "date": "01/01/2024",
+            "date_ts": 1704067200000,
+            "profit_abs": 10449.30978476,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "month": [
+          {
+            "date": "31/01/2024",
+            "date_ts": 1706659200000,
+            "profit_abs": 10449.30978476,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "year": [
+          {
+            "date": "31/12/2024",
+            "date_ts": 1735603200000,
+            "profit_abs": 10449.30978476,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "weekday": [
+          {
+            "date": "Monday",
+            "date_ts": 0,
+            "profit_abs": 10449.30978476,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ]
+      },
+      "backtest_best_day": 0.5374032875938295,
+      "backtest_worst_day": 0.5374032875938295,
+      "backtest_best_day_abs": 10449.30978476,
+      "backtest_worst_day_abs": 10449.30978476,
+      "winning_days": 1,
+      "draw_days": 0,
+      "losing_days": 0,
+      "daily_profit": [
+        [
+          "2024-01-01",
+          10449.30978476
+        ]
+      ],
+      "wins": 1,
+      "losses": 0,
+      "draws": 0,
+      "winrate": 1.0,
+      "holding_avg": "364 days, 0:00:00",
+      "holding_avg_s": 31449600.0,
+      "winner_holding_min": "364d 00:00",
+      "winner_holding_min_s": 31449600.0,
+      "winner_holding_max": "364d 00:00",
+      "winner_holding_max_s": 31449600.0,
+      "winner_holding_avg": "364d 00:00",
+      "winner_holding_avg_s": 31449600.0,
+      "loser_holding_min": "0d 00:00",
+      "loser_holding_min_s": 0.0,
+      "loser_holding_max": "0d 00:00",
+      "loser_holding_max_s": 0.0,
+      "loser_holding_avg": "0d 00:00",
+      "loser_holding_avg_s": 0.0,
+      "max_consecutive_wins": 1,
+      "max_consecutive_losses": 0,
+      "max_drawdown_account": 0.0,
+      "max_relative_drawdown": 0.0,
+      "max_drawdown_abs": 0.0,
+      "drawdown_start": "2024-01-01 00:00:00",
+      "drawdown_start_ts": 1704067200000.0,
+      "drawdown_end": "2024-01-01 00:00:00",
+      "drawdown_end_ts": 1704067200000.0,
+      "drawdown_duration": "0 days 00:00:00",
+      "drawdown_duration_s": 0.0,
+      "max_drawdown_low": 0.0,
+      "max_drawdown_high": 0.0,
+      "csum_min": 20449.30978476,
+      "csum_max": 20449.30978476
+    }
+  },
+  "strategy_comparison": [
+    {
+      "key": "BtcRebalanceStrategy",
+      "trades": 1,
+      "profit_mean": 0.5374032875938295,
+      "profit_mean_pct": 53.74,
+      "profit_total_abs": 10449.30978476,
+      "profit_total": 1.044930978476,
+      "profit_total_pct": 104.49,
+      "duration_avg": "364 days, 0:00:00",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "winrate": 1.0,
+      "cagr": 1.0449309784760001,
+      "expectancy": 10449.30978476,
+      "expectancy_ratio": 100.0,
+      "sortino": -100.0,
+      "sharpe": -100.0,
+      "calmar": -100.0,
+      "sqn": -100.0,
+      "profit_factor": 0.0,
+      "max_drawdown_account": 0.0,
+      "max_drawdown_abs": "0"
+    }
+  ]
+}
