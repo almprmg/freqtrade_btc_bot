@@ -130,33 +130,74 @@ def main():
     ).reset_index()
     yearly["l"] = yearly["n"] - yearly["w"]
     yearly["wr"] = yearly["w"]/yearly["n"]*100
-    yearly["avg_per_trade"] = yearly["pnl"]/yearly["n"]
-    # ROI% = pnl / (active_strats × $10K per-strategy backtest capital)
+    # Per-trade ROI%: avg of profit_ratio (already a % of position)
+    yearly["roi_per_trade_pct"] = trades.groupby("year")["profit_ratio"].mean().values * 100
+    # Yearly non-cumulative ROI: pnl / (active_strats × $10K per-strategy backtest capital)
     yearly["capital"] = yearly["active_strats"] * 10000
     yearly["roi_pct"] = yearly["pnl"] / yearly["capital"] * 100
+    # Cumulative wallet growth: start at $10K, compound by per-strategy avg ROI each year
+    # (avg ROI per strategy = pnl / num_active_that_year / 10000 — equivalent to roi_pct above)
+    yearly = yearly.sort_values("year").reset_index(drop=True)
+    wallet = 10000.0
+    cum_wallets_start = []
+    cum_wallets_end = []
+    cum_roi_pct = []
+    for _, r in yearly.iterrows():
+        cum_wallets_start.append(wallet)
+        wallet = wallet * (1 + r["roi_pct"]/100)
+        cum_wallets_end.append(wallet)
+        cum_roi_pct.append((wallet - 10000)/10000 * 100)
+    yearly["wallet_start"] = cum_wallets_start
+    yearly["wallet_end"] = cum_wallets_end
+    yearly["cum_roi"] = cum_roi_pct
 
-    html.append("<div class='card'><h2>📅 السنوي — إجمالي جميع الاستراتيجيات</h2>")
-    html.append("<p style='color:#95a5a6;font-size:0.9em;'>* الـROI محسوب على رأس مال $10K × عدد الاستراتيجيات النشطة في تلك السنة (كل استراتيجية بدأت في backtest بـ$10K)</p>")
-    html.append("<table><thead><tr><th>السنة</th><th>الاستراتيجيات</th><th>رأس المال ($)</th><th>صفقات</th><th>فوز</th><th>خسارة</th><th>WR</th><th>PnL ($)</th><th>الربح السنوي %</th><th>متوسط/صفقة</th></tr></thead><tbody>")
+    # === Table 1: Per-year, NON-cumulative ===
+    html.append("<div class='card'><h2>📅 السنوي (غير تراكمي) — كل سنة مستقلّة</h2>")
+    html.append("<p style='color:#95a5a6;font-size:0.9em;'>كل سنة محسوبة على رأس مال جديد (\$10K × عدد الاستراتيجيات النشطة في تلك السنة). الـROI/صفقة هو متوسط ربح الصفقة كنسبة من حجم الصفقة.</p>")
+    html.append("<table><thead><tr><th>السنة</th><th>الاستراتيجيات</th><th>صفقات</th><th>WR</th><th>ROI/صفقة %</th><th>PnL ($)</th><th>ROI السنوي %</th></tr></thead><tbody>")
     for _, r in yearly.iterrows():
         pnl_cls = "pos" if r["pnl"] >= 0 else "neg"
         roi_cls = "pos" if r["roi_pct"] >= 0 else "neg"
+        per_trade_cls = "pos" if r["roi_per_trade_pct"] >= 0 else "neg"
         html.append(f"<tr><td><b>{int(r['year'])}</b></td><td>{int(r['active_strats'])}</td>"
-                   f"<td>${int(r['capital']):,}</td>"
-                   f"<td>{int(r['n'])}</td><td class='pos'>{int(r['w'])}</td><td class='neg'>{int(r['l'])}</td>"
+                   f"<td>{int(r['n'])}</td>"
                    f"<td>{r['wr']:.0f}%</td>"
+                   f"<td class='{per_trade_cls}'>{r['roi_per_trade_pct']:+.2f}%</td>"
                    f"<td class='{pnl_cls}'>${r['pnl']:+,.0f}</td>"
-                   f"<td class='{roi_cls}'><b>{r['roi_pct']:+.1f}%</b></td>"
-                   f"<td class='{pnl_cls}'>${r['avg_per_trade']:+,.0f}</td></tr>")
-    # Totals row — total capital invested over years (sum-active × 10K)
+                   f"<td class='{roi_cls}'><b>{r['roi_pct']:+.1f}%</b></td></tr>")
+    # Totals row
     total_capital_yr_sum = yearly["capital"].sum()
-    total_roi = total_pnl / total_capital_yr_sum * 100
-    html.append(f"<tr class='totals'><td>الإجمالي 9 سنوات</td><td>{trades['strategy_label'].nunique()}</td>"
-               f"<td>${int(total_capital_yr_sum):,} مجموع</td>"
-               f"<td>{n:,}</td><td>{w:,}</td><td>{n-w:,}</td><td>{wr:.1f}%</td>"
+    total_roi_nc = total_pnl / total_capital_yr_sum * 100
+    avg_per_trade_pct = trades["profit_ratio"].mean() * 100
+    html.append(f"<tr class='totals'><td>المتوسط/الإجمالي</td><td>—</td>"
+               f"<td>{n:,}</td><td>{wr:.0f}%</td>"
+               f"<td>{avg_per_trade_pct:+.2f}%</td>"
                f"<td>${total_pnl:+,.0f}</td>"
-               f"<td><b>{total_roi:+.1f}%</b></td>"
-               f"<td>${avg_t:+,.0f}</td></tr>")
+               f"<td><b>{total_roi_nc:+.1f}%</b></td></tr>")
+    html.append("</tbody></table></div>")
+
+    # === Table 2: Cumulative wallet growth ===
+    html.append("<div class='card'><h2>💰 التراكمي (Compounding) — كيف ينمو $10K</h2>")
+    html.append("<p style='color:#95a5a6;font-size:0.9em;'>افتراض: تبدأ بـ\$10K، وفي نهاية كل سنة يُعاد استثمار الربح. الـROI السنوي مأخوذ من الجدول السابق ويُطبَّق على الـwallet الحالي.</p>")
+    html.append("<table><thead><tr><th>السنة</th><th>رصيد البداية</th><th>ROI السنوي</th><th>الربح</th><th>رصيد النهاية</th><th>تراكمي من $10K</th></tr></thead><tbody>")
+    for _, r in yearly.iterrows():
+        roi_cls = "pos" if r["roi_pct"] >= 0 else "neg"
+        cum_cls = "pos" if r["cum_roi"] >= 0 else "neg"
+        year_gain = r["wallet_end"] - r["wallet_start"]
+        gain_cls = "pos" if year_gain >= 0 else "neg"
+        html.append(f"<tr><td><b>{int(r['year'])}</b></td>"
+                   f"<td>${r['wallet_start']:,.0f}</td>"
+                   f"<td class='{roi_cls}'>{r['roi_pct']:+.1f}%</td>"
+                   f"<td class='{gain_cls}'>${year_gain:+,.0f}</td>"
+                   f"<td><b>${r['wallet_end']:,.0f}</b></td>"
+                   f"<td class='{cum_cls}'><b>{r['cum_roi']:+.1f}%</b></td></tr>")
+    final_wallet = yearly["wallet_end"].iloc[-1]
+    cagr_9y = ((final_wallet/10000) ** (1/len(yearly)) - 1) * 100
+    html.append(f"<tr class='totals'><td>النهائي (9 سنوات)</td><td>$10,000 بداية</td>"
+               f"<td>CAGR {cagr_9y:+.1f}%/سنة</td>"
+               f"<td>${final_wallet-10000:+,.0f}</td>"
+               f"<td><b>${final_wallet:,.0f}</b></td>"
+               f"<td><b>{(final_wallet/10000-1)*100:+.0f}%</b></td></tr>")
     html.append("</tbody></table></div>")
 
     # Yearly chart

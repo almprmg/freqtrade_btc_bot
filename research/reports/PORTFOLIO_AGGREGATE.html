@@ -32,19 +32,33 @@ table.heatmap{font-size:0.9em;}
 <div class='kpi'><div class='kpi-label'>إجمالي PnL</div><div class='kpi-value pos'>$+517,841</div></div>
 <div class='kpi'><div class='kpi-label'>متوسط صفقة</div><div class='kpi-value pos'>$+1,385</div></div>
 </div></div>
-<div class='card'><h2>📅 السنوي — إجمالي جميع الاستراتيجيات</h2>
-<p style='color:#95a5a6;font-size:0.9em;'>* الـROI محسوب على رأس مال $10K × عدد الاستراتيجيات النشطة في تلك السنة (كل استراتيجية بدأت في backtest بـ$10K)</p>
-<table><thead><tr><th>السنة</th><th>الاستراتيجيات</th><th>رأس المال ($)</th><th>صفقات</th><th>فوز</th><th>خسارة</th><th>WR</th><th>PnL ($)</th><th>الربح السنوي %</th><th>متوسط/صفقة</th></tr></thead><tbody>
-<tr><td><b>2018</b></td><td>3</td><td>$30,000</td><td>4</td><td class='pos'>0</td><td class='neg'>4</td><td>0%</td><td class='neg'>$-3,536</td><td class='neg'><b>-11.8%</b></td><td class='neg'>$-884</td></tr>
-<tr><td><b>2019</b></td><td>13</td><td>$130,000</td><td>24</td><td class='pos'>13</td><td class='neg'>11</td><td>54%</td><td class='pos'>$+16,159</td><td class='pos'><b>+12.4%</b></td><td class='pos'>$+673</td></tr>
-<tr><td><b>2020</b></td><td>14</td><td>$140,000</td><td>48</td><td class='pos'>35</td><td class='neg'>13</td><td>73%</td><td class='pos'>$+31,459</td><td class='pos'><b>+22.5%</b></td><td class='pos'>$+655</td></tr>
-<tr><td><b>2021</b></td><td>15</td><td>$150,000</td><td>119</td><td class='pos'>101</td><td class='neg'>18</td><td>85%</td><td class='pos'>$+326,932</td><td class='pos'><b>+218.0%</b></td><td class='pos'>$+2,747</td></tr>
-<tr><td><b>2022</b></td><td>4</td><td>$40,000</td><td>6</td><td class='pos'>2</td><td class='neg'>4</td><td>33%</td><td class='pos'>$+7,796</td><td class='pos'><b>+19.5%</b></td><td class='pos'>$+1,299</td></tr>
-<tr><td><b>2023</b></td><td>15</td><td>$150,000</td><td>56</td><td class='pos'>52</td><td class='neg'>4</td><td>93%</td><td class='pos'>$+44,922</td><td class='pos'><b>+29.9%</b></td><td class='pos'>$+802</td></tr>
-<tr><td><b>2024</b></td><td>14</td><td>$140,000</td><td>77</td><td class='pos'>51</td><td class='neg'>26</td><td>66%</td><td class='pos'>$+80,236</td><td class='pos'><b>+57.3%</b></td><td class='pos'>$+1,042</td></tr>
-<tr><td><b>2025</b></td><td>15</td><td>$150,000</td><td>38</td><td class='pos'>15</td><td class='neg'>23</td><td>39%</td><td class='pos'>$+14,923</td><td class='pos'><b>+9.9%</b></td><td class='pos'>$+393</td></tr>
-<tr><td><b>2026</b></td><td>2</td><td>$20,000</td><td>2</td><td class='pos'>0</td><td class='neg'>2</td><td>0%</td><td class='neg'>$-1,049</td><td class='neg'><b>-5.2%</b></td><td class='neg'>$-524</td></tr>
-<tr class='totals'><td>الإجمالي 9 سنوات</td><td>15</td><td>$950,000 مجموع</td><td>374</td><td>269</td><td>105</td><td>71.9%</td><td>$+517,841</td><td><b>+54.5%</b></td><td>$+1,385</td></tr>
+<div class='card'><h2>📅 السنوي (غير تراكمي) — كل سنة مستقلّة</h2>
+<p style='color:#95a5a6;font-size:0.9em;'>كل سنة محسوبة على رأس مال جديد (\$10K × عدد الاستراتيجيات النشطة في تلك السنة). الـROI/صفقة هو متوسط ربح الصفقة كنسبة من حجم الصفقة.</p>
+<table><thead><tr><th>السنة</th><th>الاستراتيجيات</th><th>صفقات</th><th>WR</th><th>ROI/صفقة %</th><th>PnL ($)</th><th>ROI السنوي %</th></tr></thead><tbody>
+<tr><td><b>2018</b></td><td>3</td><td>4</td><td>0%</td><td class='neg'>-13.58%</td><td class='neg'>$-3,536</td><td class='neg'><b>-11.8%</b></td></tr>
+<tr><td><b>2019</b></td><td>13</td><td>24</td><td>54%</td><td class='pos'>+1.12%</td><td class='pos'>$+16,159</td><td class='pos'><b>+12.4%</b></td></tr>
+<tr><td><b>2020</b></td><td>14</td><td>48</td><td>73%</td><td class='pos'>+7.28%</td><td class='pos'>$+31,459</td><td class='pos'><b>+22.5%</b></td></tr>
+<tr><td><b>2021</b></td><td>15</td><td>119</td><td>85%</td><td class='pos'>+22.45%</td><td class='pos'>$+326,932</td><td class='pos'><b>+218.0%</b></td></tr>
+<tr><td><b>2022</b></td><td>4</td><td>6</td><td>33%</td><td class='pos'>+2.97%</td><td class='pos'>$+7,796</td><td class='pos'><b>+19.5%</b></td></tr>
+<tr><td><b>2023</b></td><td>15</td><td>56</td><td>93%</td><td class='pos'>+10.22%</td><td class='pos'>$+44,922</td><td class='pos'><b>+29.9%</b></td></tr>
+<tr><td><b>2024</b></td><td>14</td><td>77</td><td>66%</td><td class='pos'>+11.84%</td><td class='pos'>$+80,236</td><td class='pos'><b>+57.3%</b></td></tr>
+<tr><td><b>2025</b></td><td>15</td><td>38</td><td>39%</td><td class='pos'>+5.37%</td><td class='pos'>$+14,923</td><td class='pos'><b>+9.9%</b></td></tr>
+<tr><td><b>2026</b></td><td>2</td><td>2</td><td>0%</td><td class='neg'>-7.73%</td><td class='neg'>$-1,049</td><td class='neg'><b>-5.2%</b></td></tr>
+<tr class='totals'><td>المتوسط/الإجمالي</td><td>—</td><td>374</td><td>72%</td><td>+12.52%</td><td>$+517,841</td><td><b>+54.5%</b></td></tr>
+</tbody></table></div>
+<div class='card'><h2>💰 التراكمي (Compounding) — كيف ينمو $10K</h2>
+<p style='color:#95a5a6;font-size:0.9em;'>افتراض: تبدأ بـ\$10K، وفي نهاية كل سنة يُعاد استثمار الربح. الـROI السنوي مأخوذ من الجدول السابق ويُطبَّق على الـwallet الحالي.</p>
+<table><thead><tr><th>السنة</th><th>رصيد البداية</th><th>ROI السنوي</th><th>الربح</th><th>رصيد النهاية</th><th>تراكمي من $10K</th></tr></thead><tbody>
+<tr><td><b>2018</b></td><td>$10,000</td><td class='neg'>-11.8%</td><td class='neg'>$-1,179</td><td><b>$8,821</b></td><td class='neg'><b>-11.8%</b></td></tr>
+<tr><td><b>2019</b></td><td>$8,821</td><td class='pos'>+12.4%</td><td class='pos'>$+1,097</td><td><b>$9,918</b></td><td class='neg'><b>-0.8%</b></td></tr>
+<tr><td><b>2020</b></td><td>$9,918</td><td class='pos'>+22.5%</td><td class='pos'>$+2,229</td><td><b>$12,146</b></td><td class='pos'><b>+21.5%</b></td></tr>
+<tr><td><b>2021</b></td><td>$12,146</td><td class='pos'>+218.0%</td><td class='pos'>$+26,474</td><td><b>$38,620</b></td><td class='pos'><b>+286.2%</b></td></tr>
+<tr><td><b>2022</b></td><td>$38,620</td><td class='pos'>+19.5%</td><td class='pos'>$+7,527</td><td><b>$46,147</b></td><td class='pos'><b>+361.5%</b></td></tr>
+<tr><td><b>2023</b></td><td>$46,147</td><td class='pos'>+29.9%</td><td class='pos'>$+13,820</td><td><b>$59,967</b></td><td class='pos'><b>+499.7%</b></td></tr>
+<tr><td><b>2024</b></td><td>$59,967</td><td class='pos'>+57.3%</td><td class='pos'>$+34,368</td><td><b>$94,335</b></td><td class='pos'><b>+843.3%</b></td></tr>
+<tr><td><b>2025</b></td><td>$94,335</td><td class='pos'>+9.9%</td><td class='pos'>$+9,385</td><td><b>$103,720</b></td><td class='pos'><b>+937.2%</b></td></tr>
+<tr><td><b>2026</b></td><td>$103,720</td><td class='neg'>-5.2%</td><td class='neg'>$-5,439</td><td><b>$98,281</b></td><td class='pos'><b>+882.8%</b></td></tr>
+<tr class='totals'><td>النهائي (9 سنوات)</td><td>$10,000 بداية</td><td>CAGR +28.9%/سنة</td><td>$+88,281</td><td><b>$98,281</b></td><td><b>+883%</b></td></tr>
 </tbody></table></div>
 <div id='yr-chart' style='height:400px;'></div>
 <script>
