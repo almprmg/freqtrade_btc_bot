@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang='ar' dir='rtl'><head><meta charset='UTF-8'>
+<title>الاستراتيجيات المحفوظة — Shelf Dashboard</title>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<style>
+body{font-family:Arial,sans-serif;background:#0a0e1a;color:#e0e6f0;margin:0;padding:20px;}
+h1{color:#f39c12;border-bottom:3px solid #f39c12;padding-bottom:10px;}
+h2{color:#48c9b0;margin-top:30px;}
+.sumbox{background:#1a2332;border-radius:8px;padding:20px;margin:20px 0;border-left:4px solid #f39c12;}
+.tag-legacy{background:#3498db;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;}
+.tag-proto{background:#e67e22;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;}
+.tag-signal{background:#9b59b6;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;}
+table{width:100%;border-collapse:collapse;margin:15px 0;background:#1a2332;}
+th{background:#2c3e50;padding:12px;text-align:right;border:1px solid #34495e;color:#5dade2;}
+td{padding:10px;border:1px solid #34495e;text-align:right;}
+tr:nth-child(even){background:#222d3e;}
+tr:hover{background:#2c3e50;}
+.pos{color:#2ecc71;font-weight:bold;}
+.star{color:#f1c40f;font-size:1.2em;}
+.filter-bar button{background:#34495e;color:white;border:none;padding:8px 16px;margin:5px;border-radius:4px;cursor:pointer;}
+.filter-bar button.active{background:#3498db;}
+.rec-box{background:#27ae60;color:white;padding:15px;border-radius:8px;margin:20px 0;}
+.rec-box ul{margin:10px 0;}
+</style></head><body>
+<h1>📦 الاستراتيجيات المحفوظة للمستقبل (39)</h1>
+<div class='sumbox'>
+<b>الفلسفة:</b> هذه استراتيجيات نجحت في الـbacktest (CAGR ≥ 2% على 9 سنوات) لكنها <b>ليست منشورة</b> كـsubscription رسمي حاليًا. يمكن ترقيتها للإنتاج أو دمجها مع أخرى أو الإبقاء عليها كـreserve.
+<br><b>التاريخ:</b> 2026-06-09 | <b>العدد الإجمالي:</b> 39
+</div>
+<h2>📈 أفضل 20 — مقارنة CAGR</h2>
+<div id='chart' style='height:500px;'></div>
+<script>
+Plotly.newPlot('chart', [{x: ["Rotation Multi", "BNB Regime Shield SLOW", "AnalogV2 ETH STAR", "Shield SOL (legacy)", "OnChain BTC", "AnalogV2 BTC", "Calendar V2 BTC", "AnalogShield V1 BTC", "Quantum AI", "ADA Meta Adaptive BAL", "DOGE Regime Shield DEFENSIVE", "Macro Shield V1 BTC", "Shield BTC (original)", "DynRebal BTC", "Rebalance BTC", "Adaptive BTC", "3Layer BTC", "DCA Hold BTC", "DynRebal ETH", "volume_profile_poc"], y: [45.9, 42.7, 42.2, 38.4, 36.0, 32.4, 31.6, 31.2, 30.5, 30.0, 28.1, 27.7, 26.0, 22.4, 22.0, 20.3, 20.0, 18.8, 17.5, 15.4], type:'bar', marker:{color: ["#3498db", "#3498db", "#e67e22", "#3498db", "#3498db", "#e67e22", "#e67e22", "#e67e22", "#e67e22", "#3498db", "#3498db", "#e67e22", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#3498db", "#9b59b6"]}, text: ["45.9%", "42.7%", "42.2%", "38.4%", "36.0%", "32.4%", "31.6%", "31.2%", "30.5%", "30.0%", "28.1%", "27.7%", "26.0%", "22.4%", "22.0%", "20.3%", "20.0%", "18.8%", "17.5%", "15.4%"], textposition:'auto'}], {paper_bgcolor:'#0a0e1a', plot_bgcolor:'#1a2332', font:{color:'#e0e6f0'}, xaxis:{tickangle:-45}, yaxis:{title:'CAGR %'}});
+</script>
+<div class='rec-box'>
+<h2 style='margin-top:0;color:white'>🎯 توصيات الترقية للإنتاج (13 استراتيجية)</h2>
+<ul>
+<li><b>Rotation Multi</b> (MULTI) — <b>+45.9%/yr</b> | الحالة: 🔄 Legacy bot</li>
+<li><b>BNB Regime Shield SLOW</b> (BNB) — <b>+42.7%/yr</b> | الحالة: 🔄 Legacy bot</li>
+<li><b>AnalogV2 ETH STAR ⭐</b> (ETH) — <b>+42.2%/yr</b> | الحالة: 🧪 Prototype</li>
+<li><b>Shield SOL (legacy)</b> (SOL) — <b>+38.4%/yr</b> | الحالة: 🔄 Legacy bot</li>
+<li><b>OnChain BTC</b> (BTC) — <b>+36.0%/yr</b> | الحالة: 🔄 Legacy bot</li>
+<li><b>AnalogV2 BTC</b> (BTC) — <b>+32.4%/yr</b> | الحالة: 🧪 Prototype</li>
+<li><b>Calendar V2 BTC</b> (BTC) — <b>+31.6%/yr</b> | الحالة: 🧪 Prototype</li>
+<li><b>AnalogShield V1 BTC</b> (BTC) — <b>+31.2%/yr</b> | الحالة: 🧪 Prototype</li>
+</ul></div>
+<h2>📋 الجدول الكامل</h2>
+<div class='filter-bar'>
+<button onclick='filt("all")' class='active' id='b-all'>الكل</button>
+<button onclick='filt("legacy_bot")' id='b-legacy_bot'>🔄 Legacy</button>
+<button onclick='filt("prototype")' id='b-prototype'>🧪 Prototype</button>
+<button onclick='filt("signal")' id='b-signal'>📡 Signal</button>
+</div>
+<table id='maintbl'>
+<thead><tr><th>#</th><th>الاستراتيجية</th><th>الفئة</th><th>عملة</th><th>TF</th><th>$10K → 9y</th><th>CAGR</th><th>صفقات</th><th>سنوات</th></tr></thead><tbody>
+<tr data-kind='legacy_bot'><td>1</td><td><b>Rotation Multi</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>MULTI</td><td>1d</td><td>$298,669</td><td class='pos'>+45.9%/yr</td><td>110</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>2</td><td><b>BNB Regime Shield SLOW</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BNB</td><td>1d</td><td>$244,999</td><td class='pos'>+42.7%/yr</td><td>13</td><td>9</td></tr>
+<tr data-kind='prototype'><td>3</td><td><b>AnalogV2 ETH STAR</b> <span class='star'>⭐</span></td><td><span class='tag-proto'>Prototype</span></td><td>ETH</td><td>1d</td><td>$237,431</td><td class='pos'>+42.2%/yr</td><td>27</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>4</td><td><b>Shield SOL (legacy)</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>SOL</td><td>1d</td><td>$185,704</td><td class='pos'>+38.4%/yr</td><td>10</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>5</td><td><b>OnChain BTC</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$159,585</td><td class='pos'>+36.0%/yr</td><td>34</td><td>9</td></tr>
+<tr data-kind='prototype'><td>6</td><td><b>AnalogV2 BTC</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$124,991</td><td class='pos'>+32.4%/yr</td><td>30</td><td>9</td></tr>
+<tr data-kind='prototype'><td>7</td><td><b>Calendar V2 BTC</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$118,208</td><td class='pos'>+31.6%/yr</td><td>30</td><td>9</td></tr>
+<tr data-kind='prototype'><td>8</td><td><b>AnalogShield V1 BTC</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$115,131</td><td class='pos'>+31.2%/yr</td><td>30</td><td>9</td></tr>
+<tr data-kind='prototype'><td>9</td><td><b>Quantum AI</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$109,529</td><td class='pos'>+30.5%/yr</td><td>32</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>10</td><td><b>ADA Meta Adaptive BAL</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>ADA</td><td>1d</td><td>$105,790</td><td class='pos'>+30.0%/yr</td><td>21</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>11</td><td><b>DOGE Regime Shield DEFENSIVE</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>DOGE</td><td>1d</td><td>$93,121</td><td class='pos'>+28.1%/yr</td><td>21</td><td>9</td></tr>
+<tr data-kind='prototype'><td>12</td><td><b>Macro Shield V1 BTC</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$90,431</td><td class='pos'>+27.7%/yr</td><td>32</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>13</td><td><b>Shield BTC (original)</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$80,126</td><td class='pos'>+26.0%/yr</td><td>15</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>14</td><td><b>DynRebal BTC</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$61,584</td><td class='pos'>+22.4%/yr</td><td>9</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>15</td><td><b>Rebalance BTC</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$60,063</td><td class='pos'>+22.0%/yr</td><td>9</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>16</td><td><b>Adaptive BTC</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$52,594</td><td class='pos'>+20.3%/yr</td><td>9</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>17</td><td><b>3Layer BTC</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$51,736</td><td class='pos'>+20.0%/yr</td><td>65</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>18</td><td><b>DCA Hold BTC</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>BTC</td><td>1d</td><td>$47,155</td><td class='pos'>+18.8%/yr</td><td>9</td><td>9</td></tr>
+<tr data-kind='legacy_bot'><td>19</td><td><b>DynRebal ETH</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>ETH</td><td>1d</td><td>$42,760</td><td class='pos'>+17.5%/yr</td><td>9</td><td>9</td></tr>
+<tr data-kind='signal'><td>20</td><td><b>volume_profile_poc</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$20,500</td><td class='pos'>+15.4%/yr</td><td>985</td><td>5</td></tr>
+<tr data-kind='legacy_bot'><td>21</td><td><b>AVAX Meta Adaptive RELAX</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>AVAX</td><td>1d</td><td>$32,838</td><td class='pos'>+14.1%/yr</td><td>16</td><td>9</td></tr>
+<tr data-kind='signal'><td>22</td><td><b>self_aware_trend_15m</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>15m</td><td>$18,920</td><td class='pos'>+13.6%/yr</td><td>1915</td><td>5</td></tr>
+<tr data-kind='signal'><td>23</td><td><b>supertrend</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$17,896</td><td class='pos'>+12.3%/yr</td><td>13</td><td>5</td></tr>
+<tr data-kind='signal'><td>24</td><td><b>blender_v2</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$16,079</td><td class='pos'>+10.0%/yr</td><td>5</td><td>5</td></tr>
+<tr data-kind='prototype'><td>25</td><td><b>Breakout Boss</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$22,881</td><td class='pos'>+9.6%/yr</td><td>26</td><td>9</td></tr>
+<tr data-kind='signal'><td>26</td><td><b>buy_the_dip_grid</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$15,754</td><td class='pos'>+9.5%/yr</td><td>5</td><td>5</td></tr>
+<tr data-kind='legacy_bot'><td>27</td><td><b>DynRebal SOL</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>SOL</td><td>1d</td><td>$22,305</td><td class='pos'>+9.3%/yr</td><td>9</td><td>9</td></tr>
+<tr data-kind='signal'><td>28</td><td><b>liquidity_pools_pro</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$15,493</td><td class='pos'>+9.2%/yr</td><td>1787</td><td>5</td></tr>
+<tr data-kind='signal'><td>29</td><td><b>donchian_breakout</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$14,979</td><td class='pos'>+8.4%/yr</td><td>558</td><td>5</td></tr>
+<tr data-kind='signal'><td>30</td><td><b>liquidity_intelligence_15m</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>15m</td><td>$14,463</td><td class='pos'>+7.7%/yr</td><td>481</td><td>5</td></tr>
+<tr data-kind='legacy_bot'><td>31</td><td><b>MetaAdaptive LINK</b> </td><td><span class='tag-legacy'>Legacy</span></td><td>LINK</td><td>1d</td><td>$17,242</td><td class='pos'>+6.2%/yr</td><td>30</td><td>9</td></tr>
+<tr data-kind='signal'><td>32</td><td><b>trend_confirm_atr</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$13,477</td><td class='pos'>+6.1%/yr</td><td>553</td><td>5</td></tr>
+<tr data-kind='signal'><td>33</td><td><b>liquidity_intelligence_4h</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>4h</td><td>$15,347</td><td class='pos'>+4.9%/yr</td><td>133</td><td>9</td></tr>
+<tr data-kind='signal'><td>34</td><td><b>trendline_break</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$11,968</td><td class='pos'>+3.7%/yr</td><td>1202</td><td>5</td></tr>
+<tr data-kind='signal'><td>35</td><td><b>volume_breakout</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$11,870</td><td class='pos'>+3.5%/yr</td><td>81</td><td>5</td></tr>
+<tr data-kind='signal'><td>36</td><td><b>blender</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$11,521</td><td class='pos'>+2.9%/yr</td><td>86</td><td>5</td></tr>
+<tr data-kind='signal'><td>37</td><td><b>tension_flow_trend</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$11,429</td><td class='pos'>+2.7%/yr</td><td>347</td><td>5</td></tr>
+<tr data-kind='signal'><td>38</td><td><b>keltner_channels</b> </td><td><span class='tag-signal'>Signal</span></td><td>BTC</td><td>1h</td><td>$11,245</td><td class='pos'>+2.4%/yr</td><td>708</td><td>5</td></tr>
+<tr data-kind='prototype'><td>39</td><td><b>Bounce Scalper 1d</b> </td><td><span class='tag-proto'>Prototype</span></td><td>BTC</td><td>1d</td><td>$11,998</td><td class='pos'>+2.0%/yr</td><td>13</td><td>9</td></tr>
+</tbody></table>
+<script>
+function filt(k){document.querySelectorAll('#maintbl tbody tr').forEach(r=>r.style.display=(k==='all'||r.dataset.kind===k)?'':'none');document.querySelectorAll('.filter-bar button').forEach(b=>b.classList.remove('active'));document.getElementById('b-'+k).classList.add('active');}
+</script>
+</body></html>
