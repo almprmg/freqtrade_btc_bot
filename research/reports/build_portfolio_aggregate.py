@@ -31,7 +31,7 @@ ACTIVE = {
     "Triple Regime BNB (#103)":("#103", "BNB"),
     "Triple Regime ADA (#104)":("#104", "ADA"),
     "Calendar ETH (#105)":     ("#105", "ETH"),
-    "Calendar BNB (#106)":     ("#106", "BNB"),
+    # "Calendar BNB (#106)":   EXCLUDED — one trade lost -$16K (-33.7%), too volatile
     "Macro V2 BTC (#108)":     ("#108", "BTC"),
     "AnalogV2 BTC":            ("#109", "BTC"),
     "AnalogV2 ETH STAR":       ("#110", "ETH ⭐"),
@@ -104,8 +104,8 @@ def main():
         ".heatmap-cell{padding:8px 12px;text-align:center;}",
         "table.heatmap{font-size:0.9em;}",
         "</style></head><body>",
-        "<h1>📊 تجميع المحفظة الكاملة — 16 استراتيجية نشطة</h1>",
-        f"<p><b>التاريخ:</b> 2026-06-09 | <b>إجمالي الصفقات:</b> {len(trades):,} | <b>الاستراتيجيات:</b> {trades['strategy_label'].nunique()}</p>",
+        "<h1>📊 تجميع المحفظة — 15 استراتيجية (بدون Calendar BNB)</h1>",
+        f"<p><b>التاريخ:</b> 2026-06-09 | <b>إجمالي الصفقات:</b> {len(trades):,} | <b>الاستراتيجيات:</b> {trades['strategy_label'].nunique()} | <b>مستثناة:</b> Calendar BNB (#106) — أسوأ صفقة -$16K</p>",
     ]
 
     # Overall KPIs
