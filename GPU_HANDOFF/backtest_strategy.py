@@ -57,8 +57,9 @@ def _sigmoid(x, k=SIGMOID_K):
     return 1.0 / (1.0 + np.exp(-k * x))
 
 
-def ai_target(df, use_analog: bool):
-    """Replicate BtcAnalogV3Strategy.populate_indicators -> ai_target."""
+def ai_target(df, use_analog: bool, w_analog: float = W_ANALOG):
+    """Replicate BtcAnalogV3Strategy.populate_indicators -> ai_target.
+    w_analog scales the LSTM tilt (tuning knob)."""
     d = df["date"].dt.normalize()
     close = df["close"]
     ema200 = ema_ind(close, 200)
@@ -88,7 +89,7 @@ def ai_target(df, use_analog: bool):
         rm = df["lstm_pred"].rolling(LSTM_Z_WINDOW, min_periods=20).mean()
         rs = df["lstm_pred"].rolling(LSTM_Z_WINDOW, min_periods=20).std().replace(0, np.nan)
         z = ((df["lstm_pred"] - rm) / rs).fillna(0.0)
-        analog_tilt = (W_ANALOG * np.tanh(z)).clip(-0.25, 0.25)
+        analog_tilt = (w_analog * np.tanh(z)).clip(-0.45, 0.45)
 
     dt = df["date"].dt
     cal = ((dt.month == 10) * CAL["oct"] + (dt.month == 7) * CAL["jul"] + (dt.month == 1) * CAL["jan"]
@@ -139,6 +140,28 @@ def metrics(ret):
     nz = ret[ret != 0]
     wr = (nz > 0).mean() if len(nz) else float("nan")
     return {"cagr": cagr, "sharpe": sharpe, "maxdd": dd, "wr": wr}
+
+
+def load_coin_signal(coin):
+    ohlcv = DATA / "binance" / f"{coin}_USDT-1d.feather"
+    sig = DATA / f"dl_signals_lstm_{coin}.feather"
+    if not ohlcv.exists() or not sig.exists():
+        return None
+    df = pd.read_feather(ohlcv)[["date", "open", "high", "low", "close", "volume"]]
+    df["date"] = pd.to_datetime(df["date"], utc=True)
+    s = pd.read_feather(sig)[["date", "lstm_pred_fwd30"]].rename(columns={"lstm_pred_fwd30": "lstm_pred"})
+    s["date"] = pd.to_datetime(s["date"], utc=True)
+    return df.merge(s, on="date", how="left").sort_values("date").reset_index(drop=True)
+
+
+def coin_strat_returns(coin, w_analog=W_ANALOG, use_analog=True):
+    """Daily strategy returns (with fees) for a coin under a given AI weight."""
+    df = load_coin_signal(coin)
+    if df is None:
+        return None, None, 0
+    tgt, rc, mr = ai_target(df, use_analog, w_analog)
+    sret, ntr = simulate(df, tgt, rc, mr)
+    return df, sret, ntr
 
 
 def run_coin(coin):
