@@ -11,12 +11,25 @@
 ```
 أنت Claude يكمل مشروع تداول كبير من جهاز آخر (CPU). الآن انت على جهاز GPU.
 
+# 🎯 الهدف الأول (مهم جدًا)
+
+**نريد تحسين الاستراتيجيات الموجودة (15 منشورة + 39 محفوظة)، لا بناء جديد.**
+
+التحديد: استخدام Deep Learning لرفع correlation الـHistorical Analogs
+من KNN +0.06 إلى LSTM +0.15-0.25، ثم بناء AnalogV3 أقوى من AnalogV2.
+
+اقرأ `GPU_HANDOFF/MISSION.md` للتفاصيل الكاملة + KPIs النجاح.
+
 # 📚 اقرأ أولاً (مهم — لا تتخطّى)
 
-1. اقرأ `CLAUDE.md` في الـroot
-2. اقرأ `GPU_HANDOFF/CONTEXT_FOR_GPU_AI.md` — يحتوي ملخّص ما عمل Claude السابق
-3. راجع `C:\Users\<name>\.claude\projects\d--pythone-trad-system\memory\MEMORY.md` — 8 ذاكرات
-4. تذكّر الـ15 Skill المتاحة (strategy-architect, bot-builder, strategy-critic، إلخ)
+1. **`GPU_HANDOFF/MISSION.md`** — الهدف بالضبط، ما نريد وما لا نريد
+2. `GPU_HANDOFF/CONTEXT_FOR_GPU_AI.md` — ما عمل Claude السابق
+3. `research/reports/ACTIVE_STRATEGIES_DETAIL.html` — الـ15 المنشورة + سنوي/شهري
+4. `research/reports/PORTFOLIO_AGGREGATE.html` — المحفظة المجمّعة ($10K → $102K)
+5. `research/reports/COMPREHENSIVE_REPORT.md` — كل الـ92 استراتيجية المختبرة
+6. `research/reports/HISTORICAL_ANALOGS_REPORT.md` — كيف بنينا AnalogV2 (KNN)
+7. راجع `~/.claude/projects/d--pythone-trad-system/memory/MEMORY.md` — 8 ذاكرات
+8. تذكّر الـ15 Skill المتاحة (strategy-architect, bot-builder, strategy-critic، إلخ)
 
 # 🎯 من أنا (الـuser)
 
