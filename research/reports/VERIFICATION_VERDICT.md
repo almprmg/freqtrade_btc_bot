@@ -57,6 +57,27 @@ XRP −57→−33, DOGE −60→**−19.5**. Drawdown ~halved, Sharpe preserved,
 significant → a real risk-adjusted improvement (lower CAGR is the expected cost
 of de-risking). WF signals cached in `trading_results/wf_signal_*.feather`.
 
+## AI as overlay vs no-AI base — the decisive test
+
+Using the cached purged-WF signals, compared the AI against a NO-AI base
+(just the regime/macro gate, "regimeLong"), all vol-targeted + real costs:
+
+| Variant | Portfolio CAGR | Sharpe | maxDD |
+|---|---|---|---|
+| **regimeLong (NO AI)** | **+40.6%** | **1.12** | −47% |
+| aiStandalone | +21% | 1.12 | −23.5% |
+| ovlMult (overlay) | +21% | 1.12 | −23.5% |
+| ovlGate | +18.5% | 0.99 | −24% |
+| buy&hold | +38% | 0.97 | −58% |
+
+**Decisive finding: the AI adds NO risk-adjusted value over the no-AI regime
+base.** regimeLong matches the AI's Sharpe (1.12) at HIGHER return. The AI's only
+effect is de-risking (lower DD + lower CAGR) — which plain vol-targeting already
+delivers. **Root cause: the LSTM was trained on the SAME macro+halving features
+the regime filter uses, so its signal is largely REDUNDANT** (confirms the
+strategy-critic redundancy flag). To add value the AI needs ORTHOGONAL inputs
+(microstructure / on-chain / sentiment); daily macro re-encoding is not enough.
+
 ## Next levers (honest, to actually improve risk-adjusted return)
 - Position cap / vol-targeting to cut the −60% drawdowns.
 - Walk-forward signals for ALL reports (stop trusting single-split numbers).
