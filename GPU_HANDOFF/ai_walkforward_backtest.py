@@ -98,6 +98,8 @@ def wf_signal(coin):
 
 def backtest(coin, sig):
     df = dl.load_coin(coin); df = dl.build_features(df); df = dl.add_macro(df); df = dl.add_halving(df)
+    sig = sig.copy()
+    sig["date"] = pd.to_datetime(sig["date"], utc=True)
     df = df.merge(sig, on="date", how="inner").sort_values("date").reset_index(drop=True)
     z = ((df["lstm_pred"] - df["lstm_pred"].rolling(ZW, min_periods=20).mean())
          / df["lstm_pred"].rolling(ZW, min_periods=20).std().replace(0, np.nan)).fillna(0.0)
