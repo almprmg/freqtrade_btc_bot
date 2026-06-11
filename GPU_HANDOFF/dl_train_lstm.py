@@ -59,17 +59,59 @@ def load_coin(coin: str) -> pd.DataFrame:
     return df
 
 
+# --- Pure-pandas indicators (TA-Lib's compiled DLL is blocked by Windows
+#     Application Control on this GPU machine, so we reimplement the four
+#     indicators build_features needs using Wilder smoothing). ---
+
+def _wilder(s: pd.Series, period: int) -> pd.Series:
+    """Wilder's RMA — the recursive smoothing TA-Lib uses for RSI/ATR/ADX."""
+    return s.ewm(alpha=1 / period, adjust=False, min_periods=period).mean()
+
+
+def ema(close: pd.Series, period: int) -> pd.Series:
+    return close.ewm(span=period, adjust=False, min_periods=period).mean()
+
+
+def rsi(close: pd.Series, period: int = 14) -> pd.Series:
+    delta = close.diff()
+    gain = delta.clip(lower=0.0)
+    loss = (-delta).clip(lower=0.0)
+    rs = _wilder(gain, period) / _wilder(loss, period)
+    return 100 - 100 / (1 + rs)
+
+
+def atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
+    prev_close = df["close"].shift(1)
+    tr = pd.concat([
+        df["high"] - df["low"],
+        (df["high"] - prev_close).abs(),
+        (df["low"] - prev_close).abs(),
+    ], axis=1).max(axis=1)
+    return _wilder(tr, period)
+
+
+def adx(df: pd.DataFrame, period: int = 14) -> pd.Series:
+    up = df["high"].diff()
+    down = -df["low"].diff()
+    plus_dm = pd.Series(((up > down) & (up > 0)) * up, index=df.index).clip(lower=0.0)
+    minus_dm = pd.Series(((down > up) & (down > 0)) * down, index=df.index).clip(lower=0.0)
+    tr = atr(df, period)
+    plus_di = 100 * _wilder(plus_dm, period) / tr
+    minus_di = 100 * _wilder(minus_dm, period) / tr
+    dx = 100 * (plus_di - minus_di).abs() / (plus_di + minus_di).replace(0, np.nan)
+    return _wilder(dx, period)
+
+
 def build_features(df: pd.DataFrame) -> pd.DataFrame:
-    import talib.abstract as ta
     df = df.copy()
     df["ret_1d"] = df["close"].pct_change(1)
     df["ret_7d"] = df["close"].pct_change(7)
     df["ret_30d"] = df["close"].pct_change(30)
-    df["ema200"] = ta.EMA(df, timeperiod=200)
+    df["ema200"] = ema(df["close"], 200)
     df["above_ema200_pct"] = (df["close"] - df["ema200"]) / df["ema200"]
-    df["rsi"] = ta.RSI(df, timeperiod=14)
-    df["adx"] = ta.ADX(df, timeperiod=14)
-    df["atr"] = ta.ATR(df, timeperiod=14)
+    df["rsi"] = rsi(df["close"], 14)
+    df["adx"] = adx(df, 14)
+    df["atr"] = atr(df, 14)
     df["atr_pct"] = df["atr"] / df["close"]
     df["fwd_30d_ret"] = df["close"].pct_change(FWD_HORIZON).shift(-FWD_HORIZON)
     return df
@@ -164,9 +206,12 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
     df = add_halving(df)
     print(f"  Rows after feature build: {len(df)}")
 
-    # Normalize features
-    feat_mean = df[FEATURE_COLS].mean()
-    feat_std = df[FEATURE_COLS].std().replace(0, 1)
+    # Normalize features — fit the scaler on the TRAIN portion only (no
+    # val-period leakage). make_sequences drops NaN rows, so mirror that here.
+    valid = df.dropna(subset=FEATURE_COLS + ["fwd_30d_ret"]).reset_index(drop=True)
+    split_row = int(len(valid) * (1 - val_split))
+    feat_mean = valid[FEATURE_COLS].iloc[:split_row].mean()
+    feat_std = valid[FEATURE_COLS].iloc[:split_row].std().replace(0, 1)
     df[FEATURE_COLS] = (df[FEATURE_COLS] - feat_mean) / feat_std
 
     # Sequences
@@ -182,14 +227,19 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
     train_loader = DataLoader(SeqDataset(X_tr, y_tr), batch_size=batch, shuffle=True)
     val_loader = DataLoader(SeqDataset(X_val, y_val), batch_size=batch, shuffle=False)
 
-    # Model
-    model = LstmAnalogModel(input_dim=len(FEATURE_COLS)).to(DEVICE)
-    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
+    # Model (dropout 0.3 + weight_decay 3e-4 to curb the overfitting seen in v0)
+    model = LstmAnalogModel(input_dim=len(FEATURE_COLS), dropout=0.3).to(DEVICE)
+    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
     loss_fn = nn.MSELoss()
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
 
     history = []
     best_val = float("inf")
+    corr_at_best = 0.0       # val_corr at the best-val_loss epoch (what we ship)
+    best_corr = -1.0         # best val_corr seen anywhere (diagnostic)
+    best_epoch = 0
+    patience = 12            # early-stop if val_loss stalls this many epochs
+    no_improve = 0
 
     for ep in range(epochs):
         # Train
@@ -227,10 +277,14 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
             "epoch": ep, "train_loss": tr_loss, "val_loss": val_loss, "val_corr": val_corr,
             "lr": sched.get_last_lr()[0],
         })
-        print(f"  Epoch {ep+1:>3}/{epochs}  train={tr_loss:.6f}  val={val_loss:.6f}  corr={val_corr:+.4f}")
-
+        best_corr = max(best_corr, val_corr)
+        flag = ""
         if val_loss < best_val:
             best_val = val_loss
+            corr_at_best = val_corr
+            best_epoch = ep + 1
+            no_improve = 0
+            flag = " *"
             torch.save({
                 "model_state": model.state_dict(),
                 "feat_mean": feat_mean.to_dict(),
@@ -238,18 +292,27 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
                 "seq_len": SEQ_LEN,
                 "feature_cols": FEATURE_COLS,
             }, MODELS_DIR / f"lstm_v1_{coin}.pt")
+        else:
+            no_improve += 1
+        print(f"  Epoch {ep+1:>3}/{epochs}  train={tr_loss:.6f}  val={val_loss:.6f}  corr={val_corr:+.4f}{flag}")
+
+        if no_improve >= patience:
+            print(f"  Early stop: val_loss stalled {patience} epochs (best @ epoch {best_epoch}).")
+            break
 
     # Save metrics
     with open(MODELS_DIR / f"lstm_v1_{coin}_metrics.json", "w") as f:
         json.dump({
             "coin": coin, "seq_len": SEQ_LEN, "epochs": epochs, "batch": batch,
-            "best_val_loss": best_val, "history": history,
-            "final_corr": history[-1]["val_corr"],
+            "best_val_loss": best_val, "best_epoch": best_epoch,
+            "corr_at_best_val_loss": corr_at_best, "best_val_corr": best_corr,
+            "history": history,
         }, f, indent=2)
 
     print(f"\n=== Done ===")
-    print(f"Best val loss: {best_val:.6f}")
-    print(f"Final correlation: {history[-1]['val_corr']:+.4f}  (KNN baseline: +0.06)")
+    print(f"Best val loss: {best_val:.6f} @ epoch {best_epoch}")
+    print(f"Shipped correlation (at best checkpoint): {corr_at_best:+.4f}")
+    print(f"Best val correlation seen:                {best_corr:+.4f}  (KNN baseline: +0.06)")
     print(f"Saved: {MODELS_DIR / f'lstm_v1_{coin}.pt'}")
 
 

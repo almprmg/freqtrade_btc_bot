@@ -1,4 +1,4 @@
-# setup_gpu.ps1 — One-shot setup for GPU machine (Windows + PowerShell)
+# setup_gpu.ps1 - One-shot setup for GPU machine (Windows + PowerShell)
 # Run from the freqtrade_btc_bot directory after git clone.
 #
 # Usage: powershell -ExecutionPolicy Bypass -File GPU_HANDOFF/setup_gpu.ps1
@@ -46,13 +46,15 @@ Write-Host "Step 4: Installing PyTorch with CUDA 12.1..." -ForegroundColor Yello
 pip install --quiet torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
 # Verify CUDA available
-$cudaOk = python -c "import torch; print(torch.cuda.is_available())" 2>$null
-if ($cudaOk -ne "True") {
+# Note: take the LAST output line — a missing VC++ redist prints a benign
+# warning to stdout that would otherwise pollute the comparison.
+$cudaOk = (python -c "import torch; print(torch.cuda.is_available())" 2>$null | Select-Object -Last 1)
+if ("$cudaOk".Trim() -ne "True") {
     Write-Host "ERROR: PyTorch installed but CUDA not available!" -ForegroundColor Red
     Write-Host "Run: python -c `"import torch; print(torch.version.cuda)`"" -ForegroundColor Yellow
     exit 1
 }
-$gpuName = python -c "import torch; print(torch.cuda.get_device_name(0))"
+$gpuName = (python -c "import torch; print(torch.cuda.get_device_name(0))" 2>$null | Select-Object -Last 1)
 Write-Host "GPU recognized: $gpuName" -ForegroundColor Green
 Write-Host ""
 
@@ -86,25 +88,27 @@ if (Test-Path "pyproject.toml") {
 
 # Step 8: Verify all imports
 Write-Host "Step 8: Verifying critical imports..." -ForegroundColor Yellow
-python -c @"
+$verify = @'
 import sys
 errors = []
-for mod in ['torch', 'pandas', 'numpy', 'sklearn', 'lightning', 'talib']:
+for mod in ["torch", "pandas", "numpy", "sklearn", "lightning", "talib"]:
     try:
         __import__(mod)
-        print(f'  OK  {mod}')
+        print(f"  OK  {mod}")
     except ImportError as e:
-        print(f'  FAIL {mod}: {e}')
+        print(f"  FAIL {mod}: {e}")
         errors.append(mod)
 import torch
-print(f'\nPyTorch: {torch.__version__}')
-print(f'CUDA: {torch.cuda.is_available()}, GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else "none"}')
-print(f'VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB' if torch.cuda.is_available() else '')
+print(f"PyTorch: {torch.__version__}")
+print(f"CUDA: {torch.cuda.is_available()}, GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'none'}")
+if torch.cuda.is_available():
+    print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
 sys.exit(1 if errors else 0)
-"@
+'@
+python -c $verify
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Some imports failed — review above." -ForegroundColor Red
+    Write-Host "Some imports failed - review above." -ForegroundColor Red
     exit 1
 }
 
