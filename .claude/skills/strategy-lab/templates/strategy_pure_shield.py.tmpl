@@ -1,0 +1,162 @@
+"""{{ ClassName }}Strategy — Pure Shield template.
+
+Hypothesis: {{ hypothesis }}
+
+Pure Shield uses 3 indicators only:
+  close > EMA200      → uptrend confirmation
+  ret_30d > 5%        → momentum
+  ADX > 20            → trend strength (not chop)
+
+Regime confirmed only when ALL 3 agree for N consecutive days.
+BEAR: close < EMA200 AND ret_30d < -10%.
+
+Use this template when:
+  - Coin has annualized vol < 80% (BTC, ETH, BNB, DOGE, ADA-like)
+  - You want a clean baseline before adding complexity
+  - The hypothesis is "regime detection improves over HODL/DCA"
+
+For high-vol coins (SOL, AVAX), use strategy_vol_shield.py.tmpl instead.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import talib.abstract as ta
+from freqtrade.persistence import Trade
+from freqtrade.strategy import IStrategy
+
+
+def _load_aux(name: str):
+    candidates = [
+        Path("/freqtrade/user_data/data") / name,
+        Path(__file__).resolve().parents[1] / "data" / name,
+        Path(__file__).resolve().parents[2] / "user_data" / "data" / name,
+    ]
+    for p in candidates:
+        if p.exists():
+            try:
+                df = pd.read_feather(p)
+                if "date" in df.columns:
+                    df["date"] = pd.to_datetime(df["date"], utc=True)
+                    df = df.set_index("date").sort_index()
+                return df
+            except Exception:
+                continue
+    return pd.DataFrame()
+
+
+_ANOMALY = _load_aux("anomaly_flags.feather")
+
+# {{ ClassName }} TUNING — adjust per coin
+COIN = "{{ COIN }}"           # e.g. "BTC", "ETH"
+N_CONFIRM = {{ n_confirm }}    # 3 for BTC/ETH/BNB, 4 for DOGE, 5 for SOL/AVAX
+TARGET_PCT = 0.75              # 75% of wallet during BULL
+
+
+class {{ ClassName }}Strategy(IStrategy):
+    INTERFACE_VERSION: int = 3
+    timeframe: str = "1d"
+    can_short: bool = False
+    process_only_new_candles: bool = True
+
+    minimal_roi: dict = {"0": 10.0}
+    stoploss: float = -0.99
+    use_custom_stoploss: bool = False
+    position_adjustment_enable: bool = True
+    max_entry_position_adjustment: int = 5000
+    use_exit_signal: bool = True
+    exit_profit_only: bool = False
+    startup_candle_count: int = 220
+
+    order_types = {"entry": "limit", "exit": "limit",
+                   "stoploss": "limit", "stoploss_on_exchange": False}
+
+    def populate_indicators(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        df = dataframe.copy()
+        df["ema200"] = ta.EMA(df, timeperiod=200)
+        df["adx"] = ta.ADX(df, timeperiod=14)
+        df["ret_30d"] = df["close"].pct_change(30)
+
+        bull = (df["close"] > df["ema200"]) & (df["ret_30d"] > 0.05) & (df["adx"] > 20)
+        bear = (df["close"] < df["ema200"]) & (df["ret_30d"] < -0.10)
+        rcode = pd.Series(0.0, index=df.index)
+        rcode[bull] = 1.0
+        rcode[bear] = -1.0
+        rmin = rcode.rolling(N_CONFIRM, min_periods=N_CONFIRM).min()
+        rmax = rcode.rolling(N_CONFIRM, min_periods=N_CONFIRM).max()
+        stable = rmin == rmax
+        df["regime_confirmed_code"] = rcode.where(stable, other=pd.NA).ffill().fillna(0)
+        df["regime_confirmed"] = df["regime_confirmed_code"].map({1.0: "BULL", -1.0: "BEAR", 0.0: "NEUTRAL"})
+
+        df["anomaly"] = 0
+        if not _ANOMALY.empty:
+            coin_anom = _ANOMALY[_ANOMALY["coin"] == COIN][["is_anomaly"]] \
+                       if "coin" in _ANOMALY.columns else _ANOMALY
+            d = pd.to_datetime(df["date"], utc=True).dt.normalize()
+            df["anomaly"] = d.map(coin_anom["is_anomaly"]).fillna(0).astype(int)
+
+        df["target"] = 0.0
+        df.loc[df["regime_confirmed"] == "BULL", "target"] = TARGET_PCT
+        df.loc[df["anomaly"] == 1, "target"] = 0.0
+        return df
+
+    def populate_entry_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        df = dataframe
+        enter = df["ema200"].notna() & (df["regime_confirmed"] == "BULL") & (df["target"] > 0.1)
+        df.loc[enter, "enter_long"] = 1
+        df.loc[enter, "enter_tag"] = "{{ tag }}"
+        return df
+
+    def populate_exit_trend(self, dataframe: pd.DataFrame, metadata: dict) -> pd.DataFrame:
+        df = dataframe
+        exit_cond = (df["regime_confirmed"] != "BULL") | (df["anomaly"] == 1)
+        df.loc[exit_cond, "exit_long"] = 1
+        df.loc[exit_cond, "exit_tag"] = "{{ tag }}:exit"
+        return df
+
+    def custom_stake_amount(self, pair, current_time, current_rate, proposed_stake,
+                            min_stake, max_stake, leverage, entry_tag, side, **kwargs):
+        df, _ = self.dp.get_analyzed_dataframe(pair=pair, timeframe=self.timeframe)
+        if df is None or df.empty:
+            return float(proposed_stake)
+        target = float(df.iloc[-1]["target"])
+        if max_stake and max_stake > 0:
+            return float(max_stake) * max(target, 0.0)
+        return float(proposed_stake)
+
+    def adjust_trade_position(self, trade, current_time, current_rate, current_profit,
+                              min_stake, max_stake, current_entry_rate, current_exit_rate,
+                              current_entry_profit, current_exit_profit, **kwargs):
+        df, _ = self.dp.get_analyzed_dataframe(pair=trade.pair, timeframe=self.timeframe)
+        if df is None or df.empty:
+            return None
+        last = df.iloc[-1]
+        target = float(last["target"])
+        if target <= 0.10:
+            return None
+        qty = float(trade.amount or 0)
+        value = qty * float(current_rate)
+        usdt_free = float(self.wallets.get_free(trade.stake_currency) or 0.0)
+        total = value + usdt_free
+        if total <= 0:
+            return None
+        target_value = target * total
+        drift = value - target_value
+        if drift < -0.05 * total and usdt_free > 1:
+            buy = min(-drift, usdt_free * 0.99)
+            if max_stake and max_stake > 0:
+                buy = min(buy, max_stake)
+            if min_stake and buy < min_stake:
+                return None
+            return float(buy)
+        if drift > 0.10 * total:
+            sell = min(drift, value * 0.99)
+            if min_stake and sell < min_stake:
+                return None
+            return -float(sell)
+        return None
+
+
+__all__ = ["{{ ClassName }}Strategy"]
