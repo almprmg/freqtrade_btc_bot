@@ -1,0 +1,42 @@
+-- {{ ClassName }}Strategy deployment
+-- Hypothesis: {{ hypothesis }}
+-- Backtest: {{ backtest_summary }}
+-- Adversarial: {{ adversarial_verdict }}
+
+BEGIN;
+
+INSERT INTO strategies (name, display_name, description, strategy_type,
+                       default_symbol, default_timeframe, default_parameters,
+                       is_active, min_capital) VALUES
+('{{ slug }}',
+ '{{ display_name }}',
+ '{{ description }}',
+ '{{ strategy_type }}',
+ '{{ COIN }}USDT',
+ '1d',
+ NULL,
+ true,
+ 1000);
+
+INSERT INTO user_strategy_subscriptions (user_id, strategy_id,
+                                          exchange_connection_id, trading_symbol,
+                                          timeframe, allocated_capital,
+                                          risk_per_trade_pct, max_open_trades,
+                                          custom_parameters, status) VALUES
+(10,
+ (SELECT id FROM strategies WHERE name='{{ slug }}'),
+ 10,
+ '{{ COIN }}USDT',
+ '1d',
+ {{ wallet_usd }},
+ 1.00,
+ 1,
+ '{"externally_managed": true, "source": "freqtrade_{{ slug }}"}'::jsonb,
+ 'active');
+
+COMMIT;
+
+SELECT id, trading_symbol, allocated_capital,
+       custom_parameters->>'source' AS bot
+FROM user_strategy_subscriptions
+WHERE custom_parameters->>'source' = 'freqtrade_{{ slug }}';

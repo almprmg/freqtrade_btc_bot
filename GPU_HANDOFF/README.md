@@ -1,113 +1,124 @@
-# 🎯 Welcome to the GPU Machine — Quick Start
+# 🚀 GPU Machine — أسهل طريقة (3 أوامر فقط)
 
-You just `git clone`d this repo on a Windows + GPU machine. Follow these
-steps in order to get from zero → first deep-learning model trained.
+> **الهدف:** انقل المشروع لجهاز GPU، خلّي Claude يكمل من حيث توقّفنا.
 
-## 📚 Read these first (5 minutes)
+## ⚡ Quick Start (3 أوامر)
 
-1. **`CONTEXT_FOR_GPU_AI.md`** — what's been done, what we want
-2. **`FUTURE_GPU_TASKS.md` (in `research/reports/`)** — full DL roadmap
-
-## 🚀 Setup (one-time, ~15 minutes)
+### على الجهاز الجديد (Windows + GPU):
 
 ```powershell
-# In freqtrade_btc_bot dir:
-powershell -ExecutionPolicy Bypass -File GPU_HANDOFF\setup_gpu.ps1
+# 1. افتح PowerShell (Win → اكتب PowerShell → Enter)
+
+# 2. انسخ الـrepo
+git clone https://github.com/almprmg/freqtrade_btc_bot.git
+cd freqtrade_btc_bot
+
+# 3. شغّل AUTO_START — يُثبّت كل شيء تلقائيًا
+powershell -ExecutionPolicy Bypass -File GPU_HANDOFF\AUTO_START.ps1
 ```
 
-This installs:
-- PyTorch with CUDA 12.1
-- pandas, sklearn, lightning, transformers
-- freqtrade itself
-- Verifies GPU is recognized
+**سيُنفّذ AUTO_START تلقائيًا:**
+1. ✅ يثبّت Git + Python + Node.js (لو ناقصة)
+2. ✅ يتحقّق من GPU
+3. ✅ ينشئ Python venv + يثبّت PyTorch CUDA + ML stack
+4. ✅ يثبّت Claude Code
+5. ✅ ينسخ **15 Skill** + **8 ذاكرة** إلى `~/.claude/`
+6. ✅ ينشئ `CLAUDE.md` يخبر الـAI الجديد بكل السياق
 
-## 📦 Sync data from CPU machine
+**المدّة:** ~20 دقيقة
 
-Edit `GPU_HANDOFF\sync_data.ps1` — set `$SOURCE_HOST` and `$SOURCE_USER` to your CPU machine. Then:
+---
+
+## 📦 نقل البيانات (يدوي بـUSB - الأسهل)
+
+> **مهم:** بعد ما AUTO_START يكمل، تحتاج تنقل البيانات.
+
+### من الجهاز القديم (CPU)، انسخ على USB:
+
+| المجلد | الحجم تقريبي |
+|---|---|
+| `D:\pythone\freqtrade_btc_bot\user_data\data\` | ~500MB |
+| `D:\pythone\freqtrade_btc_bot\research\experiments\` | ~200MB (اختياري) |
+| `C:\Users\user\.claude\projects\d--pythone-trad-system\*.jsonl` | ~50MB (محادثات Claude) |
+
+### الصق في الجهاز الجديد:
+
+| من USB | إلى |
+|---|---|
+| `user_data\data\` | `D:\projects\freqtrade_btc_bot\user_data\data\` |
+| `research\experiments\` | `D:\projects\freqtrade_btc_bot\research\experiments\` |
+| `*.jsonl` | `C:\Users\<اسمك>\.claude\projects\d--pythone-trad-system\` |
+
+---
+
+## 🤖 شغّل Claude
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File GPU_HANDOFF\sync_data.ps1
-```
-
-This pulls (over SSH/SCP):
-- OHLCV feather files (~500MB)
-- macro_signals, halving_cycle, anomaly_flags
-- All 3500+ backtest experiments
-- Claude Code session history + memory
-
-Alternative if SCP fails:
-- Copy via OneDrive / shared network drive
-- Or USB external drive
-
-## 🧠 First training run
-
-```powershell
-# Activate venv
-.venv\Scripts\Activate.ps1
-
-# Train LSTM on BTC (50 epochs, ~30 min on RTX 3060/12GB)
-python GPU_HANDOFF\dl_train_lstm.py --coin BTC --epochs 50
-
-# Output:
-#   research/dl_models/lstm_v1_BTC.pt           (model weights)
-#   research/dl_models/lstm_v1_BTC_metrics.json  (loss curves + correlation)
-#   user_data/data/dl_signals_lstm_BTC.feather   (per-day signal)
-#   user_data/data/dl_embeddings_lstm_BTC.npz    (60-day embeddings)
-```
-
-**Target metric:** validation correlation ≥ +0.15 (KNN baseline is +0.06).
-
-## 🔁 Multi-coin training
-
-```powershell
-foreach ($coin in @("BTC", "ETH", "SOL", "BNB", "ADA", "XRP", "DOGE")) {
-    python GPU_HANDOFF\dl_train_lstm.py --coin $coin --epochs 50
-}
-```
-
-## 🤖 Resume Claude Code
-
-Your old conversation history (with all the context) is at:
-
-```
-%USERPROFILE%\.claude\projects\d--pythone-trad-system\
-```
-
-After `sync_data.ps1` ran, Claude Code on this machine will see all
-previous chats + memory.
-
-```powershell
-# Install Claude Code
-npm install -g @anthropic-ai/claude-code
-
-# Login (use same API key as old machine)
+# سجّل دخول (مرة وحدة):
 claude login
 
-# Open project
-cd freqtrade_btc_bot
+# افتح المشروع:
+cd D:\projects\freqtrade_btc_bot
 claude
 ```
 
-The new Claude session will have access to all 8 memories (deploy
-topology, dashboard ws, postgres zombies, etc.) and 100% of prior
-context.
+**Claude الجديد سيرى:**
+- ✅ كل محادثاتنا السابقة (من `.jsonl`)
+- ✅ كل الـ8 ذاكرات (postgres-zombie-txns، deploy-topology، إلخ)
+- ✅ كل الـ15 skill (strategy-architect، bot-builder، إلخ)
+- ✅ `CLAUDE.md` يخبره بالسياق
+- ✅ `GPU_HANDOFF/CONTEXT_FOR_GPU_AI.md` يلخّص كل ما عملناه
 
-## 🆘 Troubleshooting
+**ببساطة قل له:**
+> "ابدأ بتدريب LSTM على BTC"
 
-| Problem | Fix |
+وسيُنفّذ تلقائيًا:
+```powershell
+python GPU_HANDOFF\dl_train_lstm.py --coin BTC --epochs 50
+```
+
+النتيجة المتوقّعة:
+- Validation correlation ≥ +0.15 (KNN baseline +0.06)
+- ~30 دقيقة على RTX 3060/12GB
+
+---
+
+## 📚 ماذا يحتوي مجلد `GPU_HANDOFF/`
+
+| الملف | الوصف |
 |---|---|
-| `torch.cuda.is_available() == False` | Driver mismatch — reinstall PyTorch with correct CUDA version (`nvidia-smi` shows your driver, install matching `cu121` or `cu118`) |
-| Out of memory during training | Reduce `--batch` (try 64 or 32) |
-| `talib` install fails | Use `pip install talib-binary` (precompiled) |
-| SCP fails over SSH | Use shared OneDrive folder instead, or USB drive |
-| Claude Code doesn't see history | Verify path: `%USERPROFILE%\.claude\projects\d--pythone-trad-system\` must contain `.jsonl` files |
+| `AUTO_START.ps1` | ⭐ شغّله أولاً — يثبّت كل شيء |
+| `setup_gpu.ps1` | تثبيت Python venv + PyTorch CUDA فقط |
+| `sync_data.ps1` | نقل تلقائي بـSCP (لو عندك SSH) |
+| `dl_train_lstm.py` | LSTM training جاهز |
+| `CONTEXT_FOR_GPU_AI.md` | ملخّص ما عمله Claude للـAI الجديد |
+| `skills/` | الـ15 skill (bot-builder, strategy-architect, إلخ) |
+| `memory/` | الـ8 ذاكرات (deploy-topology، postgres-zombie، إلخ) |
 
-## 📊 What's next after LSTM works
+---
 
-See `research/reports/FUTURE_GPU_TASKS.md` for full roadmap:
+## 🆘 لو علقت
 
-1. ✅ LSTM Embedding (you are here)
-2. Multi-coin joint training (~8-12 hours on 16GB+ VRAM)
-3. Transformer attention model
-4. Online learning (updates daily as new data comes in)
-5. RL allocator (needs more live data first)
+| المشكلة | الحل |
+|---|---|
+| `winget not found` | ثبّت "App Installer" من Microsoft Store |
+| `nvidia-smi not found` | ثبّت NVIDIA driver من nvidia.com |
+| `torch.cuda.is_available() == False` | السائق قديم، حدّثه |
+| `git not recognized` | أعد فتح PowerShell بعد تثبيت Git |
+| Out of memory أثناء التدريب | قلّل `--batch 64` بدل 256 |
+
+---
+
+## 🎯 خطوات Claude التلقائية بعد البدء
+
+عندما تقول لـClaude "ابدأ"، سيقوم بـ:
+
+1. **يقرأ** `CLAUDE.md` + `CONTEXT_FOR_GPU_AI.md` + `MEMORY.md`
+2. **يتحقّق** من الـGPU + البيانات
+3. **يبدأ** تدريب LSTM على BTC
+4. **يقارن** النتيجة بـKNN baseline (+0.06)
+5. **إذا نجح** (corr ≥ +0.15) → يكرّر على ETH/SOL/BNB/ADA/XRP/DOGE
+6. **يبني** strategy جديدة `BtcAnalogV3Strategy` تستخدم LSTM
+7. **يختبر** 9 سنوات backtest
+8. **يقدّم** report مقارن (LSTM vs KNN)
+9. **commit + push** كل التقدّم على GitHub
