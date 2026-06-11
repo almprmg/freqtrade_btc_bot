@@ -131,6 +131,7 @@ because the edge comes from daily macro/halving features.</p>
 <ul>
 <li>DL adds <b>no edge</b> over simple methods on this daily OHLCV+macro data (direction redundant, vol &lt; EWMA).</li>
 <li>Even adding <b>Fear &amp; Greed sentiment</b> did not help (mean walk-forward corr delta −0.07) — because FGI is itself partly price-derived, i.e. NOT truly orthogonal.</li>
+<li><b>Ensembling</b> the no-AI strategy + the AI strategy gave no Sharpe gain (1.12→1.14): the two return streams are <b>0.80 correlated</b> — same redundancy. Diversification needs uncorrelated logic, which needs orthogonal data.</li>
 <li>Real DL value would need <b>genuinely orthogonal</b> data (on-chain flows, order-flow) — not freely available here; a data-engineering project.</li>
 <li><b>vol-targeting</b> (use EWMA, not rolling-std) is a genuine, model-free improvement: ~halved drawdown.</li>
 <li>The official AnalogV3-vs-AnalogV2 call still needs the <b>freqtrade 9-year backtest on the CPU machine</b>.</li>
