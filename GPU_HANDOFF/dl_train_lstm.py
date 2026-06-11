@@ -339,8 +339,10 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
     train_loader = DataLoader(LazySeqDataset(feat, targets, tr_idx, SEQ_LEN), batch_size=batch, shuffle=True)
     val_loader = DataLoader(LazySeqDataset(feat, targets, va_idx, SEQ_LEN), batch_size=batch, shuffle=False)
 
-    # Model (dropout 0.3 + weight_decay 3e-4 to curb the overfitting seen in v0)
-    model = LstmAnalogModel(input_dim=len(FEATURE_COLS), dropout=0.3).to(DEVICE)
+    # Model — build_model honours --arch (lstm/gru/transformer). dropout/width
+    # from MODEL_CFG. weight_decay 3e-4 to curb overfitting.
+    model = build_model(len(FEATURE_COLS)).to(DEVICE)
+    print(f"  Arch: {MODEL_CFG}")
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
     loss_fn = make_loss(loss)
     print(f"  Loss: {loss}")
@@ -404,6 +406,7 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
                 "feat_std": feat_std.to_dict(),
                 "seq_len": SEQ_LEN,
                 "feature_cols": FEATURE_COLS,
+                "arch_cfg": dict(MODEL_CFG),
             }, MODELS_DIR / f"lstm_v1_{_tag(coin)}.pt")
         else:
             no_improve += 1
@@ -439,7 +442,9 @@ def inference(coin: str):
     feat_mean = pd.Series(ckpt["feat_mean"])
     feat_std = pd.Series(ckpt["feat_std"])
 
-    model = LstmAnalogModel(input_dim=len(FEATURE_COLS)).to(DEVICE)
+    global MODEL_CFG
+    MODEL_CFG = ckpt.get("arch_cfg", {"arch": "lstm", "hidden": 64, "layers": 2, "dropout": 0.3})
+    model = build_model(len(FEATURE_COLS)).to(DEVICE)
     model.load_state_dict(ckpt["model_state"])
     model.eval()
 
