@@ -93,6 +93,15 @@ the best forecaster — vol clustering is captured near-optimally by a one-line
 formula; a small LSTM on daily data overfits. Practical (non-ML) tip: switch
 vol-targeting from rolling-std to **EWMA** (corr 0.37 vs 0.33).
 
+## Even orthogonal sentiment (Fear & Greed) does not help
+
+Added crypto Fear & Greed Index as a 13th feature (`fng_test.py`, purged WF):
+mean corr delta vs the 12-feature baseline = **−0.07** (BTC −0.09, ETH +0.00,
+SOL −0.27, BNB +0.09). It does NOT help — and FGI is itself partly price-derived
+(its components include volatility/momentum), so it is not truly orthogonal.
+Genuinely orthogonal inputs (on-chain flows, order-flow) aren't freely available
+here and are a separate data-engineering effort.
+
 ## Overall conclusion: DL adds no edge on this daily data
 
 Across BOTH tasks tested rigorously (purged walk-forward, real costs):

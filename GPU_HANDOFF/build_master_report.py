@@ -130,7 +130,8 @@ because the edge comes from daily macro/halving features.</p>
 <h2>Conclusion &amp; honest next levers</h2>
 <ul>
 <li>DL adds <b>no edge</b> over simple methods on this daily OHLCV+macro data (direction redundant, vol &lt; EWMA).</li>
-<li>Real DL value would need <b>orthogonal / higher-frequency</b> data (on-chain, order-flow, sentiment).</li>
+<li>Even adding <b>Fear &amp; Greed sentiment</b> did not help (mean walk-forward corr delta −0.07) — because FGI is itself partly price-derived, i.e. NOT truly orthogonal.</li>
+<li>Real DL value would need <b>genuinely orthogonal</b> data (on-chain flows, order-flow) — not freely available here; a data-engineering project.</li>
 <li><b>vol-targeting</b> (use EWMA, not rolling-std) is a genuine, model-free improvement: ~halved drawdown.</li>
 <li>The official AnalogV3-vs-AnalogV2 call still needs the <b>freqtrade 9-year backtest on the CPU machine</b>.</li>
 </ul>
