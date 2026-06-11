@@ -78,6 +78,30 @@ the regime filter uses, so its signal is largely REDUNDANT** (confirms the
 strategy-critic redundancy flag). To add value the AI needs ORTHOGONAL inputs
 (microstructure / on-chain / sentiment); daily macro re-encoding is not enough.
 
+## DL for volatility (not direction) — also loses to simple methods
+
+Tested whether DL predicts forward realized vol better than the estimators
+vol-targeting uses (`dl_vol_predict.py`, purged WF):
+
+| | ML (LSTM) | rolling-std | EWMA(0.94) |
+|---|---|---|---|
+| mean corr vs realized fwd vol | 0.236 | 0.333 | **0.366** |
+| mean MAE | 2.00% | 1.87% | — |
+
+**ML is WORSE** than the simple baselines (beats both on corr only 2/7). EWMA is
+the best forecaster — vol clustering is captured near-optimally by a one-line
+formula; a small LSTM on daily data overfits. Practical (non-ML) tip: switch
+vol-targeting from rolling-std to **EWMA** (corr 0.37 vs 0.33).
+
+## Overall conclusion: DL adds no edge on this daily data
+
+Across BOTH tasks tested rigorously (purged walk-forward, real costs):
+- **Direction:** redundant with the macro/regime features it was trained on.
+- **Volatility:** loses to EWMA.
+The signal correlation was real (+0.41) but does not survive into tradable,
+non-redundant alpha. The lasting value is the **rigorous testing methodology**
+(walk-forward + bootstrap + overlay/ablation) and **vol-targeting** (halved DD).
+
 ## Next levers (honest, to actually improve risk-adjusted return)
 - Position cap / vol-targeting to cut the −60% drawdowns.
 - Walk-forward signals for ALL reports (stop trusting single-split numbers).
