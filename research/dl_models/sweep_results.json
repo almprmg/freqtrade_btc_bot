@@ -1,0 +1,244 @@
+[
+  {
+    "label": "arch=transformer",
+    "config": {
+      "arch": "transformer",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.4239,
+        "std": 0.3082
+      },
+      "ETH": {
+        "mean": 0.3882,
+        "std": 0.1341
+      }
+    },
+    "avg_mean": 0.40605
+  },
+  {
+    "label": "seq=30",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 30,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.3715,
+        "std": 0.2129
+      },
+      "ETH": {
+        "mean": 0.2914,
+        "std": 0.1882
+      }
+    },
+    "avg_mean": 0.33145
+  },
+  {
+    "label": "baseline (lstm h64 l2 d0.3 s60 corr)",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.314,
+        "std": 0.3161
+      },
+      "ETH": {
+        "mean": 0.2674,
+        "std": 0.1934
+      }
+    },
+    "avg_mean": 0.2907
+  },
+  {
+    "label": "hidden=128",
+    "config": {
+      "arch": "lstm",
+      "hidden": 128,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.3442,
+        "std": 0.3085
+      },
+      "ETH": {
+        "mean": 0.2129,
+        "std": 0.2194
+      }
+    },
+    "avg_mean": 0.27855
+  },
+  {
+    "label": "loss=combo",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "combo"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.3175,
+        "std": 0.3322
+      },
+      "ETH": {
+        "mean": 0.2392,
+        "std": 0.242
+      }
+    },
+    "avg_mean": 0.27835
+  },
+  {
+    "label": "arch=gru",
+    "config": {
+      "arch": "gru",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.2327,
+        "std": 0.2585
+      },
+      "ETH": {
+        "mean": 0.3146,
+        "std": 0.2023
+      }
+    },
+    "avg_mean": 0.27365
+  },
+  {
+    "label": "dropout=0.5",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.5,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.2771,
+        "std": 0.3618
+      },
+      "ETH": {
+        "mean": 0.2537,
+        "std": 0.2794
+      }
+    },
+    "avg_mean": 0.26539999999999997
+  },
+  {
+    "label": "seq=90",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 90,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.2669,
+        "std": 0.3062
+      },
+      "ETH": {
+        "mean": 0.263,
+        "std": 0.2401
+      }
+    },
+    "avg_mean": 0.26495
+  },
+  {
+    "label": "layers=3",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 3,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.3041,
+        "std": 0.2207
+      },
+      "ETH": {
+        "mean": 0.2201,
+        "std": 0.2872
+      }
+    },
+    "avg_mean": 0.2621
+  },
+  {
+    "label": "layers=1",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 1,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "corr"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.301,
+        "std": 0.2814
+      },
+      "ETH": {
+        "mean": 0.2165,
+        "std": 0.2634
+      }
+    },
+    "avg_mean": 0.25875
+  },
+  {
+    "label": "loss=mse",
+    "config": {
+      "arch": "lstm",
+      "hidden": 64,
+      "layers": 2,
+      "dropout": 0.3,
+      "seq": 60,
+      "loss": "mse"
+    },
+    "per_coin": {
+      "BTC": {
+        "mean": 0.1539,
+        "std": 0.3498
+      },
+      "ETH": {
+        "mean": 0.266,
+        "std": 0.2641
+      }
+    },
+    "avg_mean": 0.20995000000000003
+  }
+]

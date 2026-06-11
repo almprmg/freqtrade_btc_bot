@@ -186,6 +186,58 @@ class LstmAnalogModel(nn.Module):
         return pred.squeeze(-1), emb
 
 
+# --- Sweep architectures (used by walk-forward / _fit_eval via build_model) ---
+
+class RnnAnalogModel(nn.Module):
+    """LSTM or GRU, configurable depth/width — for the architecture sweep."""
+    def __init__(self, input_dim, cell="lstm", hidden=64, embed_dim=32, n_layers=2, dropout=0.3):
+        super().__init__()
+        self.cell = cell
+        rnn = nn.LSTM if cell == "lstm" else nn.GRU
+        self.rnn = rnn(input_dim, hidden, num_layers=n_layers,
+                       dropout=dropout if n_layers > 1 else 0, batch_first=True)
+        self.embed = nn.Linear(hidden, embed_dim)
+        self.head = nn.Linear(embed_dim, 1)
+
+    def forward(self, x):
+        out = self.rnn(x)
+        h = out[1][0] if self.cell == "lstm" else out[1]   # (layers, B, hidden)
+        h = h[-1]
+        emb = torch.tanh(self.embed(h))
+        return self.head(emb).squeeze(-1), emb
+
+
+class TransformerAnalogModel(nn.Module):
+    """Small Transformer encoder over the sequence (mean-pooled)."""
+    def __init__(self, input_dim, d_model=64, nhead=4, n_layers=2, embed_dim=32, dropout=0.3):
+        super().__init__()
+        self.proj = nn.Linear(input_dim, d_model)
+        self.pos = nn.Parameter(torch.zeros(1, 512, d_model))
+        layer = nn.TransformerEncoderLayer(d_model, nhead, dim_feedforward=d_model * 2,
+                                           dropout=dropout, batch_first=True)
+        self.enc = nn.TransformerEncoder(layer, num_layers=n_layers)
+        self.embed = nn.Linear(d_model, embed_dim)
+        self.head = nn.Linear(embed_dim, 1)
+
+    def forward(self, x):
+        z = self.proj(x) + self.pos[:, :x.size(1)]
+        z = self.enc(z).mean(dim=1)
+        emb = torch.tanh(self.embed(z))
+        return self.head(emb).squeeze(-1), emb
+
+
+# Config for build_model(), set from CLI in main(). Defaults = the shipped LSTM.
+MODEL_CFG = {"arch": "lstm", "hidden": 64, "layers": 2, "dropout": 0.3}
+
+
+def build_model(input_dim):
+    cfg = MODEL_CFG
+    if cfg["arch"] == "transformer":
+        return TransformerAnalogModel(input_dim, n_layers=cfg["layers"], dropout=cfg["dropout"])
+    return RnnAnalogModel(input_dim, cell=cfg["arch"], hidden=cfg["hidden"],
+                          n_layers=cfg["layers"], dropout=cfg["dropout"])
+
+
 class SeqDataset(Dataset):
     def __init__(self, X: np.ndarray, y: np.ndarray):
         self.X = torch.from_numpy(X)
@@ -426,7 +478,7 @@ def inference(coin: str):
 def _fit_eval(feat, targets, tr_idx, va_idx, seq_len, epochs, batch, lr=1e-3, patience=12, loss="mse"):
     """Train one model on the train indices; return best val_loss + corr at that
     checkpoint + best corr seen. Lazy (memory-safe) — used by walk-forward folds."""
-    model = LstmAnalogModel(input_dim=feat.shape[1], dropout=0.3).to(DEVICE)
+    model = build_model(feat.shape[1]).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
     loss_fn = make_loss(loss)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
@@ -517,13 +569,18 @@ def main():
     parser.add_argument("--timeframe", default="1d", help="1d/4h/1h/15m (bars of this tf)")
     parser.add_argument("--seq", type=int, default=60, help="lookback length in bars")
     parser.add_argument("--horizon", type=int, default=30, help="forward target in bars")
+    parser.add_argument("--arch", choices=["lstm", "gru", "transformer"], default="lstm")
+    parser.add_argument("--hidden", type=int, default=64)
+    parser.add_argument("--layers", type=int, default=2)
+    parser.add_argument("--dropout", type=float, default=0.3)
     parser.add_argument("--mode", choices=["train", "infer", "both", "walkforward"], default="both")
     args = parser.parse_args()
 
-    global TIMEFRAME, SEQ_LEN, FWD_HORIZON
+    global TIMEFRAME, SEQ_LEN, FWD_HORIZON, MODEL_CFG
     TIMEFRAME = args.timeframe
     SEQ_LEN = args.seq
     FWD_HORIZON = args.horizon
+    MODEL_CFG = {"arch": args.arch, "hidden": args.hidden, "layers": args.layers, "dropout": args.dropout}
 
     if not torch.cuda.is_available():
         print("WARNING: CUDA not available! Training will be slow on CPU.")
