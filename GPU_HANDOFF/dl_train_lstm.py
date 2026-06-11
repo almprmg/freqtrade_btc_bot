@@ -361,18 +361,106 @@ def inference(coin: str):
     print(f"  Embeddings: {emb_path}")
 
 
+# ============== Walk-forward validation ==============
+
+def _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr=1e-3, patience=12):
+    """Train one model on (X_tr,y_tr); return best val_loss + corr at that
+    checkpoint + best corr seen. No disk I/O — used by walk-forward folds."""
+    model = LstmAnalogModel(input_dim=X_tr.shape[2], dropout=0.3).to(DEVICE)
+    opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
+    loss_fn = nn.MSELoss()
+    sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
+    tr_loader = DataLoader(SeqDataset(X_tr, y_tr), batch_size=batch, shuffle=True)
+    val_loader = DataLoader(SeqDataset(X_val, y_val), batch_size=batch, shuffle=False)
+
+    best_val, corr_at_best, best_corr, no_improve = float("inf"), 0.0, -1.0, 0
+    for _ in range(epochs):
+        model.train()
+        for xb, yb in tr_loader:
+            xb, yb = xb.to(DEVICE), yb.to(DEVICE)
+            loss = loss_fn(model(xb)[0], yb)
+            opt.zero_grad(); loss.backward(); opt.step()
+        model.eval()
+        vl, nb, preds, ys = 0.0, 0, [], []
+        with torch.no_grad():
+            for xb, yb in val_loader:
+                xb, yb = xb.to(DEVICE), yb.to(DEVICE)
+                p, _ = model(xb)
+                vl += loss_fn(p, yb).item(); nb += 1
+                preds.append(p.cpu().numpy()); ys.append(yb.cpu().numpy())
+        vl /= max(nb, 1)
+        preds, ys = np.concatenate(preds), np.concatenate(ys)
+        corr = float(np.corrcoef(preds, ys)[0, 1]) if len(preds) > 1 else 0.0
+        sched.step()
+        best_corr = max(best_corr, corr)
+        if vl < best_val:
+            best_val, corr_at_best, no_improve = vl, corr, 0
+        else:
+            no_improve += 1
+            if no_improve >= patience:
+                break
+    return best_val, corr_at_best, best_corr
+
+
+def walkforward(coin: str, epochs: int, batch: int, folds: int = 5, lr: float = 1e-3):
+    """Expanding-window walk-forward: fold k trains on blocks[0..k], validates
+    on block[k+1]. Scaler is fit on each fold's train rows only (no leakage)."""
+    print(f"\n=== Walk-forward validation: {coin}/USDT ({folds} folds) ===")
+    df = load_coin(coin)
+    df = build_features(df)
+    df = add_macro(df)
+    df = add_halving(df)
+    valid = df.dropna(subset=FEATURE_COLS + ["fwd_30d_ret"]).reset_index(drop=True)
+    n = len(valid)
+    if n < SEQ_LEN + (folds + 1) * 60:
+        print(f"  WARNING: only {n} usable rows — folds may be tiny.")
+
+    # (folds+1) equal blocks over the usable timeline.
+    bounds = [int(n * i / (folds + 1)) for i in range(folds + 2)]
+    results = []
+    for k in range(1, folds + 1):
+        train_end, val_end = bounds[k], bounds[k + 1]
+        # Fit scaler on this fold's train rows only.
+        mean = valid[FEATURE_COLS].iloc[:train_end].mean()
+        std = valid[FEATURE_COLS].iloc[:train_end].std().replace(0, 1)
+        vn = valid.copy()
+        vn[FEATURE_COLS] = (vn[FEATURE_COLS] - mean) / std
+        X, y, _ = make_sequences(vn, SEQ_LEN)        # X[j] <-> valid row SEQ_LEN+j
+        tr_hi = train_end - SEQ_LEN
+        va_hi = val_end - SEQ_LEN
+        if tr_hi < 50 or va_hi - tr_hi < 20:
+            print(f"  Fold {k}: too few samples, skipped.")
+            continue
+        X_tr, y_tr = X[:tr_hi], y[:tr_hi]
+        X_val, y_val = X[tr_hi:va_hi], y[tr_hi:va_hi]
+        bv, corr_best_ckpt, corr_peak = _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr)
+        results.append(corr_best_ckpt)
+        print(f"  Fold {k}: train={len(X_tr):>4} val={len(X_val):>4}  "
+              f"corr@best={corr_best_ckpt:+.4f}  corr_peak={corr_peak:+.4f}")
+
+    if results:
+        arr = np.array(results)
+        print(f"\n  Mean corr (at best ckpt): {arr.mean():+.4f} +/- {arr.std():.4f}  "
+              f"(n={len(arr)} folds, KNN +0.06, single-split +0.47)")
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--coin", default="BTC", help="BTC/ETH/SOL/BNB/...")
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch", type=int, default=256)
     parser.add_argument("--lr", type=float, default=1e-3)
-    parser.add_argument("--mode", choices=["train", "infer", "both"], default="both")
+    parser.add_argument("--folds", type=int, default=5)
+    parser.add_argument("--mode", choices=["train", "infer", "both", "walkforward"], default="both")
     args = parser.parse_args()
 
     if not torch.cuda.is_available():
         print("WARNING: CUDA not available! Training will be slow on CPU.")
 
+    if args.mode == "walkforward":
+        walkforward(args.coin, args.epochs, args.batch, args.folds, args.lr)
+        return
     if args.mode in ("train", "both"):
         train(args.coin, args.epochs, args.batch, args.lr)
     if args.mode in ("infer", "both"):
