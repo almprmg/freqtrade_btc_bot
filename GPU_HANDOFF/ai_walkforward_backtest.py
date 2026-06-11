@@ -29,6 +29,11 @@ FOLDS = 6
 FEE, SLIP = 0.00075, 0.0005
 ZW, K_FIXED, ANN = 90, 1.5, 365
 MACRO_EXIT_THR = -0.70
+# Risk controls (added to cut the -60/-80% drawdowns)
+VOL_TARGET_D = 0.025      # target daily vol (~48% annual); scale down when realized vol is higher
+VOL_WIN = 30
+VOL_CAP = 1.0             # never lever above full allocation
+POS_CAP = 0.8             # hard cap on position fraction
 dl.MODEL_CFG = {"arch": "transformer", "hidden": 64, "layers": 2, "dropout": 0.3}
 
 
@@ -72,7 +77,11 @@ def train_predict(feat, targets, tr_idx, te_idx, seq_len, epochs=70, batch=256, 
 
 
 def wf_signal(coin):
-    """Purged walk-forward OOS predictions across (FOLDS) blocks."""
+    """Purged walk-forward OOS predictions across (FOLDS) blocks. Cached to feather
+    (signal does NOT depend on position sizing, so risk-control sweeps are instant)."""
+    cache = OUT / f"wf_signal_{coin}.feather"
+    if cache.exists():
+        return pd.read_feather(cache)
     df = dl.load_coin(coin); df = dl.build_features(df); df = dl.add_macro(df); df = dl.add_halving(df)
     valid = df.dropna(subset=dl.FEATURE_COLS + ["fwd_30d_ret"]).reset_index(drop=True)
     n = len(valid)
@@ -93,7 +102,9 @@ def wf_signal(coin):
         dates_all.append(valid["date"].values[te_idx]); preds_all.append(preds)
     if not preds_all:
         return None
-    return pd.DataFrame({"date": np.concatenate(dates_all), "lstm_pred": np.concatenate(preds_all)})
+    sig = pd.DataFrame({"date": np.concatenate(dates_all), "lstm_pred": np.concatenate(preds_all)})
+    sig.to_feather(cache)
+    return sig
 
 
 def backtest(coin, sig):
@@ -107,6 +118,11 @@ def backtest(coin, sig):
     _, rconf, macro = ai_target(df, use_analog=False)
     pos = pos.where((rconf != -1.0) & (macro >= MACRO_EXIT_THR), 0.0)
     ret = df["close"].pct_change().fillna(0.0)
+    # vol-targeting: scale down exposure when recent realized vol is high (causal),
+    # then hard-cap. Cuts the deep crash drawdowns.
+    rvol = ret.rolling(VOL_WIN, min_periods=10).std().shift(1)
+    vscalar = (VOL_TARGET_D / rvol).clip(0, VOL_CAP).fillna(0.0)
+    pos = (pos * vscalar).clip(0, POS_CAP)
     turn = pos.diff().abs().fillna(pos.abs())
     strat = pos.shift(1).fillna(0) * ret - turn * (FEE + SLIP)
     return df["date"], strat, ret

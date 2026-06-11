@@ -39,6 +39,24 @@ Costs in the rigorous tests: 0.075% fee + 0.05% slippage per side, next-bar exec
 
 > The AI signal has a **genuine but modest risk-adjusted edge at the portfolio level** (Sharpe ~1.2, CI > 0), NOT the headline returns seen earlier — those were overfit. It is **not yet better than buy&hold in absolute terms** and carries heavy drawdowns. Verdict: *promising research signal, not a deployable strategy yet.*
 
+## Risk control added (vol-targeting + 0.8 position cap)
+
+Scaling exposure down when realized vol is high (target 0.025 daily, causal) +
+hard cap 0.8. Same purged walk-forward, fixed params (not tuned on data):
+
+| | No control | **Vol-targeted** |
+|---|---|---|
+| Portfolio CAGR | +40% | +21% |
+| Portfolio Sharpe | 1.19 | 1.12 |
+| Portfolio Sharpe CI | [0.40, 1.85] | [0.43, 1.84] |
+| Portfolio maxDD | −47% | **−23.5%** |
+| Significant coins | 2/7 | **3/7** (BNB, XRP, DOGE) |
+
+Per-coin maxDD: BTC −63→−42, ETH −59→−39, SOL −81→−60, ADA −79→−48,
+XRP −57→−33, DOGE −60→**−19.5**. Drawdown ~halved, Sharpe preserved, edge still
+significant → a real risk-adjusted improvement (lower CAGR is the expected cost
+of de-risking). WF signals cached in `trading_results/wf_signal_*.feather`.
+
 ## Next levers (honest, to actually improve risk-adjusted return)
 - Position cap / vol-targeting to cut the −60% drawdowns.
 - Walk-forward signals for ALL reports (stop trusting single-split numbers).
