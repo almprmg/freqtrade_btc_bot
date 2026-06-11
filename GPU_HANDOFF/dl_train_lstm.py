@@ -193,9 +193,30 @@ class SeqDataset(Dataset):
         return self.X[i], self.y[i]
 
 
+# ============== Losses ==============
+# MSE optimizes magnitude; our signal is directional, so a Pearson-correlation
+# loss matches the eval metric (and makes best-val-loss == best-val-corr).
+
+def _pearson_loss(pred: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+    pred = pred - pred.mean()
+    y = y - y.mean()
+    denom = torch.sqrt((pred ** 2).sum() * (y ** 2).sum() + 1e-8)
+    return 1.0 - (pred * y).sum() / denom
+
+
+def make_loss(name: str):
+    if name == "corr":
+        return _pearson_loss
+    if name == "combo":
+        mse = nn.MSELoss()
+        return lambda p, y: mse(p, y) + 0.5 * _pearson_loss(p, y)
+    return nn.MSELoss()
+
+
 # ============== Training loop ==============
 
-def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float = 0.2):
+def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float = 0.2,
+          loss: str = "mse"):
     print(f"\n=== Training LSTM for {coin}/USDT ===")
     print(f"Device: {DEVICE} | Epochs: {epochs} | Batch: {batch}")
 
@@ -230,7 +251,8 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
     # Model (dropout 0.3 + weight_decay 3e-4 to curb the overfitting seen in v0)
     model = LstmAnalogModel(input_dim=len(FEATURE_COLS), dropout=0.3).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
-    loss_fn = nn.MSELoss()
+    loss_fn = make_loss(loss)
+    print(f"  Loss: {loss}")
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
 
     history = []
@@ -363,12 +385,12 @@ def inference(coin: str):
 
 # ============== Walk-forward validation ==============
 
-def _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr=1e-3, patience=12):
+def _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr=1e-3, patience=12, loss="mse"):
     """Train one model on (X_tr,y_tr); return best val_loss + corr at that
     checkpoint + best corr seen. No disk I/O — used by walk-forward folds."""
     model = LstmAnalogModel(input_dim=X_tr.shape[2], dropout=0.3).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
-    loss_fn = nn.MSELoss()
+    loss_fn = make_loss(loss)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
     tr_loader = DataLoader(SeqDataset(X_tr, y_tr), batch_size=batch, shuffle=True)
     val_loader = DataLoader(SeqDataset(X_val, y_val), batch_size=batch, shuffle=False)
@@ -402,7 +424,8 @@ def _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr=1e-3, patience=12):
     return best_val, corr_at_best, best_corr
 
 
-def walkforward(coin: str, epochs: int, batch: int, folds: int = 5, lr: float = 1e-3):
+def walkforward(coin: str, epochs: int, batch: int, folds: int = 5, lr: float = 1e-3,
+                loss: str = "mse"):
     """Expanding-window walk-forward: fold k trains on blocks[0..k], validates
     on block[k+1]. Scaler is fit on each fold's train rows only (no leakage)."""
     print(f"\n=== Walk-forward validation: {coin}/USDT ({folds} folds) ===")
@@ -433,7 +456,7 @@ def walkforward(coin: str, epochs: int, batch: int, folds: int = 5, lr: float = 
             continue
         X_tr, y_tr = X[:tr_hi], y[:tr_hi]
         X_val, y_val = X[tr_hi:va_hi], y[tr_hi:va_hi]
-        bv, corr_best_ckpt, corr_peak = _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr)
+        bv, corr_best_ckpt, corr_peak = _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr, loss=loss)
         results.append(corr_best_ckpt)
         print(f"  Fold {k}: train={len(X_tr):>4} val={len(X_val):>4}  "
               f"corr@best={corr_best_ckpt:+.4f}  corr_peak={corr_peak:+.4f}")
@@ -452,6 +475,7 @@ def main():
     parser.add_argument("--batch", type=int, default=256)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--folds", type=int, default=5)
+    parser.add_argument("--loss", choices=["mse", "corr", "combo"], default="mse")
     parser.add_argument("--mode", choices=["train", "infer", "both", "walkforward"], default="both")
     args = parser.parse_args()
 
@@ -459,10 +483,10 @@ def main():
         print("WARNING: CUDA not available! Training will be slow on CPU.")
 
     if args.mode == "walkforward":
-        walkforward(args.coin, args.epochs, args.batch, args.folds, args.lr)
+        walkforward(args.coin, args.epochs, args.batch, args.folds, args.lr, args.loss)
         return
     if args.mode in ("train", "both"):
-        train(args.coin, args.epochs, args.batch, args.lr)
+        train(args.coin, args.epochs, args.batch, args.lr, loss=args.loss)
     if args.mode in ("infer", "both"):
         inference(args.coin)
 
