@@ -67,6 +67,24 @@ the KNN feather. Fair A/B with AnalogV2.
 TA-Lib won't install on this GPU box (compiled DLL blocked by Windows Application
 Control). The vectorized OOS check above is the GPU-side substitute.
 
+## 4b. Timeframe experiment (15m / 1h / 4h / 1d)
+
+Walk-forward mean corr (corr loss, 5 folds). `dl_train_lstm.py --timeframe {tf}`
+(lazy dataset added so 15m's 308k bars don't blow up RAM):
+
+| Coin | 1d | 4h | 1h | 15m |
+|---|---|---|---|---|
+| BTC | **+0.33** | +0.05 | +0.05 | +0.06 |
+| ETH | **+0.26** | +0.07 | +0.08 | +0.06 |
+
+**The edge lives ONLY on the daily timeframe.** On 4h/1h/15m correlation
+collapses to ~+0.05–0.08 — i.e. KNN-baseline noise. Cause: the signal's power
+comes from the **daily** macro (DXY/VIX/SPY) + halving-cycle features, which are
+near-constant within a day, so they add nothing intraday; the model is left with
+short-horizon price action that is ~efficient. **Conclusion: keep this model 1d-only.**
+Intraday would need intraday-native features (microstructure, order-flow, funding),
+not daily macro.
+
 ## 5. Verdict & next
 
 - ✅ Task #1 target met: walk-forward corr ~+0.26 avg (vs +0.15 target, +0.06 KNN).

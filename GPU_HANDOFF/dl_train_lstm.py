@@ -37,6 +37,11 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# These are overridable from main() (--timeframe/--seq/--horizon). They are
+# counted in BARS of the chosen timeframe, so on 15m "FWD_HORIZON=30" means
+# 30 bars = 7.5h ahead, on 1d it means 30 days. macro/halving stay daily and
+# are forward-filled onto each intraday bar.
+TIMEFRAME = "1d"
 SEQ_LEN = 60
 FWD_HORIZON = 30
 FEATURE_COLS = [
@@ -50,7 +55,7 @@ FEATURE_COLS = [
 # ============== Data prep ==============
 
 def load_coin(coin: str) -> pd.DataFrame:
-    fp = DATA / f"{coin}_USDT-1d.feather"
+    fp = DATA / f"{coin}_USDT-{TIMEFRAME}.feather"
     if not fp.exists():
         raise FileNotFoundError(f"Missing OHLCV: {fp}")
     df = pd.read_feather(fp)
@@ -193,6 +198,35 @@ class SeqDataset(Dataset):
         return self.X[i], self.y[i]
 
 
+def prep_matrix(df: pd.DataFrame, seq_len: int):
+    """Memory-safe alternative to make_sequences: return the 2D feature matrix
+    + targets + dates + the end-position index of every sequence, WITHOUT
+    materializing the (N, seq_len, F) cube. Needed for intraday frames where
+    that cube is multiple GB. Sequence k = feat[end-seq_len:end], end=idx[k]."""
+    df = df.dropna(subset=FEATURE_COLS + ["fwd_30d_ret"]).reset_index(drop=True)
+    feat = df[FEATURE_COLS].values.astype(np.float32)
+    targets = df["fwd_30d_ret"].values.astype(np.float32)
+    dates = df["date"].values
+    idx = np.arange(seq_len, len(df), dtype=np.int64)
+    return feat, targets, dates, idx
+
+
+class LazySeqDataset(Dataset):
+    """Slices sequences from the shared feature matrix on demand."""
+    def __init__(self, feat: np.ndarray, targets: np.ndarray, idx: np.ndarray, seq_len: int):
+        self.feat = torch.from_numpy(feat)
+        self.targets = torch.from_numpy(targets)
+        self.idx = idx
+        self.seq_len = seq_len
+
+    def __len__(self):
+        return len(self.idx)
+
+    def __getitem__(self, k):
+        i = int(self.idx[k])
+        return self.feat[i - self.seq_len:i], self.targets[i]
+
+
 # ============== Losses ==============
 # MSE optimizes magnitude; our signal is directional, so a Pearson-correlation
 # loss matches the eval metric (and makes best-val-loss == best-val-corr).
@@ -215,6 +249,11 @@ def make_loss(name: str):
 
 # ============== Training loop ==============
 
+def _tag(coin: str) -> str:
+    """1d keeps the bare name (back-compat with AnalogV3); intraday adds the tf."""
+    return coin if TIMEFRAME == "1d" else f"{coin}_{TIMEFRAME}"
+
+
 def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float = 0.2,
           loss: str = "mse"):
     print(f"\n=== Training LSTM for {coin}/USDT ===")
@@ -235,18 +274,18 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
     feat_std = valid[FEATURE_COLS].iloc[:split_row].std().replace(0, 1)
     df[FEATURE_COLS] = (df[FEATURE_COLS] - feat_mean) / feat_std
 
-    # Sequences
-    X, y, dates = make_sequences(df, SEQ_LEN)
-    print(f"  Sequences: {X.shape}, targets: {y.shape}")
+    # Sequences (lazy — memory-safe for intraday frames)
+    feat, targets, dates, idx = prep_matrix(df, SEQ_LEN)
+    print(f"  Samples: {len(idx)} | seq_len={SEQ_LEN} horizon={FWD_HORIZON} tf={TIMEFRAME}")
 
     # Time-based split (no shuffling — avoid lookahead!)
-    split = int(len(X) * (1 - val_split))
-    X_tr, X_val = X[:split], X[split:]
-    y_tr, y_val = y[:split], y[split:]
-    print(f"  Train: {len(X_tr)} | Val: {len(X_val)}")
+    split = int(len(idx) * (1 - val_split))
+    tr_idx, va_idx = idx[:split], idx[split:]
+    y_val = targets[va_idx]
+    print(f"  Train: {len(tr_idx)} | Val: {len(va_idx)}")
 
-    train_loader = DataLoader(SeqDataset(X_tr, y_tr), batch_size=batch, shuffle=True)
-    val_loader = DataLoader(SeqDataset(X_val, y_val), batch_size=batch, shuffle=False)
+    train_loader = DataLoader(LazySeqDataset(feat, targets, tr_idx, SEQ_LEN), batch_size=batch, shuffle=True)
+    val_loader = DataLoader(LazySeqDataset(feat, targets, va_idx, SEQ_LEN), batch_size=batch, shuffle=False)
 
     # Model (dropout 0.3 + weight_decay 3e-4 to curb the overfitting seen in v0)
     model = LstmAnalogModel(input_dim=len(FEATURE_COLS), dropout=0.3).to(DEVICE)
@@ -313,7 +352,7 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
                 "feat_std": feat_std.to_dict(),
                 "seq_len": SEQ_LEN,
                 "feature_cols": FEATURE_COLS,
-            }, MODELS_DIR / f"lstm_v1_{coin}.pt")
+            }, MODELS_DIR / f"lstm_v1_{_tag(coin)}.pt")
         else:
             no_improve += 1
         print(f"  Epoch {ep+1:>3}/{epochs}  train={tr_loss:.6f}  val={val_loss:.6f}  corr={val_corr:+.4f}{flag}")
@@ -323,27 +362,28 @@ def train(coin: str, epochs: int, batch: int, lr: float = 1e-3, val_split: float
             break
 
     # Save metrics
-    with open(MODELS_DIR / f"lstm_v1_{coin}_metrics.json", "w") as f:
+    with open(MODELS_DIR / f"lstm_v1_{_tag(coin)}_metrics.json", "w") as f:
         json.dump({
-            "coin": coin, "seq_len": SEQ_LEN, "epochs": epochs, "batch": batch,
+            "coin": coin, "timeframe": TIMEFRAME, "seq_len": SEQ_LEN,
+            "fwd_horizon": FWD_HORIZON, "epochs": epochs, "batch": batch,
             "best_val_loss": best_val, "best_epoch": best_epoch,
             "corr_at_best_val_loss": corr_at_best, "best_val_corr": best_corr,
             "history": history,
         }, f, indent=2)
 
-    print(f"\n=== Done ===")
+    print(f"\n=== Done ({coin} {TIMEFRAME}) ===")
     print(f"Best val loss: {best_val:.6f} @ epoch {best_epoch}")
     print(f"Shipped correlation (at best checkpoint): {corr_at_best:+.4f}")
     print(f"Best val correlation seen:                {best_corr:+.4f}  (KNN baseline: +0.06)")
-    print(f"Saved: {MODELS_DIR / f'lstm_v1_{coin}.pt'}")
+    print(f"Saved: {MODELS_DIR / f'lstm_v1_{_tag(coin)}.pt'}")
 
 
 # ============== Inference (generate signals) ==============
 
 def inference(coin: str):
-    """Load trained model + generate per-day signal/embedding for backtest use."""
-    print(f"\n=== Generating signals for {coin} ===")
-    ckpt = torch.load(MODELS_DIR / f"lstm_v1_{coin}.pt", map_location=DEVICE)
+    """Load trained model + generate per-bar signal/embedding for backtest use."""
+    print(f"\n=== Generating signals for {coin} {TIMEFRAME} ===")
+    ckpt = torch.load(MODELS_DIR / f"lstm_v1_{_tag(coin)}.pt", map_location=DEVICE)
     feat_mean = pd.Series(ckpt["feat_mean"])
     feat_std = pd.Series(ckpt["feat_std"])
 
@@ -357,51 +397,49 @@ def inference(coin: str):
     df = add_halving(df)
     df[FEATURE_COLS] = (df[FEATURE_COLS] - feat_mean) / feat_std
 
-    X, _, dates = make_sequences(df, SEQ_LEN)
+    feat, _, dates, idx = prep_matrix(df, SEQ_LEN)
+    loader = DataLoader(LazySeqDataset(feat, np.zeros(len(feat), np.float32), idx, SEQ_LEN),
+                        batch_size=512, shuffle=False)
     preds, embeds = [], []
     with torch.no_grad():
-        for i in range(0, len(X), 256):
-            xb = torch.from_numpy(X[i:i+256]).to(DEVICE)
-            p, e = model(xb)
+        for xb, _ in loader:
+            p, e = model(xb.to(DEVICE))
             preds.append(p.cpu().numpy())
             embeds.append(e.cpu().numpy())
     preds = np.concatenate(preds)
     embeds = np.concatenate(embeds)
+    sig_dates = dates[idx]
 
-    out = pd.DataFrame({
-        "date": dates,
-        "lstm_pred_fwd30": preds,
-    })
+    out = pd.DataFrame({"date": sig_dates, "lstm_pred_fwd30": preds})
     out["coin"] = coin
-    out_path = REPO / "user_data" / "data" / f"dl_signals_lstm_{coin}.feather"
+    out_path = REPO / "user_data" / "data" / f"dl_signals_lstm_{_tag(coin)}.feather"
     out.to_feather(out_path)
     print(f"  Saved: {out_path}  ({len(out)} signals)")
 
-    # Save embeddings separately (for later analog search)
-    emb_path = REPO / "user_data" / "data" / f"dl_embeddings_lstm_{coin}.npz"
-    np.savez_compressed(emb_path, dates=dates.astype(str), embeddings=embeds)
+    emb_path = REPO / "user_data" / "data" / f"dl_embeddings_lstm_{_tag(coin)}.npz"
+    np.savez_compressed(emb_path, dates=sig_dates.astype(str), embeddings=embeds)
     print(f"  Embeddings: {emb_path}")
 
 
 # ============== Walk-forward validation ==============
 
-def _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr=1e-3, patience=12, loss="mse"):
-    """Train one model on (X_tr,y_tr); return best val_loss + corr at that
-    checkpoint + best corr seen. No disk I/O — used by walk-forward folds."""
-    model = LstmAnalogModel(input_dim=X_tr.shape[2], dropout=0.3).to(DEVICE)
+def _fit_eval(feat, targets, tr_idx, va_idx, seq_len, epochs, batch, lr=1e-3, patience=12, loss="mse"):
+    """Train one model on the train indices; return best val_loss + corr at that
+    checkpoint + best corr seen. Lazy (memory-safe) — used by walk-forward folds."""
+    model = LstmAnalogModel(input_dim=feat.shape[1], dropout=0.3).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=3e-4)
     loss_fn = make_loss(loss)
     sched = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=epochs)
-    tr_loader = DataLoader(SeqDataset(X_tr, y_tr), batch_size=batch, shuffle=True)
-    val_loader = DataLoader(SeqDataset(X_val, y_val), batch_size=batch, shuffle=False)
+    tr_loader = DataLoader(LazySeqDataset(feat, targets, tr_idx, seq_len), batch_size=batch, shuffle=True)
+    val_loader = DataLoader(LazySeqDataset(feat, targets, va_idx, seq_len), batch_size=batch, shuffle=False)
 
     best_val, corr_at_best, best_corr, no_improve = float("inf"), 0.0, -1.0, 0
     for _ in range(epochs):
         model.train()
         for xb, yb in tr_loader:
             xb, yb = xb.to(DEVICE), yb.to(DEVICE)
-            loss = loss_fn(model(xb)[0], yb)
-            opt.zero_grad(); loss.backward(); opt.step()
+            loss_v = loss_fn(model(xb)[0], yb)
+            opt.zero_grad(); loss_v.backward(); opt.step()
         model.eval()
         vl, nb, preds, ys = 0.0, 0, [], []
         with torch.no_grad():
@@ -428,7 +466,7 @@ def walkforward(coin: str, epochs: int, batch: int, folds: int = 5, lr: float = 
                 loss: str = "mse"):
     """Expanding-window walk-forward: fold k trains on blocks[0..k], validates
     on block[k+1]. Scaler is fit on each fold's train rows only (no leakage)."""
-    print(f"\n=== Walk-forward validation: {coin}/USDT ({folds} folds) ===")
+    print(f"\n=== Walk-forward validation: {coin}/USDT {TIMEFRAME} ({folds} folds) ===")
     df = load_coin(coin)
     df = build_features(df)
     df = add_macro(df)
@@ -443,28 +481,28 @@ def walkforward(coin: str, epochs: int, batch: int, folds: int = 5, lr: float = 
     results = []
     for k in range(1, folds + 1):
         train_end, val_end = bounds[k], bounds[k + 1]
+        if train_end <= SEQ_LEN + 50 or val_end - train_end < 20:
+            print(f"  Fold {k}: too few samples, skipped.")
+            continue
         # Fit scaler on this fold's train rows only.
         mean = valid[FEATURE_COLS].iloc[:train_end].mean()
         std = valid[FEATURE_COLS].iloc[:train_end].std().replace(0, 1)
         vn = valid.copy()
         vn[FEATURE_COLS] = (vn[FEATURE_COLS] - mean) / std
-        X, y, _ = make_sequences(vn, SEQ_LEN)        # X[j] <-> valid row SEQ_LEN+j
-        tr_hi = train_end - SEQ_LEN
-        va_hi = val_end - SEQ_LEN
-        if tr_hi < 50 or va_hi - tr_hi < 20:
-            print(f"  Fold {k}: too few samples, skipped.")
-            continue
-        X_tr, y_tr = X[:tr_hi], y[:tr_hi]
-        X_val, y_val = X[tr_hi:va_hi], y[tr_hi:va_hi]
-        bv, corr_best_ckpt, corr_peak = _fit_eval(X_tr, y_tr, X_val, y_val, epochs, batch, lr, loss=loss)
+        feat, targets, _, _ = prep_matrix(vn, SEQ_LEN)
+        # sample end-position i -> belongs to train if i < train_end else val
+        tr_idx = np.arange(SEQ_LEN, train_end, dtype=np.int64)
+        va_idx = np.arange(train_end, val_end, dtype=np.int64)
+        bv, corr_best_ckpt, corr_peak = _fit_eval(feat, targets, tr_idx, va_idx, SEQ_LEN,
+                                                   epochs, batch, lr, loss=loss)
         results.append(corr_best_ckpt)
-        print(f"  Fold {k}: train={len(X_tr):>4} val={len(X_val):>4}  "
+        print(f"  Fold {k}: train={len(tr_idx):>6} val={len(va_idx):>6}  "
               f"corr@best={corr_best_ckpt:+.4f}  corr_peak={corr_peak:+.4f}")
 
     if results:
         arr = np.array(results)
         print(f"\n  Mean corr (at best ckpt): {arr.mean():+.4f} +/- {arr.std():.4f}  "
-              f"(n={len(arr)} folds, KNN +0.06, single-split +0.47)")
+              f"(n={len(arr)} folds, KNN +0.06)")
     return results
 
 
@@ -476,8 +514,16 @@ def main():
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--folds", type=int, default=5)
     parser.add_argument("--loss", choices=["mse", "corr", "combo"], default="mse")
+    parser.add_argument("--timeframe", default="1d", help="1d/4h/1h/15m (bars of this tf)")
+    parser.add_argument("--seq", type=int, default=60, help="lookback length in bars")
+    parser.add_argument("--horizon", type=int, default=30, help="forward target in bars")
     parser.add_argument("--mode", choices=["train", "infer", "both", "walkforward"], default="both")
     args = parser.parse_args()
+
+    global TIMEFRAME, SEQ_LEN, FWD_HORIZON
+    TIMEFRAME = args.timeframe
+    SEQ_LEN = args.seq
+    FWD_HORIZON = args.horizon
 
     if not torch.cuda.is_available():
         print("WARNING: CUDA not available! Training will be slow on CPU.")
