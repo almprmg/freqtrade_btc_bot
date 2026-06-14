@@ -1,0 +1,120 @@
+# Local Fleet — 8 bots moved from server to local machine on 2026-06-13.
+# These are the lowest-CAGR strategies (server keeps the top 8).
+#
+# Each bot runs with its own SQLite (no bridge sync to trad_pg).
+# Container names prefixed with `local_` to distinguish from server copies.
+#
+# Start:  docker compose -f docker-compose.local-fleet.yml up -d
+# Stop:   docker compose -f docker-compose.local-fleet.yml down
+
+services:
+
+  # ============ #97 AI Shield V1 ============
+  local_ai_shield:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_ai_shield
+    restart: unless-stopped
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.ai_shield.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_ai_shield.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_ai_shield.sqlite
+      --config /freqtrade/config.json --strategy BtcAiShieldStrategy
+
+  # ============ #98 Triple Regime BTC ============
+  local_triple_btc:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_triple_btc
+    restart: unless-stopped
+    environment:
+      TR_MODE: "TR_STRICT"
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.triple.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_triple_btc.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_triple_btc.sqlite
+      --config /freqtrade/config.json --strategy BtcTripleRegimeStrategy
+
+  # ============ #99 AI Shield V2 ============
+  local_ai_shield_v2:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_ai_shield_v2
+    restart: unless-stopped
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.ai_shield_v2.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_ai_shield_v2.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_ai_shield_v2.sqlite
+      --config /freqtrade/config.json --strategy BtcAiShieldV2Strategy
+
+  # ============ #100 Calendar BTC ============
+  local_calendar_btc:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_calendar_btc
+    restart: unless-stopped
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.calendar.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_calendar_btc.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_calendar_btc.sqlite
+      --config /freqtrade/config.json --strategy BtcCalendarShieldStrategy
+
+  # ============ #102 SOL VolShield ============
+  local_sol_vol_shield:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_sol_vol_shield
+    restart: unless-stopped
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.volshield-SOL.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_sol_vol_shield.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_sol_vol_shield.sqlite
+      --config /freqtrade/config.json --strategy SolVolShieldStrategy
+
+  # ============ #103 Triple Regime BNB ============
+  local_triple_bnb:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_triple_bnb
+    restart: unless-stopped
+    environment:
+      TR_MODE: "TR_STRICT"
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.triple-BNB.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_triple_bnb.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_triple_bnb.sqlite
+      --config /freqtrade/config.json --strategy BtcTripleRegimeStrategy
+
+  # ============ #104 Triple Regime ADA ============
+  local_triple_ada:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_triple_ada
+    restart: unless-stopped
+    environment:
+      TR_MODE: "TR_STRICT"
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.triple-ADA.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_triple_ada.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_triple_ada.sqlite
+      --config /freqtrade/config.json --strategy BtcTripleRegimeStrategy
+
+  # ============ #113 Quantum AI ============
+  local_quantum_ai:
+    image: freqtradeorg/freqtrade:2026.4
+    container_name: local_quantum_ai
+    restart: unless-stopped
+    volumes:
+      - ./user_data:/freqtrade/user_data
+      - ./config.quantum.json:/freqtrade/config.json:ro
+    command: >
+      trade --logfile /freqtrade/user_data/logs/local_quantum_ai.log
+      --db-url sqlite:////freqtrade/user_data/tradesv3_local_quantum_ai.sqlite
+      --config /freqtrade/config.json --strategy QuantumAiShieldStrategy
