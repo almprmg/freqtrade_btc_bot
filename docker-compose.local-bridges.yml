@@ -1,0 +1,151 @@
+# Local Bridges + SSH Tunnel to trad-server.
+# Adds bridge sidecars to the 8 local bots so their trades sync to trad_pg
+# on the server (via persistent SSH tunnel — no exposed ports).
+#
+# Start AFTER docker-compose.local-fleet.yml is up:
+#   docker compose -f docker-compose.local-fleet.yml \
+#                  -f docker-compose.local-bridges.yml up -d
+
+networks:
+  fleet:
+    name: local_fleet_net
+
+services:
+
+  # ============ SSH tunnel keeping trad_pg reachable as `pg_tunnel:5432` ============
+  pg_tunnel:
+    image: alpine:latest
+    container_name: local_pg_tunnel
+    restart: unless-stopped
+    networks:
+      - fleet
+    volumes:
+      - C:/Users/user/.ssh/id_ed25519_trad:/keys/id:ro
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache openssh autossh &&
+        mkdir -p /root/.ssh &&
+        cp /keys/id /root/.ssh/id &&
+        chmod 600 /root/.ssh/id &&
+        autossh -M 0 -N -L 0.0.0.0:5432:127.0.0.1:5433 \
+          -o ServerAliveInterval=30 -o ServerAliveCountMax=3 \
+          -o StrictHostKeyChecking=accept-new -o ExitOnForwardFailure=yes \
+          -o UserKnownHostsFile=/dev/null \
+          -i /root/.ssh/id root@72.62.179.86
+
+  # ============ Bridge containers — one per local bot ============
+
+  local_ai_shield_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_ai_shield_bridge
+    restart: unless-stopped
+    depends_on:
+      - pg_tunnel
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 97
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_ai_shield.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_triple_btc_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_triple_btc_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 98
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_btc.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_ai_shield_v2_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_ai_shield_v2_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 99
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_ai_shield_v2.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_calendar_btc_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_calendar_btc_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 100
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_calendar_btc.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_sol_vol_shield_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_sol_vol_shield_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 102
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_sol_vol_shield.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_triple_bnb_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_triple_bnb_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 103
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_bnb.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_triple_ada_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_triple_ada_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 104
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_ada.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
+
+  local_quantum_ai_bridge:
+    image: freqtrade-bridge:latest
+    container_name: local_quantum_ai_bridge
+    restart: unless-stopped
+    depends_on: [pg_tunnel]
+    environment:
+      BRIDGE_SUBSCRIPTION_ID: 113
+      BRIDGE_USER_ID: 10
+      FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_quantum_ai.sqlite
+      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      POLL_INTERVAL_SECONDS: 30
+    volumes: [./user_data:/data/freqtrade:ro]
+    networks: [fleet]
