@@ -1,0 +1,29 @@
+{
+  "candidate": "c12_solvol_LIVE",
+  "strategy": "SolVolShieldStrategy",
+  "env": {
+    "ANOMALY_FLAGS_FILE": "anomaly_flags.feather"
+  },
+  "windows": {
+    "BEAR_2022": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": -12.81,
+      "max_dd": 12.81,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "WARN",
+  "evaluated_at": "2026-10-11T19:51:24.464737+00:00"
+}

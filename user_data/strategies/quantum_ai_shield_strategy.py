@@ -54,7 +54,7 @@ def _load_aux(name: str):
 
 
 _HALVING = _load_aux("halving_cycle.feather")
-_ANOMALY = _load_aux("anomaly_flags.feather")
+_ANOMALY = _load_aux(os.environ.get("ANOMALY_FLAGS_FILE", "anomaly_flags.feather"))
 
 import os
 COIN = os.environ.get("QUANTUM_COIN", "BTC")

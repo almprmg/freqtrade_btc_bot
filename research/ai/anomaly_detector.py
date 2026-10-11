@@ -15,8 +15,22 @@ Features:
 Output: per-day anomaly score (higher = more anomalous).
 Threshold: top 2.5% of training distribution = "anomaly" flag.
 
-Trained on BTC 2019-2024, tested on 2025-2026. The "anomaly" flag becomes
-a new column in the OHLCV-derived feature feather; strategies can use it.
+Two training schemes:
+
+  default (in-sample, LEGACY — what live bots read today):
+      one model per coin trained on 2019-01-01..2023-12-31 and applied to the
+      FULL series -> flags for 2019-2023 are IN-SAMPLE (audit finding C12).
+      Output: user_data/data/anomaly_flags.feather
+
+  --walk-forward (expanding window, no look-ahead):
+      for each calendar year Y, train a fresh model (same features/params) on
+      feature rows strictly before Y-01-01 and flag only year Y. Years with
+      fewer than MIN_TRAIN_ROWS training rows are not flagged (no row ->
+      strategies treat as "no anomaly"). Adds a `train_end` column (last
+      training date). Output: user_data/data/anomaly_flags_wf.feather
+
+Strategies pick the file via env ANOMALY_FLAGS_FILE (default
+"anomaly_flags.feather", i.e. live behaviour unchanged).
 """
 from __future__ import annotations
 
@@ -29,6 +43,12 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[2]
 DATA = REPO / "user_data" / "data" / "binance"
 OUT = REPO / "user_data" / "data" / "anomaly_flags.feather"
+OUT_WF = REPO / "user_data" / "data" / "anomaly_flags_wf.feather"
+
+COINS = ["BTC", "ETH", "SOL", "BNB", "AVAX", "DOGE", "ADA"]
+CONTAMINATION = 0.025
+RANDOM_STATE = 42
+MIN_TRAIN_ROWS = 200          # same guard as the legacy in-sample model
 
 
 def load_pair(coin: str) -> pd.DataFrame:
@@ -50,12 +70,69 @@ def features(df: pd.DataFrame) -> pd.DataFrame:
     return f.dropna()
 
 
-def main():
+def _model():
+    from sklearn.ensemble import IsolationForest
+    return IsolationForest(contamination=CONTAMINATION, random_state=RANDOM_STATE, n_jobs=1)
+
+
+def walk_forward_flags(feats: pd.DataFrame, coin: str,
+                       min_train_rows: int = MIN_TRAIN_ROWS) -> pd.DataFrame:
+    """Expanding-window flags: year Y is scored by a model fit on rows < Y-01-01.
+
+    Returns columns date, coin, anomaly_score, is_anomaly, train_end.
+    """
+    feats = feats.sort_index()
+    out = []
+    for year in sorted(feats.index.year.unique()):
+        start = pd.Timestamp(f"{year}-01-01", tz=feats.index.tz)
+        end = pd.Timestamp(f"{year + 1}-01-01", tz=feats.index.tz)
+        train = feats[feats.index < start]
+        test = feats[(feats.index >= start) & (feats.index < end)]
+        if len(train) < min_train_rows or test.empty:
+            continue
+        clf = _model()
+        clf.fit(train.values)
+        out.append(pd.DataFrame({
+            "date": test.index,
+            "coin": coin,
+            "anomaly_score": -clf.score_samples(test.values),
+            "is_anomaly": (clf.predict(test.values) == -1).astype(int),
+            "train_end": train.index.max(),
+        }))
+    if not out:
+        return pd.DataFrame(columns=["date", "coin", "anomaly_score", "is_anomaly", "train_end"])
+    return pd.concat(out, ignore_index=True)
+
+
+def main_walk_forward(out_path: Path = OUT_WF) -> int:
+    print("Walk-forward anomaly flags (expanding window, per-year refit)...")
+    all_flags = []
+    for coin in COINS:
+        try:
+            df = load_pair(coin)
+        except FileNotFoundError:
+            print(f"  skip {coin}: no data")
+            continue
+        cdf = walk_forward_flags(features(df), coin)
+        if cdf.empty:
+            print(f"  skip {coin}: not enough training data")
+            continue
+        all_flags.append(cdf)
+        flag_yr = cdf.groupby(pd.to_datetime(cdf["date"]).dt.year)["is_anomaly"].sum().to_dict()
+        print(f"  {coin}: {int(cdf['is_anomaly'].sum())} anomaly days; per-year: {flag_yr}")
+    out_df = pd.concat(all_flags, ignore_index=True)
+    out_df.to_feather(out_path)
+    print(f"\nSaved: {out_path}  ({len(out_df)} rows)")
+    return 0
+
+
+def main(out_path: Path = OUT):
+    """LEGACY in-sample model (train 2019-2023, score everything). Kept as-is."""
     from sklearn.ensemble import IsolationForest
 
     print("Computing anomaly flags for BTC/ETH/SOL/BNB/AVAX/DOGE/ADA...")
     all_flags = []
-    for coin in ["BTC", "ETH", "SOL", "BNB", "AVAX", "DOGE", "ADA"]:
+    for coin in COINS:
         try:
             df = load_pair(coin)
         except FileNotFoundError:
@@ -85,10 +162,22 @@ def main():
         print(f"  {coin}: {flag.sum()} anomaly days; per-year: {flag_yr}")
 
     out_df = pd.concat(all_flags, ignore_index=True)
-    out_df.to_feather(OUT)
-    print(f"\nSaved: {OUT}  ({len(out_df)} rows)")
+    out_df.to_feather(out_path)
+    print(f"\nSaved: {out_path}  ({len(out_df)} rows)")
     return 0
 
 
+def cli(argv=None) -> int:
+    import argparse
+    ap = argparse.ArgumentParser(description="Isolation-Forest anomaly flags")
+    ap.add_argument("--walk-forward", action="store_true",
+                    help="expanding-window per-year refit (writes anomaly_flags_wf.feather)")
+    ap.add_argument("--out", type=Path, default=None, help="override output path")
+    a = ap.parse_args(argv)
+    if a.walk_forward:
+        return main_walk_forward(a.out or OUT_WF)
+    return main(a.out or OUT)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(cli())

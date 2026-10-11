@@ -11,6 +11,7 @@ For coins without anomaly data, anomaly check is skipped.
 """
 from __future__ import annotations
 
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -49,7 +50,7 @@ if not _CYCLES.empty:
     _CYCLES_BY_COIN = {coin: g.set_index("date") for coin, g in _CYCLES.groupby("coin")}
 else:
     _CYCLES_BY_COIN = {}
-_ANOMALY = _load_aux("anomaly_flags.feather")
+_ANOMALY = _load_aux(os.environ.get("ANOMALY_FLAGS_FILE", "anomaly_flags.feather"))
 
 
 PHASE_SHIFTS = {

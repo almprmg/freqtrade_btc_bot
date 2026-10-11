@@ -1,0 +1,29 @@
+{
+  "candidate": "c12_calshield_WF",
+  "strategy": "BtcCalendarShieldStrategy",
+  "env": {
+    "ANOMALY_FLAGS_FILE": "anomaly_flags_wf.feather"
+  },
+  "windows": {
+    "BEAR_2022": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": 13.94,
+      "max_dd": 2.68,
+      "n_trades": 2,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": 0.0,
+      "max_dd": 0.0,
+      "n_trades": 0,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "PASS",
+  "evaluated_at": "2026-10-11T19:50:51.849892+00:00"
+}
