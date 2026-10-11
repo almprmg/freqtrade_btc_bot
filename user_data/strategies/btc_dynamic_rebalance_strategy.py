@@ -36,11 +36,25 @@ Trigger families (selected via ENV `DR_MODE`):
 In all modes the "rebalance" action means: bring BTC back to TARGET_PCT of
 total portfolio (full rebalance). Modes differ only in WHEN they fire.
 Target defaults to 0.75 except DR_REGIME.
+
+Profit anchor (fix C14): profit-based triggers (DR_PROFIT_*, and the profit
+leg of DR_RSI_AND_PROFIT) measure the move of the PORTFOLIO value
+(position value + free stake) against an anchor stored per trade in
+`trade.custom_data["dr_anchor_value"]`. The anchor is (re)set to the
+portfolio value at the price of the most recent filled order (entry or
+rebalance), so a rebalance fires once per ±profit_trigger_pct move and then
+re-arms. Previously the trigger used `current_profit` (vs the average entry
+rate), which stayed past the threshold forever and re-rebalanced on every
+bot loop (live churn: duplicate fills seconds apart).
+
+Cooldown (all modes): no adjustment while the trade has an open order, or
+within DR_COOLDOWN_MIN minutes (default 60) of the last filled order.
+On 1d backtests this is a no-op (adjust is evaluated once per candle).
 """
 from __future__ import annotations
 
 import os
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 import pandas as pd
@@ -57,6 +71,43 @@ WITH_SHIELD = os.environ.get("WITH_SHIELD", "false").lower() in ("true", "1", "y
 
 
 MODE = os.environ.get("DR_MODE", "DR_PROFIT_20").upper()  # winner of 12-variant sweep
+COOLDOWN_MIN = float(os.environ.get("DR_COOLDOWN_MIN", "60"))
+
+ANCHOR_KEY = "dr_anchor_value"
+ANCHOR_NFILLS_KEY = "dr_anchor_nfills"
+
+
+# ---- Pure helpers (unit-tested in tests/test_dynrebal_anchor.py) ---------- #
+
+def anchor_value(amount: float, fill_price: float, free_stake: float) -> float:
+    """Portfolio value at the last fill: position marked at the fill price + free stake."""
+    return float(amount) * float(fill_price) + float(free_stake)
+
+
+def portfolio_move(anchor: float, total: float) -> float:
+    """Relative portfolio move since the anchor (0.2 == +20%)."""
+    if not anchor or anchor <= 0:
+        return 0.0
+    return float(total) / float(anchor) - 1.0
+
+
+def profit_trigger_fires(anchor: float, total: float, threshold: float) -> bool:
+    """True once the portfolio moved >= threshold (either direction) from the anchor."""
+    return abs(portfolio_move(anchor, total)) >= float(threshold) - 1e-9  # float tolerance
+
+
+def in_cooldown(has_open_orders: bool, last_fill: Optional[datetime],
+                now: datetime, cooldown_min: float) -> bool:
+    """Block adjustments while an order is open or the last fill is too recent."""
+    if has_open_orders:
+        return True
+    if last_fill is None or cooldown_min <= 0:
+        return False
+    if last_fill.tzinfo is None:
+        last_fill = last_fill.replace(tzinfo=timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=timezone.utc)
+    return now - last_fill < timedelta(minutes=cooldown_min)
 
 
 def _build_modes() -> dict[str, dict]:
@@ -182,6 +233,7 @@ class BtcDynamicRebalanceStrategy(IStrategy):
     # ---- The conditional triggers ---------------------------------------- #
 
     def _trigger_fires(self, last: pd.Series, profit_pct: float) -> bool:
+        # profit_pct = portfolio move since the per-trade anchor (see module docstring)
         tt = P["trigger_type"]
         if tt == "profit_only":
             return abs(profit_pct) >= float(P["profit_trigger_pct"])
@@ -215,6 +267,15 @@ class BtcDynamicRebalanceStrategy(IStrategy):
         current_entry_rate: float, current_exit_rate: float,
         current_entry_profit: float, current_exit_profit: float, **kwargs,
     ) -> Optional[float]:
+        # Cooldown: never stack a second order on an open one, and wait
+        # COOLDOWN_MIN after the last fill (prevents back-to-back duplicates).
+        filled = trade.select_filled_orders()
+        last_fill = filled[-1] if filled else None
+        if in_cooldown(trade.has_open_orders,
+                       last_fill.order_filled_utc if last_fill else None,
+                       current_time, COOLDOWN_MIN):
+            return None
+
         df, _ = self.dp.get_analyzed_dataframe(pair=trade.pair, timeframe=self.timeframe)
         if df is None or df.empty:
             return None
@@ -238,8 +299,17 @@ class BtcDynamicRebalanceStrategy(IStrategy):
         target_btc_value = target * total
         drift_usdt = btc_value - target_btc_value  # >0 → too much BTC
 
-        # Portfolio profit relative to trade open (simple proxy).
-        profit_pct = float(current_profit or 0.0)
+        # Portfolio move since the anchor. The anchor is re-set whenever a new
+        # order has filled since it was taken (entry or rebalance fill), valued
+        # at that fill's price — free stake is unchanged since that fill.
+        profit_pct = 0.0
+        if P["trigger_type"] in ("profit_only", "rsi_and_profit") and last_fill is not None:
+            anchor = trade.get_custom_data(ANCHOR_KEY)
+            if anchor is None or trade.get_custom_data(ANCHOR_NFILLS_KEY) != len(filled):
+                anchor = anchor_value(btc_qty, last_fill.safe_price, usdt_free)
+                trade.set_custom_data(ANCHOR_KEY, anchor)
+                trade.set_custom_data(ANCHOR_NFILLS_KEY, len(filled))
+            profit_pct = portfolio_move(float(anchor), total)
 
         if not self._trigger_fires(last, profit_pct):
             return None
