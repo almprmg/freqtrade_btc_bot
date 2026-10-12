@@ -47,7 +47,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 97
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_ai_shield.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -61,7 +61,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 98
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_btc.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -75,7 +75,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 99
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_ai_shield_v2.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -89,7 +89,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 100
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_calendar_btc.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -103,7 +103,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 102
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_sol_vol_shield.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -117,7 +117,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 103
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_bnb.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -131,7 +131,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 104
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_ada.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
@@ -145,7 +145,7 @@ services:
       BRIDGE_SUBSCRIPTION_ID: 113
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_quantum_ai.sqlite
-      TRAD_PG_DSN: postgresql://trading:e763ad7f2c4924e949913f58@pg_tunnel:5432/trading
+      TRAD_PG_DSN: ${TRAD_PG_DSN_TUNNEL:?set TRAD_PG_DSN_TUNNEL (postgresql://trading:<password>@pg_tunnel:5432/trading) in .env}
       POLL_INTERVAL_SECONDS: 30
     volumes: [./user_data:/data/freqtrade:ro]
     networks: [fleet]
