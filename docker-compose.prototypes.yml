@@ -11,6 +11,8 @@ services:
     environment:
       FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
       FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      # C12: walk-forward (out-of-sample) anomaly flags, not the in-sample file
+      ANOMALY_FLAGS_FILE: anomaly_flags_wf.feather
     volumes:
       - ./user_data:/freqtrade/user_data
       - ./config.analogv2.json:/freqtrade/config.json:ro
@@ -42,6 +44,8 @@ services:
     environment:
       FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
       FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      # C12: walk-forward (out-of-sample) anomaly flags, not the in-sample file
+      ANOMALY_FLAGS_FILE: anomaly_flags_wf.feather
     volumes:
       - ./user_data:/freqtrade/user_data
       - ./config.analogv2-ETH.json:/freqtrade/config.json:ro
@@ -73,6 +77,8 @@ services:
     environment:
       FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
       FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      # C12: walk-forward (out-of-sample) anomaly flags, not the in-sample file
+      ANOMALY_FLAGS_FILE: anomaly_flags_wf.feather
       CAL_W_JUL: "-0.05"
       CAL_W_JAN: "0.10"
     volumes:
@@ -106,6 +112,8 @@ services:
     environment:
       FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
       FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      # C12: walk-forward (out-of-sample) anomaly flags, not the in-sample file
+      ANOMALY_FLAGS_FILE: anomaly_flags_wf.feather
     volumes:
       - ./user_data:/freqtrade/user_data
       - ./config.analog.json:/freqtrade/config.json:ro
