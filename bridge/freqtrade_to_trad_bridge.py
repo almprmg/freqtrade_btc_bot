@@ -15,6 +15,13 @@ Mapping is one-way (Freqtrade is source of truth):
   Freqtrade close_profit_abs → trades.pnl
   Freqtrade is_open == false → trades.status='closed', set exit_order_id
 
+Position adjustments (DCA buys / partial sells via adjust_trade_position)
+change amount, open_rate and realized_profit while the trade stays open;
+those are re-synced onto the open trade row on every poll, and each
+adjustment fill is mirrored as its own `orders` row (client_order_id
+`bridge-<sub>-ftord-<id>`, idempotent). Partial realized P&L of open trades
+lives in fees_breakdown.realized_profit and is folded into total_pnl.
+
 Idempotency: we keep `bridge_meta` in trad_pg (a JSONB blob inside
 admin_audit_logs[type=bridge_state]) tracking the highest Freqtrade trade
 id we've imported per subscription. On every poll we only fetch
@@ -72,13 +79,78 @@ def fetch_freqtrade_trades(sqlite_path: str) -> list[dict]:
         """
         SELECT id, pair, is_open, open_date, close_date, amount, open_rate,
                close_rate, close_profit_abs, stake_amount, fee_open_cost,
-               fee_close_cost, exit_reason
+               fee_close_cost, exit_reason, realized_profit
         FROM trades
         ORDER BY id ASC
         """
     ).fetchall()
+    orders = con.execute(
+        """
+        SELECT id, ft_trade_id, ft_order_side, order_type, average, price,
+               filled, cost, ft_fee_base, order_date, order_filled_date
+        FROM orders
+        WHERE status = 'closed' AND filled > 0
+        ORDER BY order_filled_date ASC, id ASC
+        """
+    ).fetchall()
     con.close()
-    return [dict(r) for r in rows]
+    by_trade: dict[int, list[dict]] = {}
+    for o in orders:
+        by_trade.setdefault(int(o["ft_trade_id"]), []).append(dict(o))
+    trades = [dict(r) for r in rows]
+    for t in trades:
+        t["orders"] = by_trade.get(int(t["id"]), [])
+    return trades
+
+
+def adjustment_orders(orders: list[dict], is_open: bool) -> list[dict]:
+    """Fills that are neither the trade's initial entry nor its final exit.
+
+    The bridge already writes one synthetic entry order on insert and one
+    synthetic exit order on close; everything in between (DCA buys, partial
+    sells) is an adjustment and gets mirrored on its own.
+    """
+    buys = [o for o in orders if o["ft_order_side"] == "buy"]
+    sells = [o for o in orders if o["ft_order_side"] == "sell"]
+    skip = {id(buys[0])} if buys else set()
+    if not is_open and sells:
+        skip.add(id(sells[-1]))
+    return [o for o in orders if id(o) not in skip]
+
+
+def mirror_adjustment_orders(cur: psycopg.Cursor, ft: dict, symbol: str) -> int:
+    """Insert one `orders` row per adjustment fill; idempotent per Freqtrade order id."""
+    inserted = 0
+    for o in adjustment_orders(ft.get("orders", []), bool(ft["is_open"])):
+        filled = float(o["filled"] or 0)
+        px = float(o["average"] or o["price"] or 0)
+        if filled <= 0 or px <= 0:
+            continue
+        otype = (o.get("order_type") or "limit").lower()
+        if otype not in ("market", "limit"):
+            otype = "limit"
+        commission = float(o.get("ft_fee_base") or 0) * px  # fee taken in base → quote
+        cur.execute(
+            """
+            INSERT INTO orders (subscription_id, user_id, client_order_id, symbol,
+                                side, type, quantity, price, filled_qty, avg_fill_price,
+                                status, quote_quantity, commission, placed_at, filled_at,
+                                strategy_signal)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'filled', %s, %s, %s, %s,
+                    'freqtrade:adjust')
+            ON CONFLICT (client_order_id) DO NOTHING
+            """,
+            (SUBSCRIPTION_ID, USER_ID, f"bridge-{SUBSCRIPTION_ID}-ftord-{o['id']}", symbol,
+             o["ft_order_side"], otype, filled, px, filled, px,
+             float(o.get("cost") or filled * px), commission,
+             to_dt(o["order_date"]), to_dt(o["order_filled_date"]) or to_dt(o["order_date"])),
+        )
+        inserted += cur.rowcount
+    return inserted
+
+
+def realized_of(ft: dict) -> float:
+    return float(ft.get("realized_profit") or 0)
 
 
 def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
@@ -161,18 +233,20 @@ def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
                                 direction, entry_price, exit_price, quantity, pnl, fees,
                                 fees_breakdown, exit_reason, status, opened_at, closed_at)
             VALUES (%s, %s, %s, %s, 'long', %s, %s, %s, %s, %s,
-                    jsonb_build_object('freqtrade_id', %s::int, 'source', 'freqtrade_rebalance'),
+                    jsonb_build_object('freqtrade_id', %s::int, 'source', 'freqtrade_rebalance',
+                                       'realized_profit', %s::float8),
                     %s, %s, %s, %s)
             RETURNING id
             """,
             (SUBSCRIPTION_ID, entry_order_id, exit_order_id, symbol,
              entry_px, exit_px, qty, pnl, fee_total,
-             ft_id,
+             ft_id, realized_of(ft),
              exit_reason if not is_open else None,
              "open" if is_open else "closed",
              open_dt, close_dt),
         )
         new_id = cur.fetchone()[0]
+        mirror_adjustment_orders(cur, ft, symbol)
         log.info(
             "INSERT trade ft=%s -> trad=%s (%s, %s, qty=%.6f)",
             ft_id, new_id, symbol, "open" if is_open else "closed", qty,
@@ -180,7 +254,32 @@ def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
         return
 
     trad_id, current_status = existing
-    # Update only if state changed (open → closed) or numbers changed.
+    n = mirror_adjustment_orders(cur, ft, symbol) if current_status == "open" else 0
+    if current_status == "open" and is_open:
+        # Position adjustments move amount / open_rate / realized_profit while
+        # the trade stays open — keep the platform's view in step.
+        cur.execute(
+            """
+            UPDATE trades
+            SET quantity = ROUND(%s::numeric, 8), entry_price = ROUND(%s::numeric, 8),
+                fees = ROUND(%s::numeric, 8),
+                fees_breakdown = fees_breakdown || jsonb_build_object('realized_profit', %s::float8)
+            WHERE id = %s
+              -- columns are numeric(24,8): compare at that scale or every poll rewrites
+              AND (quantity IS DISTINCT FROM ROUND(%s::numeric, 8)
+                   OR entry_price IS DISTINCT FROM ROUND(%s::numeric, 8)
+                   OR fees IS DISTINCT FROM ROUND(%s::numeric, 8)
+                   OR (fees_breakdown ->> 'realized_profit')::float8 IS DISTINCT FROM %s::float8)
+            """,
+            (qty, entry_px, fee_total, realized_of(ft), trad_id,
+             qty, entry_px, fee_total, realized_of(ft)),
+        )
+        if cur.rowcount or n:
+            log.info(
+                "ADJUST trade ft=%s -> trad=%s qty=%.6f entry=%.6f realized=%.4f (+%d orders)",
+                ft_id, trad_id, qty, entry_px, realized_of(ft), n,
+            )
+        return
     if current_status == "open" and not is_open:
         # Close the trade.
         client_oid2 = f"bridge-{ft_id}-exit-{uuid.uuid4().hex[:8]}"
@@ -214,11 +313,15 @@ def update_subscription_stats(cur: psycopg.Cursor) -> None:
         """
         WITH s AS (
           SELECT
-            COUNT(*) AS total,
-            COUNT(*) FILTER (WHERE pnl > 0) AS wins,
-            COALESCE(SUM(pnl), 0) AS pnl_sum
+            COUNT(*) FILTER (WHERE status = 'closed') AS total,
+            COUNT(*) FILTER (WHERE status = 'closed' AND pnl > 0) AS wins,
+            -- closed: Freqtrade's close_profit_abs already includes earlier
+            -- partial exits; open: only the partial exits realized so far.
+            COALESCE(SUM(pnl) FILTER (WHERE status = 'closed'), 0)
+              + COALESCE(SUM((fees_breakdown ->> 'realized_profit')::numeric)
+                         FILTER (WHERE status = 'open'), 0) AS pnl_sum
           FROM trades
-          WHERE subscription_id = %s AND status = 'closed'
+          WHERE subscription_id = %s
         )
         UPDATE user_strategy_subscriptions
         SET total_trades = s.total, winning_trades = s.wins, total_pnl = s.pnl_sum
@@ -238,13 +341,20 @@ def main_loop() -> None:
         try:
             fts = fetch_freqtrade_trades(FREQTRADE_DB)
             if fts:
-                with psycopg.connect(TRAD_PG_DSN, autocommit=False) as conn:
-                    with conn.cursor() as cur:
-                        for ft in fts:
-                            upsert_trade(cur, ft)
+                failed = 0
+                with psycopg.connect(TRAD_PG_DSN, autocommit=True) as conn:
+                    # One transaction per trade: a single bad row must not
+                    # roll back (and so block) every other trade's sync.
+                    for ft in fts:
+                        try:
+                            with conn.transaction(), conn.cursor() as cur:
+                                upsert_trade(cur, ft)
+                        except Exception:
+                            failed += 1
+                            log.exception("trade ft=%s failed to sync; skipped", ft.get("id"))
+                    with conn.transaction(), conn.cursor() as cur:
                         update_subscription_stats(cur)
-                    conn.commit()
-                log.info("synced %d freqtrade trades", len(fts))
+                log.info("synced %d freqtrade trades (%d failed)", len(fts), failed)
             else:
                 log.info("no freqtrade trades yet")
         except Exception as exc:
