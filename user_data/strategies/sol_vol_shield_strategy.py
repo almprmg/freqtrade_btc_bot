@@ -21,6 +21,7 @@ short bounces in sideways markets — that's where the previous variants died.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import numpy as np
@@ -49,7 +50,7 @@ def _load_aux(name: str):
     return pd.DataFrame()
 
 
-_ANOMALY = _load_aux("anomaly_flags.feather")
+_ANOMALY = _load_aux(os.environ.get("ANOMALY_FLAGS_FILE", "anomaly_flags.feather"))
 
 
 class SolVolShieldStrategy(IStrategy):

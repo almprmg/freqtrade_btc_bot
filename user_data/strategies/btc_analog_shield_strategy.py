@@ -11,6 +11,7 @@
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import numpy as np
@@ -40,7 +41,7 @@ def _load_aux(name: str):
 
 
 _HALVING = _load_aux("halving_cycle.feather")
-_ANOMALY = _load_aux("anomaly_flags.feather")
+_ANOMALY = _load_aux(os.environ.get("ANOMALY_FLAGS_FILE", "anomaly_flags.feather"))
 _ANALOGS = _load_aux("historical_analogs.feather")
 
 W_ANALOG_MEAN     = 0.30    # weight for analog_fwd_30d_mean tilt

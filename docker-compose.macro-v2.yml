@@ -9,6 +9,8 @@ services:
     environment:
       FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
       FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      # C12: walk-forward (out-of-sample) anomaly flags, not the in-sample file
+      ANOMALY_FLAGS_FILE: anomaly_flags_wf.feather
       MV_W_MACRO: "0.20"
       MV_W_VIX: "0.00"
       MV_W_SPY: "0.10"

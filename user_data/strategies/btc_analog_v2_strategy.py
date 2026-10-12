@@ -13,6 +13,7 @@ See: research/reports/STAR_STRATEGIES.md
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import numpy as np
@@ -42,7 +43,7 @@ def _load_aux(name: str):
 
 
 _HALVING = _load_aux("halving_cycle.feather")
-_ANOMALY = _load_aux("anomaly_flags.feather")
+_ANOMALY = _load_aux(os.environ.get("ANOMALY_FLAGS_FILE", "anomaly_flags.feather"))
 _ANALOG_V2 = _load_aux("historical_analogs_v2.feather")
 _MACRO = _load_aux("macro_signals.feather")
 

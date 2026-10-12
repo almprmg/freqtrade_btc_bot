@@ -70,6 +70,8 @@ services:
     environment:
       FREQTRADE__EXCHANGE__KEY: ${FREQTRADE__EXCHANGE__KEY:-}
       FREQTRADE__EXCHANGE__SECRET: ${FREQTRADE__EXCHANGE__SECRET:-}
+      # C12: walk-forward (out-of-sample) anomaly flags, not the in-sample file
+      ANOMALY_FLAGS_FILE: anomaly_flags_wf.feather
     volumes:
       - ./user_data:/freqtrade/user_data
       - ./config.calendar-ETH.json:/freqtrade/config.json:ro

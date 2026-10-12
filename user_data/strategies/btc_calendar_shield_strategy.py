@@ -26,6 +26,7 @@ Anti-overfit guardrails:
 """
 from __future__ import annotations
 
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -57,7 +58,7 @@ def _load_aux(name: str):
 
 
 _HALVING = _load_aux("halving_cycle.feather")
-_ANOMALY = _load_aux("anomaly_flags.feather")
+_ANOMALY = _load_aux(os.environ.get("ANOMALY_FLAGS_FILE", "anomaly_flags.feather"))
 
 
 PHASE_SHIFTS = {
