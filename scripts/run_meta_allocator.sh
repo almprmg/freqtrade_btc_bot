@@ -9,6 +9,12 @@ mkdir -p /srv/trad/logs
 
 cd /srv/trad/pythone/freqtrade_btc_bot
 
+# Secrets live in .env.meta_allocator (gitignored) — see .env.meta_allocator.example
+set -a
+source .env.meta_allocator
+set +a
+: "${TRAD_PG_DSN:?TRAD_PG_DSN not set — copy .env.meta_allocator.example to .env.meta_allocator and fill it in}"
+
 # Build the image if missing (idempotent — Docker caches layers)
 if ! docker image inspect meta-allocator:latest >/dev/null 2>&1; then
   echo "[$(date)] building meta-allocator image..." >> "$LOG"
@@ -17,7 +23,7 @@ fi
 
 docker run --rm \
   --network trad_system_trad \
-  -e TRAD_PG_DSN="postgresql://trading:e763ad7f2c4924e949913f58@trad_pg:5432/trading" \
+  -e TRAD_PG_DSN="${TRAD_PG_DSN}" \
   -e LOOKBACK_DAYS=90 \
   -v "$PWD:/work:ro" \
   -w /work \
