@@ -94,13 +94,7 @@ def test_crash_deploys_cash(strat, open_trades):
     assert _stake(strat, 100.0, free=250.0, dd=0.10) == 0.0
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Grid layer bookkeeping is dead: populate_entry_trend tags EVERY entry 'layer:auto' "
-    "(btc_3layer_strategy.py populate_entry_trend) and confirm_trade_entry cannot retag, but "
-    "_layer_of() only recognises 'grid:'/'hedge:' prefixes. So grid legs are counted as CORE: "
-    "the GRID_LEVELS cap is never enforced (max_open_trades=-1 in config.3layer.json), the "
-    "grid anchor is always the first core trade, and grid legs inflate core value. Input: "
-    "one core + 3 grid legs opened by the strategy. Expected 3 grid trades, actual 0."))
+# Regression (was strict xfail): untagged legs after the core are GRID; layer tags written in order_filled.
 def test_grid_legs_are_classified_as_grid(strat, open_trades):
     tag = run_pipeline(strat, bull_ohlcv())["enter_tag"].iloc[-1]
     open_trades.append(FakeTrade(7.5, 100.0, enter_tag=tag))
@@ -116,3 +110,43 @@ def test_grid_trade_takes_profit_via_roi(strat):
 # Regression (was strict xfail): ROI applies to grid legs only (custom_roi).
 def test_core_trade_never_roi_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(7.0, 100.0, enter_tag="layer:auto"), profit=0.12)
+
+
+def test_grid_cap_enforced(strat, open_trades):
+    """A 4th grid leg is refused once GRID_LEVELS (3) legs are open (all tagged
+    'layer:auto' as pre-fix trades are)."""
+    open_trades.append(FakeTrade(10.0, 100.0, enter_tag="layer:auto"))
+    for px in (99.0, 98.0, 97.0):
+        open_trades.append(FakeTrade(83.3 / px, px, enter_tag="layer:auto"))
+    assert len(strat._portfolio_state("BTC/USDT", 90.0)["grid_trades"]) == 3
+    # 90 <= 97 * (1 - 6%) would open a 4th leg if the cap were not enforced.
+    assert _stake(strat, 90.0, free=10.0) == 0.0
+
+
+def test_grid_anchor_is_last_grid_leg(strat, open_trades):
+    open_trades.append(FakeTrade(10.0, 100.0, enter_tag="core:initial"))
+    open_trades.append(FakeTrade(1.0, 94.0, enter_tag="grid:buy_1"))
+    assert _stake(strat, 90.0, free=10.0) == 0.0           # -4.3% vs 94 < 6% step
+    assert _stake(strat, 88.0, free=10.0) == pytest.approx(10.0)  # -6.4% vs 94
+
+
+def test_order_filled_writes_layer_tag(strat, open_trades):
+    from types import SimpleNamespace
+    open_trades.append(FakeTrade(10.0, 100.0, enter_tag="core:initial"))
+    assert _stake(strat, 94.0, free=250.0) > 0             # decides grid leg 1
+    leg = FakeTrade(0.886, 94.0, enter_tag="layer:auto")
+    leg.entry_side = "buy"
+    strat.order_filled("BTC/USDT", leg, SimpleNamespace(ft_order_side="buy"), None)
+    assert leg.enter_tag == "grid:buy_1"
+    assert strat._layer_of(leg) == "grid"
+    assert roi_would_exit(strat, leg, profit=0.11)
+
+
+def test_bootstrap_tags_core(strat, open_trades):
+    from types import SimpleNamespace
+    assert _stake(strat, 100.0, free=1000.0) == pytest.approx(700.0)
+    t = FakeTrade(7.0, 100.0, enter_tag="layer:auto")
+    t.entry_side = "buy"
+    strat.order_filled("BTC/USDT", t, SimpleNamespace(ft_order_side="buy"), None)
+    assert t.enter_tag == "core:initial"
+    assert not roi_would_exit(strat, t, profit=0.5)
