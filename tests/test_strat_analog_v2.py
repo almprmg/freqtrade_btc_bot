@@ -57,11 +57,7 @@ def test_total_tilt_clamped(strat, inject, pair):
     assert out["total_tilt"].max() == pytest.approx(0.45)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Anomaly coin hard-coded to 'BTC' (btc_analog_v2_strategy.py populate_indicators: "
-    "_ANOMALY[_ANOMALY['coin'] == 'BTC']) regardless of metadata['pair']; the deployed ETH "
-    "AnalogV2 bot ignores ETH anomaly flags. Input: ETH/USDT, coin='ETH' is_anomaly=1 on the "
-    "last day; expected anomaly=1 + exit_long=1, actual anomaly=0."))
+# Regression (was strict xfail): anomaly flags of the traded coin (metadata['pair']).
 def test_anomaly_uses_traded_coin(monkeypatch, mod):
     s = make_strategy(mod.BtcAnalogV2Strategy, pair="ETH/USDT")
     df = bull_ohlcv()

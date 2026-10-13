@@ -22,6 +22,10 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:  # per-coin anomaly flags (coin derived from metadata["pair"])
+    from _anomaly_flags import coin_anomaly_flags
+except ImportError:  # pragma: no cover
+    from user_data.strategies._anomaly_flags import coin_anomaly_flags
 try:  # cost-basis partial-exit sizing shared with dynrebal (C14b)
     from _position_sizing import exit_stake
 except ImportError:  # pragma: no cover
@@ -125,10 +129,10 @@ class BtcAnalogV2Strategy(IStrategy):
 
         df["anomaly"] = 0
         if not _ANOMALY.empty:
-            coin_anom = _ANOMALY[_ANOMALY["coin"] == "BTC"][["is_anomaly"]] \
-                       if "coin" in _ANOMALY.columns else _ANOMALY
+            # Flags of the traded coin (was hard-coded "BTC" for every pair).
+            coin_anom = coin_anomaly_flags(_ANOMALY, metadata.get("pair", "BTC/USDT"))
             d = pd.to_datetime(df["date"], utc=True).dt.normalize()
-            df["anomaly"] = d.map(coin_anom["is_anomaly"]).fillna(0).astype(int)
+            df["anomaly"] = d.map(coin_anom).fillna(0).astype(int)
 
         # === ANALOG V2 SIGNALS ===
         df["analog_v2"] = 0.0
