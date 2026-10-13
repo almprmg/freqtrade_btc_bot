@@ -105,14 +105,7 @@ def test_adjust_trims_overweight(strat):
     assert adjust(strat, FakeTrade(10.0, 100.0), 100.0) == pytest.approx(-600.0)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "NOSTOP does not disable TRIM_RALLY: trim_rally_pct=1.0 is only 'disabled' if a 100% "
-    "rally from the 90d low never happens, but crypto does it routinely (BTC Oct-2020 -> "
-    "Jan-2021 ~+280%). btc_adaptive_strategy.py adjust_trade_position: "
-    "`if last['rally_from_low'] >= P['trim_rally_pct']` -> sells 20% of the coin value even "
-    "when drift says hold/buy, and repeats on every call (no once-per-bar/cooldown guard), "
-    "so the position is ratcheted down while the rally lasts. Input: TREND_UP, at 85% "
-    "target, rally_from_low=1.5. Expected None, actual -170.0."))
+# Regression (was strict xfail): NOSTOP really disables TRIM_RALLY (trim_rally_pct = inf).
 def test_nostop_never_rally_trims(strat):
     attach_runtime(strat, row(rally_from_low=1.5), free=150.0)
     assert adjust(strat, FakeTrade(8.5, 100.0), 100.0) is None
@@ -146,3 +139,23 @@ def test_trim_in_profit_lands_on_target(strat):
 # Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)
+
+
+def test_rally_trim_once_per_candle():
+    """Modes with TRIM_RALLY enabled trim at most once per analysed candle
+    (adjust_trade_position runs on every process loop), and not while an
+    order is open."""
+    m = load_strategy(FILE, {"AD_MODE": "ADAPT_AGGR_BASELINE"})
+    s = make_strategy(m.BtcAdaptiveStrategy)
+    day1 = row(rally_from_low=0.5).assign(date=pd.Timestamp("2024-03-01", tz="UTC"))
+    attach_runtime(s, day1, free=150.0)               # at the 85% target
+    trade = FakeTrade(8.5, 100.0)
+    first = adjust(s, trade, 100.0)
+    assert first == pytest.approx(-0.20 * 850.0)
+    assert all(adjust(s, trade, 100.0) is None for _ in range(60))   # same candle
+    day2 = day1.assign(date=pd.Timestamp("2024-03-02", tz="UTC"))
+    attach_runtime(s, day2, free=150.0)
+    trade.has_open_orders = True
+    assert adjust(s, trade, 100.0) is None            # order still open
+    trade.has_open_orders = False
+    assert adjust(s, trade, 100.0) == pytest.approx(-0.20 * 850.0)

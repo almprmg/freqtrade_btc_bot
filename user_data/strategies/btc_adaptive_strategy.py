@@ -17,6 +17,7 @@ The "pro" version that combines four layers:
   3. STOP RULES (override allocation when fired)
      - STOP_GRID:  daily price -X% over 2 days → freeze grid entries
      - TRIM_RALLY: price +Y% without an X% pullback → trim 20% of BTC to cash
+                   (at most once per daily candle, never while an order is open)
      - VOL_PUSH:   ATR z-score > 2 → move 10pp of allocation to cash
 
   4. EXECUTION (one trade, position_adjustment)
@@ -112,8 +113,10 @@ def _build_modes() -> dict[str, dict]:
         }
         modes[f"ADAPT_{pname}_NOSTOP"] = {
             **baseline,
-            "stop_grid_drop_pct": 1.0,        # effectively disabled
-            "trim_rally_pct": 1.0,            # disabled
+            "stop_grid_drop_pct": 1.0,        # disabled: a -100% 2-day drop is impossible
+            # disabled for real: 1.0 (+100% from the 90d low) was reachable
+            # (BTC Oct-2020 -> Jan-2021 ~+280%) and fired TRIM_RALLY.
+            "trim_rally_pct": float("inf"),
             "vol_zscore_threshold": 100.0,    # disabled
         }
     return modes
@@ -123,6 +126,31 @@ AD_MODES = _build_modes()
 if MODE not in AD_MODES:
     raise ValueError(f"unknown AD_MODE: {MODE}; valid: {list(AD_MODES)}")
 P = AD_MODES[MODE]
+
+RALLY_TRIM_KEY = "ad_rally_trim_candle"  # trade custom data: candle of the last rally trim
+
+
+def _candle_key(last: pd.Series, current_time: datetime) -> str:
+    """Identifier of the analysed candle (its open date), for once-per-candle guards."""
+    d = last.get("date") if hasattr(last, "get") else None
+    if d is not None and not pd.isna(d):
+        return pd.Timestamp(d).isoformat()
+    return pd.Timestamp(current_time).normalize().isoformat()
+
+
+def _get_cd(trade, key):
+    getter = getattr(trade, "get_custom_data", None)
+    return getter(key) if callable(getter) else getattr(trade, "_ad_cd", {}).get(key)
+
+
+def _set_cd(trade, key, value) -> None:
+    setter = getattr(trade, "set_custom_data", None)
+    if callable(setter):
+        setter(key, value)
+    else:  # plain objects (tests)
+        if not hasattr(trade, "_ad_cd"):
+            trade._ad_cd = {}
+        trade._ad_cd[key] = value
 
 
 class BtcAdaptiveStrategy(IStrategy):
@@ -246,9 +274,15 @@ class BtcAdaptiveStrategy(IStrategy):
             target = max(0.0, target - float(P["vol_push_pct"]))
 
         # TRIM_RALLY: if up trim_rally_pct from 90d low and no recent pullback,
-        # trim trim_rally_amount of BTC value.
+        # trim trim_rally_amount of BTC value. adjust_trade_position runs on
+        # every process loop, so the trim is limited to once per analysed
+        # candle (and never while an order is still open) — previously it
+        # re-fired on every call and ratcheted the position down.
         rally_trim_usdt = 0.0
-        if last["rally_from_low"] >= float(P["trim_rally_pct"]):
+        candle = _candle_key(last, current_time)
+        if (last["rally_from_low"] >= float(P["trim_rally_pct"])
+                and not getattr(trade, "has_open_orders", False)
+                and _get_cd(trade, RALLY_TRIM_KEY) != candle):
             rally_trim_usdt = btc_value * float(P["trim_rally_amount"])
 
         target_btc_value = target * total
@@ -275,7 +309,10 @@ class BtcAdaptiveStrategy(IStrategy):
             sell_usdt = min(rebalance_usdt, btc_value * 0.99)
             if min_stake and sell_usdt < min_stake:
                 return None
-            return exit_stake(trade, sell_usdt, current_rate)
+            stake = exit_stake(trade, sell_usdt, current_rate)
+            if stake is not None and rally_trim_usdt > 0:
+                _set_cd(trade, RALLY_TRIM_KEY, candle)
+            return stake
         else:
             # In stop_grid_active we don't buy new grid legs even if drift says buy.
             if stop_grid_active:
