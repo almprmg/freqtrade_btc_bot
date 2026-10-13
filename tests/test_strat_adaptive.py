@@ -134,12 +134,12 @@ def test_adjust_in_shield_bear(strat, shield, request):
     assert out is None
 
 
-@pytest.mark.xfail(strict=True, reason=SIZING_XFAIL_REASON)
+# C14b regression (was strict xfail): trims are sized by cost basis via _position_sizing.
 def test_trim_in_profit_lands_on_target(strat):
     attach_runtime(strat, row(), free=0.0)
     trade = FakeTrade(1.0, 100.0)
     stake = adjust(strat, trade, 200.0)
-    assert stake == pytest.approx(-30.0)
+    assert stake == pytest.approx(-15.0)  # $30 market value = 15% of the $100 cost basis
     assert allocation_after_trim(stake, trade, 200.0, 0.0) == pytest.approx(0.85, abs=0.01)
 
 

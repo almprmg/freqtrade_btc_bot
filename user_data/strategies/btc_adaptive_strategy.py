@@ -41,6 +41,11 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:  # cost-basis partial-exit sizing shared with dynrebal (C14b)
+    from _position_sizing import exit_stake
+except ImportError:  # pragma: no cover
+    from user_data.strategies._position_sizing import exit_stake
+
 try:
     from _regime_shield import shield_indicators, apply_shield, regime_allows_add
 except ImportError:  # pragma: no cover
@@ -268,7 +273,7 @@ class BtcAdaptiveStrategy(IStrategy):
             sell_usdt = min(rebalance_usdt, btc_value * 0.99)
             if min_stake and sell_usdt < min_stake:
                 return None
-            return -float(sell_usdt) if sell_usdt > 0 else None
+            return exit_stake(trade, sell_usdt, current_rate)
         else:
             # In stop_grid_active we don't buy new grid legs even if drift says buy.
             if stop_grid_active:

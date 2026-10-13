@@ -20,6 +20,11 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:  # cost-basis partial-exit sizing shared with dynrebal (C14b)
+    from _position_sizing import exit_stake
+except ImportError:  # pragma: no cover
+    from user_data.strategies._position_sizing import exit_stake
+
 
 def _load_aux(name: str):
     candidates = [
@@ -213,7 +218,7 @@ class BtcAnalogShieldStrategy(IStrategy):
         if drift > 0.10 * total:
             sell = min(drift, value * 0.99)
             if min_stake and sell < min_stake: return None
-            return -float(sell)
+            return exit_stake(trade, sell, current_rate)
         return None
 
 

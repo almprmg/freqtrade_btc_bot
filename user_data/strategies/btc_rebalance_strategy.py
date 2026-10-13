@@ -29,6 +29,11 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:  # cost-basis partial-exit sizing shared with dynrebal (C14b)
+    from _position_sizing import exit_stake
+except ImportError:  # pragma: no cover
+    from user_data.strategies._position_sizing import exit_stake
+
 try:
     from _regime_shield import shield_indicators, apply_shield, regime_allows_add
 except ImportError:  # pragma: no cover
@@ -173,7 +178,7 @@ class BtcRebalanceStrategy(IStrategy):
             sell_usdt = min(rebalance_usdt, btc_value * 0.99)
             if min_stake is not None and sell_usdt < min_stake:
                 return None
-            return -float(sell_usdt)
+            return exit_stake(trade, sell_usdt, current_rate)
         else:
             # Too little BTC → buy more. Cap by free USDT.
             buy_usdt = min(-rebalance_usdt, usdt_free * 0.99)

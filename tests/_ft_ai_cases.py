@@ -143,7 +143,7 @@ def test_adjust_noop_when_target_off(strat, inject, pair):
     assert adjust(strat, FakeTrade(0.0001, 100.0, pair=pair), 100.0) is None
 
 
-@pytest.mark.xfail(strict=True, reason=SIZING_XFAIL_REASON)
+# C14b regression (was strict xfail): trims are sized by cost basis via _position_sizing.
 def test_trim_in_profit_lands_on_target(strat, inject, pair):
     target = _runtime(strat, inject, pair, free=0.0)
     trade = FakeTrade(1.0, 100.0, pair=pair)
