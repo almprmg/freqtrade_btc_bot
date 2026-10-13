@@ -47,7 +47,9 @@ class BtcDcaHoldStrategy(IStrategy):
     can_short: bool = False
     process_only_new_candles: bool = True
 
-    minimal_roi: dict = {"0": 1.0} if MODE in TP_MODES else {"0": 10.0}
+    # TP modes: +100% take-profit. HODL modes never ROI-exit: the old {"0": 10.0}
+    # sentinel (+1000%) was reachable (C14b); an empty table never matches.
+    minimal_roi: dict = {"0": 1.0} if MODE in TP_MODES else {}
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 

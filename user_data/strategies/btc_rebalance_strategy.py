@@ -71,7 +71,9 @@ class BtcRebalanceStrategy(IStrategy):
 
     # Rebalancing never wants Freqtrade's auto-exit to trigger — it controls
     # all increase/decrease via adjust_trade_position.
-    minimal_roi: dict = {"0": 10.0}
+    # Never ROI-exit: {"0": 10.0} (+1000%) was reachable (C14b). Empty table ->
+    # min_roi_reached() is always False. Do NOT set minimal_roi in bot configs.
+    minimal_roi: dict = {}
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 

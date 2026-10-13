@@ -60,7 +60,9 @@ class BtcRotationStrategy(IStrategy):
     process_only_new_candles: bool = True
 
     # Position sizing: 95% of wallet per trade (single asset at a time).
-    minimal_roi: dict = {"0": 10.0}
+    # Never ROI-exit: {"0": 10.0} (+1000%) was reachable (C14b). Empty table ->
+    # min_roi_reached() is always False. Do NOT set minimal_roi in bot configs.
+    minimal_roi: dict = {}
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 

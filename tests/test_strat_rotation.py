@@ -88,7 +88,6 @@ def test_stake_is_95pct(mod):
     assert s.position_adjustment_enable is False
 
 
-@pytest.mark.xfail(strict=True, reason=ROI_XFAIL_REASON + " Rotation exits are defined as "
-                   "'signal says CASH or a different coin'; SOL (in the universe) did >10x in 2021.")
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(mod):
     assert not roi_would_exit(strat_for(mod, "SOL/USDT"), FakeTrade(1.0, 100.0, pair="SOL/USDT"), profit=12.0)

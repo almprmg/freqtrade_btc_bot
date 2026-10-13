@@ -87,9 +87,6 @@ def test_one_dca_per_daily_candle(strat):
     assert adjust(strat, trade, 100.0, now=t0 + timedelta(minutes=1)) is None
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "V1_BLIND is documented 'never sell' but minimal_roi = {'0': 10.0} (non-TP modes) closes "
-    "the whole accumulated position at +1000% vs average cost. Fix: minimal_roi = {} for "
-    "non-TP modes."))
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_v1_never_roi_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)

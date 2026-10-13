@@ -97,7 +97,9 @@ class BtcCalendarShieldStrategy(IStrategy):
     can_short: bool = False
     process_only_new_candles: bool = True
 
-    minimal_roi: dict = {"0": 10.0}
+    # Never ROI-exit: {"0": 10.0} (+1000%) was reachable (C14b). Empty table ->
+    # min_roi_reached() is always False. Do NOT set minimal_roi in bot configs.
+    minimal_roi: dict = {}
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
     position_adjustment_enable: bool = True

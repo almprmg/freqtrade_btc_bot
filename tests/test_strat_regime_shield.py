@@ -144,6 +144,6 @@ def test_stoploss_effectively_disabled(strat):
     assert strat.stoploss <= -0.99 and not strat.use_custom_stoploss
 
 
-@pytest.mark.xfail(strict=True, reason=ROI_XFAIL_REASON)
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)
