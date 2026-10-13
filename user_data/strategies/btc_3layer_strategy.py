@@ -138,12 +138,13 @@ class Btc3LayerStrategy(IStrategy):
     can_short: bool = False
     process_only_new_candles: bool = True
 
-    # Per-trade ROI = take-profit for grid trades. Core trades never trip
-    # this (their accumulated drift is the rebalance signal, not per-trade
-    # ROI), so we use the highest grid_take across modes as the cap.
-    # Set sufficiently low so grid take fires; core trades close via the
-    # rebalance flow which closes oldest-trades, not via ROI.
-    minimal_roi: dict = {"0": GRID_TAKE}
+    # ROI is the take-profit of GRID legs only. A table-wide {"0": GRID_TAKE}
+    # also ROI-closed the 70% CORE trade at +10%, contradicting the design
+    # (core is long-term accumulation). The table is therefore empty and
+    # custom_roi() returns GRID_TAKE for grid legs and None (= never) for
+    # core/hedge trades. Do NOT set minimal_roi in the bot configs.
+    minimal_roi: dict = {}
+    use_custom_roi: bool = True
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 
@@ -293,6 +294,12 @@ class Btc3LayerStrategy(IStrategy):
                     return float(deploy)
 
         return 0.0  # nothing to do this bar
+
+    def custom_roi(self, pair: str, trade: Trade, current_time: datetime,
+                   trade_duration: int, entry_tag: Optional[str], side: str,
+                   **kwargs) -> Optional[float]:
+        """Per-trade ROI: grid legs take profit at GRID_TAKE; core/hedge never."""
+        return GRID_TAKE if self._layer_of(trade) == "grid" else None
 
     # ---- Override enter_tag based on layer decision --------------------- #
 

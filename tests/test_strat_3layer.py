@@ -113,10 +113,6 @@ def test_grid_trade_takes_profit_via_roi(strat):
     assert roi_would_exit(strat, FakeTrade(1.0, 100.0, enter_tag="grid:buy_1"), profit=0.11)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "minimal_roi = {'0': GRID_TAKE} (0.10 in L3_AGGR_WIDE_GRID) applies to ALL trades; the class "
-    "comment says 'Core trades never trip this ... core trades close via the rebalance flow', "
-    "but there is no custom_roi/tag filter, so the 70% CORE position is ROI-closed at +10%. "
-    "Input: core trade, +12% profit. Expected no ROI exit, actual exit."))
+# Regression (was strict xfail): ROI applies to grid legs only (custom_roi).
 def test_core_trade_never_roi_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(7.0, 100.0, enter_tag="layer:auto"), profit=0.12)
