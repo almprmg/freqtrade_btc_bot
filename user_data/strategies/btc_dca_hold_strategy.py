@@ -38,6 +38,34 @@ PER_BUY_USD = 100.0
 DAILY_CAP_USD = 500.0
 TIER_EXTRA_USD = 100.0
 TP_MODES = {"V2_BLIND_TP", "V6_TIERED_TP"}
+LAST_BUY_CANDLE_KEY = "dca_last_buy_candle"  # trade custom data: candle of the last DCA
+
+
+def _candle_key(df: pd.DataFrame, current_time: datetime) -> str:
+    """Identifier of the last analysed (closed) candle: its open date. Falls
+    back to the UTC calendar day of current_time when no date column exists."""
+    if "date" in df.columns:
+        d = df["date"].iloc[-1]
+        if d is not None and not pd.isna(d):
+            return pd.Timestamp(d).isoformat()
+    ts = pd.Timestamp(current_time)
+    ts = ts.tz_localize("UTC") if ts.tzinfo is None else ts.tz_convert("UTC")
+    return ts.normalize().isoformat()
+
+
+def _get_cd(trade, key):
+    getter = getattr(trade, "get_custom_data", None)
+    return getter(key) if callable(getter) else getattr(trade, "_dca_cd", {}).get(key)
+
+
+def _set_cd(trade, key, value) -> None:
+    setter = getattr(trade, "set_custom_data", None)
+    if callable(setter):
+        setter(key, value)
+    else:  # plain objects (tests)
+        if not hasattr(trade, "_dca_cd"):
+            trade._dca_cd = {}
+        trade._dca_cd[key] = value
 
 
 class BtcDcaHoldStrategy(IStrategy):
@@ -139,10 +167,29 @@ class BtcDcaHoldStrategy(IStrategy):
         current_exit_profit: float,
         **kwargs,
     ) -> Optional[float]:
-        # Run only on a new daily bar (one DCA per day).
+        # Run only on a new daily bar (one DCA per day). Live freqtrade calls
+        # this on EVERY process loop (throttle 30s), not once per candle as in
+        # backtesting — without this guard V1_BLIND bought $100 per loop
+        # (2,008 buys in 48h). One decision per analysed candle, recorded in
+        # trade custom data, and nothing while an order is still open.
         df, _ = self.dp.get_analyzed_dataframe(pair=trade.pair, timeframe=self.timeframe)
         if df is None or df.empty:
             return None
+        if getattr(trade, "has_open_orders", False):
+            return None
+        candle = _candle_key(df, current_time)
+        if _get_cd(trade, LAST_BUY_CANDLE_KEY) == candle:
+            return None
+        if trade.nr_of_successful_entries <= 1 and _get_cd(trade, LAST_BUY_CANDLE_KEY) is None:
+            # The initial entry (populate_entry_trend) already bought on this
+            # candle when the trade opened during it.
+            opened = pd.Timestamp(trade.open_date_utc)
+            opened = opened.tz_localize("UTC") if opened.tzinfo is None else opened.tz_convert("UTC")
+            cstart = pd.Timestamp(candle)
+            cstart = cstart.tz_localize("UTC") if cstart.tzinfo is None else cstart.tz_convert("UTC")
+            if opened >= cstart + timedelta(days=1):
+                _set_cd(trade, LAST_BUY_CANDLE_KEY, candle)
+                return None
         last = df.iloc[-1]
 
         # Mode-specific eligibility for today's DCA.
@@ -164,5 +211,7 @@ class BtcDcaHoldStrategy(IStrategy):
         # passes max_stake which is the residual headroom; respect it.
         if max_stake is not None and max_stake > 0:
             add = min(add, max_stake)
-
-        return float(add) if add > 0 else None
+        if add <= 0:
+            return None
+        _set_cd(trade, LAST_BUY_CANDLE_KEY, candle)
+        return float(add)

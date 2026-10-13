@@ -67,14 +67,7 @@ def test_adjust_capped_by_max_stake(strat):
     assert adjust(strat, FakeTrade(1.0, 100.0), 100.0, max_stake=40.0) == 40.0
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "No once-per-candle guard: btc_dca_hold_strategy.py adjust_trade_position says 'Run only "
-    "on a new daily bar (one DCA per day)' but returns PER_BUY_USD on EVERY call. Live "
-    "freqtrade calls adjust_trade_position on every process loop "
-    "(freqtradebot.process -> process_open_trade_positions, throttle 30s in config.dca.json), "
-    "not once per candle as in backtesting, so V1_BLIND buys $100 per filled loop until the "
-    "wallet is drained instead of $100/day. Input: two calls 1 minute apart within the same "
-    "daily candle. Expected second call None, actual 100.0."))
+# Regression (was strict xfail): one DCA per analysed daily candle.
 def test_one_dca_per_daily_candle(strat):
     attach_runtime(strat, pd.DataFrame([{"rsi": 50.0, "close": 100.0, "ema200": 50.0,
                                          "dd_from_90d_high": 0.0}]), free=10_000)
@@ -90,3 +83,45 @@ def test_one_dca_per_daily_candle(strat):
 # Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_v1_never_roi_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)
+
+
+def _flat_row(**extra):
+    return pd.DataFrame([{"rsi": 50.0, "close": 100.0, "ema200": 50.0,
+                          "dd_from_90d_high": 0.0, **extra}])
+
+
+def test_60_loop_calls_in_one_day_buy_once(strat):
+    """Live loop: adjust_trade_position runs every ~30s. 60 consecutive calls
+    within one daily candle (each buy filling immediately) -> exactly 1 buy."""
+    attach_runtime(strat, _flat_row(date=START + timedelta(days=299)), free=200_000)
+    trade = FakeTrade(1.0, 100.0)
+    t0 = START + timedelta(days=300, hours=1)
+    buys = 0
+    for i in range(60):
+        out = adjust(strat, trade, 100.0, now=t0 + timedelta(seconds=30 * i))
+        if out:
+            buys += 1
+            trade.amount += out / 100.0
+            trade.stake_amount += out
+            trade.nr_of_successful_entries += 1
+    assert buys == 1
+    # next closed candle -> the next DCA
+    attach_runtime(strat, _flat_row(date=START + timedelta(days=300)), free=200_000)
+    assert adjust(strat, trade, 100.0, now=t0 + timedelta(days=1)) == 100.0
+
+
+def test_no_dca_while_order_open(strat):
+    attach_runtime(strat, _flat_row(), free=10_000)
+    trade = FakeTrade(1.0, 100.0)
+    trade.has_open_orders = True
+    assert adjust(strat, trade, 100.0) is None
+
+
+def test_no_extra_dca_on_the_opening_day(strat):
+    """The initial entry already bought on the day the trade opened."""
+    candle = START + timedelta(days=299)
+    attach_runtime(strat, _flat_row(date=candle), free=10_000)
+    trade = FakeTrade(1.0, 100.0, open_date=candle + timedelta(days=1, hours=2))
+    assert adjust(strat, trade, 100.0, now=candle + timedelta(days=1, hours=3)) is None
+    attach_runtime(strat, _flat_row(date=candle + timedelta(days=1)), free=10_000)
+    assert adjust(strat, trade, 100.0, now=candle + timedelta(days=2, hours=1)) == 100.0
