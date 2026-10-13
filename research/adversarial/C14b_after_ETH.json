@@ -1,0 +1,27 @@
+{
+  "candidate": "C14b_after_ETH",
+  "strategy": "BtcDynamicRebalanceStrategy",
+  "env": {},
+  "windows": {
+    "BEAR_2022": {
+      "roi": -53.17,
+      "max_dd": 53.17,
+      "n_trades": 1,
+      "timerange": "20220101-20230101"
+    },
+    "SIDEWAYS_2025": {
+      "roi": -2.74,
+      "max_dd": 2.74,
+      "n_trades": 1,
+      "timerange": "20250101-20260101"
+    },
+    "BEAR_2026Q12": {
+      "roi": -25.38,
+      "max_dd": 25.38,
+      "n_trades": 1,
+      "timerange": "20260101-20260601"
+    }
+  },
+  "verdict": "CATASTROPHIC",
+  "evaluated_at": "2026-10-13T16:53:05.757803+00:00"
+}

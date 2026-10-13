@@ -53,10 +53,12 @@ def test_cooldown():
 class FakeTrade:
     """Just enough of freqtrade's Trade for adjust_trade_position."""
 
-    def __init__(self, amount, fills):
+    def __init__(self, amount, fills, stake_amount=None):
         self.pair = "BTC/USDT"
         self.stake_currency = "USDT"
         self.amount = amount
+        # cost basis; default = position bought at the first fill price
+        self.stake_amount = stake_amount if stake_amount is not None else amount * fills[0][0]
         self.has_open_orders = False
         self._fills = fills  # list of (price, filled_at)
         self._cd: dict = {}
