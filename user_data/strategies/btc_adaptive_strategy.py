@@ -254,6 +254,10 @@ class BtcAdaptiveStrategy(IStrategy):
         if df is None or df.empty:
             return None
         last = df.iloc[-1]
+        if WITH_SHIELD and not regime_allows_add(last):
+            # Confirmed BEAR: no adds (same as BtcRebalanceStrategy); the
+            # shield's exit signal closes the trade.
+            return None
         regime = self._regime(last)
 
         btc_qty = float(trade.amount or 0)

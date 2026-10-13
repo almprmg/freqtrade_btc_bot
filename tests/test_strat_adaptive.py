@@ -111,19 +111,14 @@ def test_nostop_never_rally_trims(strat):
     assert adjust(strat, FakeTrade(8.5, 100.0), 100.0) is None
 
 
-def test_adjust_in_shield_bear(strat, shield, request):
+def test_adjust_in_shield_bear(strat, shield):
     """WITH_SHIELD: _regime_shield.regime_allows_add says no adds in confirmed BEAR."""
     attach_runtime(strat, row(close=80.0, regime_confirmed="BEAR"), free=1000.0)
     out = adjust(strat, FakeTrade(0.0001, 100.0), 100.0)
     if not shield:
         assert out == pytest.approx(0.40 * 1000.01 - 0.01)   # regime-blind by design
         return
-    request.applymarker(pytest.mark.xfail(strict=True, reason=(
-        "WITH_SHIELD adaptive imports regime_allows_add but never calls it "
-        "(btc_adaptive_strategy.py adjust_trade_position), unlike BtcRebalanceStrategy. In "
-        "confirmed BEAR it still BUYS toward the TREND_DN target while the shield's exit "
-        "signal tries to close the trade. Input: BEAR, 0 coin, 1000 free. Expected None, "
-        "actual +400.")))
+    # Regression (was strict xfail): WITH_SHIELD calls regime_allows_add -> no adds in BEAR.
     assert out is None
 
 
