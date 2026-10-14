@@ -49,12 +49,7 @@ def test_calendar_tilt_values(strat, pair):
     assert len(plain) >= 1 and (plain["calendar_tilt"] == 0).all()
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "Anomaly coin hard-coded to 'BTC' (btc_calendar_shield_strategy.py populate_indicators: "
-    "_ANOMALY[_ANOMALY['coin'] == 'BTC']) regardless of metadata['pair']. The ETH/BNB/XRP "
-    "Calendar Shield bots therefore never react to their OWN coin's anomaly flags (and do "
-    "react to BTC's). Input: ETH/USDT, flags coin='ETH' is_anomaly=1 on the last day; "
-    "expected anomaly=1 + exit_long=1, actual anomaly=0 and enter_long=1."))
+# Regression (was strict xfail): anomaly flags of the traded coin (metadata['pair']).
 def test_anomaly_uses_traded_coin(monkeypatch, mod):
     s = make_strategy(mod.BtcCalendarShieldStrategy, pair="ETH/USDT")
     df = bull_ohlcv()
@@ -63,3 +58,26 @@ def test_anomaly_uses_traded_coin(monkeypatch, mod):
     out = run_pipeline(s, df, "ETH/USDT")
     assert out["anomaly"].iloc[-1] == 1
     assert col(out, "exit_long").iloc[-1] == 1
+
+
+def test_anomaly_ignores_other_coins_flags(monkeypatch, mod):
+    """ETH bot must not react to BTC-only anomalies when ETH has its own flags."""
+    import pandas as pd
+    s = make_strategy(mod.BtcCalendarShieldStrategy, pair="ETH/USDT")
+    df = bull_ohlcv()
+    install_aux(monkeypatch, mod, df)
+    flags = pd.concat([anomaly_frame(df, [df["date"].iloc[-1]], coin="BTC"),
+                       anomaly_frame(df, [], coin="ETH")])
+    monkeypatch.setattr(mod, "_ANOMALY", flags)
+    out = run_pipeline(s, df, "ETH/USDT")
+    assert out["anomaly"].iloc[-1] == 0
+
+
+def test_anomaly_falls_back_to_btc_for_unflagged_coin(monkeypatch, mod):
+    """XRP has no rows in the flags files: BTC flags are the market proxy."""
+    s = make_strategy(mod.BtcCalendarShieldStrategy, pair="XRP/USDT")
+    df = bull_ohlcv()
+    install_aux(monkeypatch, mod, df)
+    monkeypatch.setattr(mod, "_ANOMALY", anomaly_frame(df, [df["date"].iloc[-1]], coin="BTC"))
+    out = run_pipeline(s, df, "XRP/USDT")
+    assert out["anomaly"].iloc[-1] == 1

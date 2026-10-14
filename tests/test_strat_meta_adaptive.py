@@ -114,7 +114,7 @@ def test_custom_stake_by_state(strat, mod):
     assert strat.custom_stake_amount("AVAX/USDT", None, 1, 10, 5, 1000, 1, None, "long") == pytest.approx(1000 * mod.DEF_T)
 
 
-@pytest.mark.xfail(strict=True, reason=SIZING_XFAIL_REASON)
+# C14b regression (was strict xfail): trims are sized by cost basis via _position_sizing.
 def test_trim_in_profit_lands_on_target(strat, mod):
     _state(strat, "BAL", 0.0)
     trade = FakeTrade(1.0, 100.0)
@@ -122,6 +122,6 @@ def test_trim_in_profit_lands_on_target(strat, mod):
     assert allocation_after_trim(stake, trade, 200.0, 0.0) == pytest.approx(mod.BAL_T, abs=0.01)
 
 
-@pytest.mark.xfail(strict=True, reason=ROI_XFAIL_REASON + " (deployed on AVAX and ADA)")
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)

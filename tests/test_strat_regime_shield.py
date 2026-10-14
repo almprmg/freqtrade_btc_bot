@@ -130,7 +130,7 @@ def test_adjust_respects_min_stake(strat):
     assert adjust(strat, FakeTrade(1.0, 100.0), 100.0, min_stake=10_000) is None
 
 
-@pytest.mark.xfail(strict=True, reason=SIZING_XFAIL_REASON)
+# C14b regression (was strict xfail): trims are sized by cost basis via _position_sizing.
 def test_trim_in_profit_lands_on_target(mod, strat):
     # 1 coin bought @100, now @200, no free cash -> 100% coin; drift > 10% band.
     _bull_runtime(strat, free=0.0)
@@ -144,6 +144,6 @@ def test_stoploss_effectively_disabled(strat):
     assert strat.stoploss <= -0.99 and not strat.use_custom_stoploss
 
 
-@pytest.mark.xfail(strict=True, reason=ROI_XFAIL_REASON)
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)

@@ -34,6 +34,9 @@ def main():
     p.add_argument("--env", action="append", default=[],
                    help="extra env var KEY=VAL (e.g. --env DR_MODE=DR_PROFIT_20)")
     p.add_argument("--notes", default="")
+    p.add_argument("--strategy-path", default=None,
+                   help="extra strategy dir searched first (e.g. a git-archive of another revision)")
+    p.add_argument("--fee", type=float, default=None, help="fee ratio per side (e.g. 0.001)")
     args = p.parse_args()
 
     env = os.environ.copy()
@@ -52,6 +55,10 @@ def main():
         "--dry-run-wallet", str(args.wallet),
         "--cache", "none",
     ]
+    if args.strategy_path:
+        cmd += ["--strategy-path", args.strategy_path]
+    if args.fee is not None:
+        cmd += ["--fee", str(args.fee)]
     print(f"\nRunning: {' '.join(cmd[1:])}")
     result = subprocess.run(cmd, env=env, capture_output=True, text=True, cwd=REPO)
     if result.returncode != 0:

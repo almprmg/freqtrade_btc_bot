@@ -84,6 +84,10 @@ try:
     from _regime_shield import shield_indicators, apply_shield, regime_allows_add
 except ImportError:  # pragma: no cover
     from user_data.strategies._regime_shield import shield_indicators, apply_shield, regime_allows_add
+try:  # shared cost-basis partial-exit sizing (C14b); names re-exported for tests
+    from _position_sizing import partial_exit_stake, freqtrade_exit_amount  # noqa: F401
+except ImportError:  # pragma: no cover
+    from user_data.strategies._position_sizing import partial_exit_stake, freqtrade_exit_amount  # noqa: F401
 
 WITH_SHIELD = os.environ.get("WITH_SHIELD", "false").lower() in ("true", "1", "yes")
 
@@ -126,27 +130,6 @@ def in_cooldown(has_open_orders: bool, last_fill: Optional[datetime],
     if now.tzinfo is None:
         now = now.replace(tzinfo=timezone.utc)
     return now - last_fill < timedelta(minutes=cooldown_min)
-
-
-def partial_exit_stake(sell_value: float, current_rate: float,
-                       trade_amount: float, trade_stake_amount: float) -> float:
-    """Stake to return (as a positive number; caller negates) so that freqtrade
-    sells `sell_value` worth of coin at `current_rate`.
-
-    freqtrade sizes a negative adjust_trade_position return as
-    amount = |stake| * trade.amount / trade.stake_amount, i.e. as a fraction of
-    the cost basis. We want amount = sell_value / current_rate, hence
-    stake = (sell_value / current_rate) / trade.amount * trade.stake_amount.
-    """
-    if current_rate <= 0 or trade_amount <= 0 or trade_stake_amount <= 0 or sell_value <= 0:
-        return 0.0
-    fraction = min(float(sell_value) / float(current_rate) / float(trade_amount), 1.0)
-    return fraction * float(trade_stake_amount)
-
-
-def freqtrade_exit_amount(stake: float, trade_amount: float, trade_stake_amount: float) -> float:
-    """Mirror of freqtrade 2026.4's negative-stake -> amount conversion (no precision rounding)."""
-    return abs(float(stake)) * float(trade_amount) / float(trade_stake_amount)
 
 
 def _build_modes() -> dict[str, dict]:

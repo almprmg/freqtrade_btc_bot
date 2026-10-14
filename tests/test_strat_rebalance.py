@@ -94,16 +94,15 @@ def test_adjust_in_bear(strat, shield):
         assert out == pytest.approx(250.0)
 
 
-@pytest.mark.xfail(strict=True, reason=SIZING_XFAIL_REASON)
+# C14b regression (was strict xfail): trims are sized by cost basis via _position_sizing.
 def test_trim_in_profit_lands_on_target(strat):
     attach_runtime(strat, run_pipeline(strat, bull_ohlcv()), free=0.0)
     trade = FakeTrade(1.0, 100.0)
-    stake = adjust(strat, trade, 200.0)        # wants to sell $50 of $200
-    assert stake == pytest.approx(-50.0)
+    stake = adjust(strat, trade, 200.0)        # wants to sell $50 (market) of $200
+    assert stake == pytest.approx(-25.0)  # $50 market value = 25% of the $100 cost basis
     assert allocation_after_trim(stake, trade, 200.0, 0.0) == pytest.approx(0.75, abs=0.01)
 
 
-@pytest.mark.xfail(strict=True, reason=ROI_XFAIL_REASON + " The class comment says explicitly "
-                   "'Rebalancing never wants Freqtrade's auto-exit to trigger'.")
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)

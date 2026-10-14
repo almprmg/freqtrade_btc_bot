@@ -1,0 +1,2133 @@
+{
+  "strategy": {
+    "BtcAdaptiveStrategy": {
+      "trades": [
+        {
+          "pair": "BTC/USDT",
+          "stake_amount": 83491.61698498,
+          "max_stake_amount": 1313888.8934721,
+          "amount": 1.14695,
+          "open_date": "2020-01-02 00:00:00+00:00",
+          "close_date": "2026-10-12 00:00:00+00:00",
+          "open_rate": 72794.47,
+          "close_rate": 83773.12,
+          "fee_open": 0.001,
+          "fee_close": 0.001,
+          "trade_duration": 3564000,
+          "profit_ratio": 0.07655506664248646,
+          "profit_abs": 100685.43665238,
+          "exit_reason": "force_exit",
+          "initial_stop_loss_abs": 72.01,
+          "initial_stop_loss_ratio": -0.99,
+          "stop_loss_abs": 1110.32,
+          "stop_loss_ratio": -0.99,
+          "min_rate": 3782.13,
+          "max_rate": 126199.63,
+          "is_open": false,
+          "enter_tag": "adapt:adapt_aggr_nostop",
+          "leverage": 1.0,
+          "is_short": false,
+          "open_timestamp": 1577923200000,
+          "close_timestamp": 1791763200000,
+          "orders": [
+            {
+              "amount": 0.83324,
+              "safe_price": 7200.77,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1577923200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 6005.969564394799
+            },
+            {
+              "amount": 0.2897,
+              "safe_price": 8198.86,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1578700800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 2377.584951742
+            },
+            {
+              "amount": 0.35106,
+              "safe_price": 9936.4,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1582502400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3491.7608565839996
+            },
+            {
+              "amount": 0.22807,
+              "safe_price": 8690.8,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1582934400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1984.0928667559997
+            },
+            {
+              "amount": 0.57801,
+              "safe_price": 9130.89,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1583539200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 5283.023474628899
+            },
+            {
+              "amount": 0.59171,
+              "safe_price": 8885.25,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1583625600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 5262.748768777499
+            },
+            {
+              "amount": 0.26984,
+              "safe_price": 4800.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1584057600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 1296.5299330983999
+            },
+            {
+              "amount": 0.13838,
+              "safe_price": 6744.69,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1585094400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 934.2635324021998
+            },
+            {
+              "amount": 0.32814,
+              "safe_price": 6772.78,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1586131200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 2224.6424492292
+            },
+            {
+              "amount": 0.04735,
+              "safe_price": 7693.1,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1587945600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 364.63255328500003
+            },
+            {
+              "amount": 0.04666,
+              "safe_price": 8778.58,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1588204800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 410.01815134279997
+            },
+            {
+              "amount": 0.37042,
+              "safe_price": 8825.67,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1588377600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 3272.4738860814
+            },
+            {
+              "amount": 0.37351,
+              "safe_price": 8900.35,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1590451200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3327.6940982285
+            },
+            {
+              "amount": 0.04593,
+              "safe_price": 10202.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1591056000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 469.07908077029987
+            },
+            {
+              "amount": 0.37929,
+              "safe_price": 9666.85,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1591488000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 3670.2060760365
+            },
+            {
+              "amount": 0.35514,
+              "safe_price": 9278.88,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1591920000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3298.5967446431996
+            },
+            {
+              "amount": 0.32987,
+              "safe_price": 9931.54,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1595808000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 3279.3932168998
+            },
+            {
+              "amount": 0.37246,
+              "safe_price": 11711.17,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1598832000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 4366.3043205782
+            },
+            {
+              "amount": 0.05094,
+              "safe_price": 10138.29,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1599177600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 516.9609370925999
+            },
+            {
+              "amount": 0.29996,
+              "safe_price": 10446.25,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1599264000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3136.59060715
+            },
+            {
+              "amount": 0.61692,
+              "safe_price": 10954.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1600300800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 6764.505597049199
+            },
+            {
+              "amount": 0.35324,
+              "safe_price": 11080.64,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1600560000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3918.039398873599
+            },
+            {
+              "amount": 0.33888,
+              "safe_price": 11360.31,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1602979200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 3853.631634652799
+            },
+            {
+              "amount": 0.10289,
+              "safe_price": 27079.42,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1609200000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2788.9877253237996
+            },
+            {
+              "amount": 0.34129,
+              "safe_price": 34246.28,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1611964800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11699.600814101199
+            },
+            {
+              "amount": 0.0374,
+              "safe_price": 39181.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1612656000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1466.835143774
+            },
+            {
+              "amount": 0.04347,
+              "safe_price": 46374.86,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1612828800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 2017.9310793641998
+            },
+            {
+              "amount": 0.27322,
+              "safe_price": 46420.42,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1612915200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 12695.6701395524
+            },
+            {
+              "amount": 0.27761,
+              "safe_price": 48436.61,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1614729600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13459.933789402101
+            },
+            {
+              "amount": 0.03484,
+              "safe_price": 55851.59,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1615420800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1947.8152649955998
+            },
+            {
+              "amount": 0.22672,
+              "safe_price": 61188.38,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1615680000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 13886.502143113597
+            },
+            {
+              "amount": 0.24343,
+              "safe_price": 58030.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1616198400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 14140.3715796343
+            },
+            {
+              "amount": 0.18078,
+              "safe_price": 51690.95,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619136000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 9354.034630940998
+            },
+            {
+              "amount": 0.43993,
+              "safe_price": 55011.97,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1619568000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 24225.617378062096
+            },
+            {
+              "amount": 0.4536,
+              "safe_price": 53555.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1619740800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 24316.840547999996
+            },
+            {
+              "amount": 0.41927,
+              "safe_price": 57697.25,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1619827200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 24214.916733507496
+            },
+            {
+              "amount": 0.43216,
+              "safe_price": 53205.05,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1620172800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 23016.087502407998
+            },
+            {
+              "amount": 0.40499,
+              "safe_price": 57436.11,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620259200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 23284.311239088896
+            },
+            {
+              "amount": 0.23326,
+              "safe_price": 56393.68,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1620345600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13167.544186596799
+            },
+            {
+              "amount": 0.03097,
+              "safe_price": 49537.15,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1620864000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 1535.6997010354999
+            },
+            {
+              "amount": 0.19914,
+              "safe_price": 49671.92,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1620950400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 9901.5578149488
+            },
+            {
+              "amount": 0.10271,
+              "safe_price": 34681.44,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1621814400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 3565.6928331024
+            },
+            {
+              "amount": 0.26387,
+              "safe_price": 33634.1,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1627084800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8883.904996966998
+            },
+            {
+              "amount": 0.25431,
+              "safe_price": 39456.61,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1627430400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 10044.244699589099
+            },
+            {
+              "amount": 0.54751,
+              "safe_price": 44842.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1631318400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 24576.104474921995
+            },
+            {
+              "amount": 0.52386,
+              "safe_price": 45173.68,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631404800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 23688.3486888048
+            },
+            {
+              "amount": 0.526,
+              "safe_price": 44940.72,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1631577600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 23662.457538720002
+            },
+            {
+              "amount": 0.49852,
+              "safe_price": 47103.28,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1631664000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 23505.409072745595
+            },
+            {
+              "amount": 0.28686,
+              "safe_price": 48292.75,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1632009600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13867.111523264999
+            },
+            {
+              "amount": 0.19325,
+              "safe_price": 40734.09,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1632268800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7879.734755392498
+            },
+            {
+              "amount": 0.4517,
+              "safe_price": 48141.6,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1633132800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 21767.306280719997
+            },
+            {
+              "amount": 0.29607,
+              "safe_price": 60344.86,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1637193600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 17884.1690029002
+            },
+            {
+              "amount": 0.19322,
+              "safe_price": 53723.72,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1637971200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10390.8776755784
+            },
+            {
+              "amount": 0.20141,
+              "safe_price": 56950.56,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638316800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 11481.882701889597
+            },
+            {
+              "amount": 0.04128,
+              "safe_price": 49152.46,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1638662400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 2031.0425623487997
+            },
+            {
+              "amount": 0.23149,
+              "safe_price": 49396.32,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1638748800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11446.1888709168
+            },
+            {
+              "amount": 0.59172,
+              "safe_price": 43839.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1644278400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 25966.939881682796
+            },
+            {
+              "amount": 0.55436,
+              "safe_price": 42373.73,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1644624000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 23513.791263762796
+            },
+            {
+              "amount": 0.52796,
+              "safe_price": 44544.85,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1644969600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 23541.416905005997
+            },
+            {
+              "amount": 0.53575,
+              "safe_price": 40515.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1645142400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 21727.997924132495
+            },
+            {
+              "amount": 0.25018,
+              "safe_price": 39974.45,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1645228800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 10010.808708900999
+            },
+            {
+              "amount": 0.23475,
+              "safe_price": 37699.08,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1646006400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 8858.708889029998
+            },
+            {
+              "amount": 0.19482,
+              "safe_price": 43160.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1646092800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8416.839631199999
+            },
+            {
+              "amount": 0.03812,
+              "safe_price": 37988.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1646697600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 1449.5510441411998
+            },
+            {
+              "amount": 0.04029,
+              "safe_price": 43991.46,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1648166400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 1774.1883393233998
+            },
+            {
+              "amount": 0.26446,
+              "safe_price": 47122.21,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1648512000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 12474.401596256597
+            },
+            {
+              "amount": 0.28186,
+              "safe_price": 46580.5,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1649116800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 13142.308909729998
+            },
+            {
+              "amount": 0.04814,
+              "safe_price": 39530.45,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1649721600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 1904.8988588629998
+            },
+            {
+              "amount": 0.24142,
+              "safe_price": 39235.72,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1651104000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 9481.7598099224
+            },
+            {
+              "amount": 0.37433,
+              "safe_price": 30204.77,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1654732800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 11317.858105654099
+            },
+            {
+              "amount": 0.04708,
+              "safe_price": 26574.53,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1655078400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 1252.3800012723998
+            },
+            {
+              "amount": 0.25881,
+              "safe_price": 22485.27,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1655164800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 5825.2321414287
+            },
+            {
+              "amount": 0.32586,
+              "safe_price": 22432.58,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1658188800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 7317.1903993188
+            },
+            {
+              "amount": 0.31415,
+              "safe_price": 21516.7,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1661126400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 6766.230776304999
+            },
+            {
+              "amount": 0.32913,
+              "safe_price": 21559.04,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1661472000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 7102.8225620352
+            },
+            {
+              "amount": 0.31299,
+              "safe_price": 20239.14,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1661558400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 6340.983077028599
+            },
+            {
+              "amount": 0.70558,
+              "safe_price": 21647.21,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1662854400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 15289.112270231797
+            },
+            {
+              "amount": 0.40804,
+              "safe_price": 21826.87,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1662940800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 8915.1422708348
+            },
+            {
+              "amount": 0.39157,
+              "safe_price": 22395.44,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1663027200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8778.151823240798
+            },
+            {
+              "amount": 0.38605,
+              "safe_price": 20173.62,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1663113600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7795.814027000998
+            },
+            {
+              "amount": 0.30928,
+              "safe_price": 18874.31,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1663718400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 5843.2840433967995
+            },
+            {
+              "amount": 0.31826,
+              "safe_price": 19422.61,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1664582400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 6187.621298458599
+            },
+            {
+              "amount": 0.31742,
+              "safe_price": 18545.38,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1667952000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 5892.561194119599
+            },
+            {
+              "amount": 0.36189,
+              "safe_price": 17775.82,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1670976000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 6439.3243912998
+            },
+            {
+              "amount": 0.39763,
+              "safe_price": 18846.62,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1673568000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 7501.475492110599
+            },
+            {
+              "amount": 0.77388,
+              "safe_price": 22354.34,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1677888000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 17316.8762158392
+            },
+            {
+              "amount": 0.32607,
+              "safe_price": 22430.24,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678060800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 7321.142185156801
+            },
+            {
+              "amount": 0.29831,
+              "safe_price": 20150.69,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1678492800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 6017.163486233899
+            },
+            {
+              "amount": 0.62733,
+              "safe_price": 24112.27,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1678752000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 15141.4766894391
+            },
+            {
+              "amount": 0.41052,
+              "safe_price": 29230.45,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1682812800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 12011.684018334
+            },
+            {
+              "amount": 0.37537,
+              "safe_price": 29233.2,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1682899200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 10984.239550283999
+            },
+            {
+              "amount": 0.37023,
+              "safe_price": 28068.26,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1682985600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10402.103611699798
+            },
+            {
+              "amount": 0.29159,
+              "safe_price": 26821.28,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684454400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7828.637852235199
+            },
+            {
+              "amount": 0.30194,
+              "safe_price": 27102.42,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1684627200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8191.487999494799
+            },
+            {
+              "amount": 0.30275,
+              "safe_price": 26747.78,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684713600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 8105.988285394999
+            },
+            {
+              "amount": 0.29768,
+              "safe_price": 27219.61,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1684886400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8110.8362383048
+            },
+            {
+              "amount": 0.29607,
+              "safe_price": 26329.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1684972800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7803.022257029999
+            },
+            {
+              "amount": 0.64484,
+              "safe_price": 28065.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1685318400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 18115.538489448394
+            },
+            {
+              "amount": 0.3695,
+              "safe_price": 27736.39,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1685404800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10258.844701105
+            },
+            {
+              "amount": 0.2809,
+              "safe_price": 25905.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1686614400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 7284.047450679999
+            },
+            {
+              "amount": 0.28607,
+              "safe_price": 26844.35,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687219200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 7687.042567704499
+            },
+            {
+              "amount": 0.34761,
+              "safe_price": 28308.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1687305600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 9849.984023879999
+            },
+            {
+              "amount": 0.66172,
+              "safe_price": 29176.5,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1690243200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 19325.980253579997
+            },
+            {
+              "amount": 0.28772,
+              "safe_price": 29351.95,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1690416000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8453.588197054
+            },
+            {
+              "amount": 0.26138,
+              "safe_price": 26100.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1692489600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 6828.842634413799
+            },
+            {
+              "amount": 0.30867,
+              "safe_price": 25901.6,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1694304000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 8003.041918871999
+            },
+            {
+              "amount": 0.34436,
+              "safe_price": 27956.67,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1696723200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 9636.786040081199
+            },
+            {
+              "amount": 0.36598,
+              "safe_price": 26875.52,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1697068800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 9845.738712409599
+            },
+            {
+              "amount": 0.34709,
+              "safe_price": 28320.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1697673600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 9839.418388799999
+            },
+            {
+              "amount": 0.40987,
+              "safe_price": 42563.76,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1703808000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 17463.0539195112
+            },
+            {
+              "amount": 0.26339,
+              "safe_price": 39897.59,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1706054400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 10519.134856330098
+            },
+            {
+              "amount": 0.60793,
+              "safe_price": 41823.51,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1706313600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 25451.1922007343
+            },
+            {
+              "amount": 0.35085,
+              "safe_price": 43302.71,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1706572800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 15207.948559303499
+            },
+            {
+              "amount": 0.2822,
+              "safe_price": 49917.28,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1707782400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 14100.743072415999
+            },
+            {
+              "amount": 0.3596,
+              "safe_price": 69582.17,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1711843200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 25046.770080331997
+            },
+            {
+              "amount": 0.04027,
+              "safe_price": 61277.38,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1713398400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 2470.1077326925997
+            },
+            {
+              "amount": 0.26137,
+              "safe_price": 60672.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1714521600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 15873.701096953699
+            },
+            {
+              "amount": 0.56085,
+              "safe_price": 63892.03,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1714867200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 35869.678870525495
+            },
+            {
+              "amount": 0.57612,
+              "safe_price": 63165.18,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1715040000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 36427.11422510159
+            },
+            {
+              "amount": 0.26257,
+              "safe_price": 62312.07,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1715126400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 16377.6415001199
+            },
+            {
+              "amount": 0.29323,
+              "safe_price": 66915.2,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1716076800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 19641.165640095995
+            },
+            {
+              "amount": 0.31563,
+              "safe_price": 67540.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1717200000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 21338.9710096563
+            },
+            {
+              "amount": 0.24131,
+              "safe_price": 64262.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1719100800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 15522.5726987331
+            },
+            {
+              "amount": 0.57166,
+              "safe_price": 64724.06,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1721088000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 37037.156295739594
+            },
+            {
+              "amount": 0.32001,
+              "safe_price": 65354.02,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1722556800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 20934.8538801402
+            },
+            {
+              "amount": 0.21231,
+              "safe_price": 54018.82,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1722902400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 11480.204409874197
+            },
+            {
+              "amount": 0.21777,
+              "safe_price": 61156.03,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1724284800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 13331.266601753097
+            },
+            {
+              "amount": 0.04105,
+              "safe_price": 53962.97,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1725667200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 2217.3950984185003
+            },
+            {
+              "amount": 0.27384,
+              "safe_price": 54869.95,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1725840000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 15040.612695107997
+            },
+            {
+              "amount": 0.24103,
+              "safe_price": 58132.31,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1726185600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 14025.642309979297
+            },
+            {
+              "amount": 0.27654,
+              "safe_price": 65173.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1727395200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 18041.238409794598
+            },
+            {
+              "amount": 0.31088,
+              "safe_price": 65602.01,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1727654400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 20414.747221668793
+            },
+            {
+              "amount": 0.28842,
+              "safe_price": 69032.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1729468800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 19930.11964944
+            },
+            {
+              "amount": 0.29972,
+              "safe_price": 66698.32,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1729900800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 20010.8112908704
+            },
+            {
+              "amount": 0.27023,
+              "safe_price": 72736.41,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1730246400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 19675.2156343743
+            },
+            {
+              "amount": 0.2943,
+              "safe_price": 72344.75,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1730332800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 21312.350984925
+            },
+            {
+              "amount": 0.27281,
+              "safe_price": 76509.78,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1731110400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 20893.505714881798
+            },
+            {
+              "amount": 0.53156,
+              "safe_price": 92792.05,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1735603200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 49373.866640098
+            },
+            {
+              "amount": 0.50015,
+              "safe_price": 93576.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1735689600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 46848.838436399994
+            },
+            {
+              "amount": 0.28285,
+              "safe_price": 96984.79,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1735862400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 27459.579999351496
+            },
+            {
+              "amount": 0.22153,
+              "safe_price": 96462.75,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1739145600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 21390.762400507498
+            },
+            {
+              "amount": 0.48999,
+              "safe_price": 98305.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1740096000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 48216.64032174989
+            },
+            {
+              "amount": 0.4937,
+              "safe_price": 96181.99,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1740182400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 47532.533511463
+            },
+            {
+              "amount": 0.26094,
+              "safe_price": 87232.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1743120000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 22785.083010089398
+            },
+            {
+              "amount": 0.04017,
+              "safe_price": 76322.42,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1744156800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 3068.9374830113998
+            },
+            {
+              "amount": 0.03799,
+              "safe_price": 87516.22,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1745280000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 3328.0659389978
+            },
+            {
+              "amount": 0.26351,
+              "safe_price": 94638.68,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1745625600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 24963.176805366795
+            },
+            {
+              "amount": 0.29545,
+              "safe_price": 105642.93,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1748822400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 31243.415872168494
+            },
+            {
+              "amount": 0.23687,
+              "safe_price": 119086.65,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1752451200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 28236.262840285493
+            },
+            {
+              "amount": 0.26652,
+              "safe_price": 117840.29,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1753920000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 31438.20088489079
+            },
+            {
+              "amount": 0.20108,
+              "safe_price": 109237.43,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1756771200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 21987.427886824396
+            },
+            {
+              "amount": 0.21363,
+              "safe_price": 111240.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1756857600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 23787.967539636295
+            },
+            {
+              "amount": 0.24457,
+              "safe_price": 120529.35,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1759449600000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 29507.3409926295
+            },
+            {
+              "amount": 0.47223,
+              "safe_price": 112774.49,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1760140800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 53308.75291011269
+            },
+            {
+              "amount": 0.47224,
+              "safe_price": 114559.41,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1761523200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 54153.63531417839
+            },
+            {
+              "amount": 0.26338,
+              "safe_price": 112898.44,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1761696000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 29764.926318327198
+            },
+            {
+              "amount": 0.19317,
+              "safe_price": 101346.04,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1762473600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 19596.5915613468
+            },
+            {
+              "amount": 0.27892,
+              "safe_price": 88620.79,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1766448000000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 24742.828857546796
+            },
+            {
+              "amount": 0.24652,
+              "safe_price": 91296.2,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1768262400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 22528.845563223997
+            },
+            {
+              "amount": 0.509,
+              "safe_price": 95413.99,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1768348800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 48614.28663091
+            },
+            {
+              "amount": 0.51603,
+              "safe_price": 88427.66,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1768953600000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 45676.9567151898
+            },
+            {
+              "amount": 0.65481,
+              "safe_price": 72815.25,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1773619200000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 47727.834006352496
+            },
+            {
+              "amount": 0.59325,
+              "safe_price": 71246.55,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1773878400000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 42309.282803287504
+            },
+            {
+              "amount": 0.27351,
+              "safe_price": 69930.01,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1773964800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 19145.683592135094
+            },
+            {
+              "amount": 0.28699,
+              "safe_price": 78178.22,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1776902400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 22458.8037251578
+            },
+            {
+              "amount": 0.32162,
+              "safe_price": 78657.55,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1777248000000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 25323.139072231
+            },
+            {
+              "amount": 0.32732,
+              "safe_price": 77371.32,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1777334400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 25350.5056428624
+            },
+            {
+              "amount": 0.32016,
+              "safe_price": 75780.0,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1777507200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 24285.9865248
+            },
+            {
+              "amount": 0.30746,
+              "safe_price": 78568.58,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1777852800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 24180.852302406798
+            },
+            {
+              "amount": 0.31627,
+              "safe_price": 76834.36,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1779235200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 24324.703440237197
+            },
+            {
+              "amount": 0.24728,
+              "safe_price": 73617.52,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1780012800000,
+              "ft_is_entry": false,
+              "ft_order_tag": "partial_exit",
+              "cost": 18222.3444859456
+            },
+            {
+              "amount": 0.33221,
+              "safe_price": 63780.0,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1783900800000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 21209.542153799997
+            },
+            {
+              "amount": 0.29414,
+              "safe_price": 73027.02,
+              "ft_order_side": "buy",
+              "order_filled_timestamp": 1787270400000,
+              "ft_is_entry": true,
+              "ft_order_tag": "adapt:adapt_aggr_nostop",
+              "cost": 21501.6478304628
+            },
+            {
+              "amount": 1.14695,
+              "safe_price": 83773.12,
+              "ft_order_side": "sell",
+              "order_filled_timestamp": 1791763200000,
+              "ft_is_entry": false,
+              "ft_order_tag": "force_exit",
+              "cost": 96179.66356398397
+            }
+          ],
+          "funding_fees": 0.0,
+          "weekday": 0
+        }
+      ],
+      "locks": [],
+      "best_pair": {
+        "key": "BTC/USDT",
+        "trades": 1,
+        "profit_mean": 0.07655506664248646,
+        "profit_mean_pct": 7.66,
+        "profit_total_abs": 100685.43665238,
+        "profit_total": 10.068543665238,
+        "profit_total_pct": 1006.85,
+        "duration_avg": "2475 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 0,
+        "winrate": 1.0,
+        "cagr": 0.4253279203010969,
+        "expectancy": 100685.43665238,
+        "expectancy_ratio": 100.0,
+        "sortino": -100.0,
+        "sharpe": -100.0,
+        "calmar": -100.0,
+        "sqn": -100.0,
+        "profit_factor": 0.0,
+        "max_drawdown_account": 0.0,
+        "max_drawdown_abs": 0.0
+      },
+      "worst_pair": {
+        "key": "BTC/USDT",
+        "trades": 1,
+        "profit_mean": 0.07655506664248646,
+        "profit_mean_pct": 7.66,
+        "profit_total_abs": 100685.43665238,
+        "profit_total": 10.068543665238,
+        "profit_total_pct": 1006.85,
+        "duration_avg": "2475 days, 0:00:00",
+        "wins": 1,
+        "draws": 0,
+        "losses": 0,
+        "winrate": 1.0,
+        "cagr": 0.4253279203010969,
+        "expectancy": 100685.43665238,
+        "expectancy_ratio": 100.0,
+        "sortino": -100.0,
+        "sharpe": -100.0,
+        "calmar": -100.0,
+        "sqn": -100.0,
+        "profit_factor": 0.0,
+        "max_drawdown_account": 0.0,
+        "max_drawdown_abs": 0.0
+      },
+      "results_per_pair": [
+        {
+          "key": "BTC/USDT",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "results_per_enter_tag": [
+        {
+          "key": "adapt:adapt_aggr_nostop",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "exit_reason_summary": [
+        {
+          "key": "force_exit",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "mix_tag_stats": [
+        {
+          "key": [
+            "adapt:adapt_aggr_nostop",
+            "force_exit"
+          ],
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "left_open_trades": [
+        {
+          "key": "BTC/USDT",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        },
+        {
+          "key": "TOTAL",
+          "trades": 1,
+          "profit_mean": 0.07655506664248646,
+          "profit_mean_pct": 7.66,
+          "profit_total_abs": 100685.43665238,
+          "profit_total": 10.068543665238,
+          "profit_total_pct": 1006.85,
+          "duration_avg": "2475 days, 0:00:00",
+          "wins": 1,
+          "draws": 0,
+          "losses": 0,
+          "winrate": 1.0,
+          "cagr": 0.4253279203010969,
+          "expectancy": 100685.43665238,
+          "expectancy_ratio": 100.0,
+          "sortino": -100.0,
+          "sharpe": -100.0,
+          "calmar": -100.0,
+          "sqn": -100.0,
+          "profit_factor": 0.0,
+          "max_drawdown_account": 0.0,
+          "max_drawdown_abs": 0.0
+        }
+      ],
+      "total_trades": 1,
+      "trade_count_long": 1,
+      "trade_count_short": 0,
+      "total_volume": 2733925.612432614,
+      "avg_stake_amount": 83491.61698498,
+      "profit_mean": 0.07655506664248646,
+      "profit_median": 0.07655506664248646,
+      "profit_total": 10.068543665238,
+      "profit_total_long": 10.068543665238,
+      "profit_total_short": 0.0,
+      "profit_total_abs": 100685.43665238,
+      "profit_total_long_abs": 100685.43665238,
+      "profit_total_short_abs": 0.0,
+      "cagr": 0.4253279203010969,
+      "expectancy": 100685.43665238,
+      "expectancy_ratio": 100.0,
+      "sortino": -100.0,
+      "sharpe": -100.0,
+      "calmar": -100.0,
+      "sqn": -100.0,
+      "wallet_stats": {
+        "start_balance": 10000.0,
+        "end_balance": 110865.0118493523,
+        "high_balance": 131373.65498395305,
+        "low_balance": 9599.512606276561,
+        "sharpe": 1.1252700009222532,
+        "sortino": 1.614202478662802,
+        "calmar": 23.56641527613984,
+        "low_date": "2020-03-13 00:00:00",
+        "low_ts": 1584057600000,
+        "high_date": "2025-10-07 00:00:00",
+        "high_ts": 1759795200000,
+        "max_drawdown_account": 0.3303834215094524,
+        "max_relative_drawdown": 0.5898663377352517,
+        "max_drawdown_abs": 43403.67762980073,
+        "drawdown_start": "2025-10-07 00:00:00",
+        "drawdown_start_ts": 1759795200000,
+        "drawdown_end": "2026-07-01 00:00:00",
+        "drawdown_end_ts": 1782864000000,
+        "drawdown_duration": "267 days 00:00:00",
+        "drawdown_duration_s": 23068800.0,
+        "max_drawdown_low": 77969.97735415232,
+        "max_drawdown_high": 121373.65498395305
+      },
+      "profit_factor": 0.0,
+      "backtest_start": "2020-01-01 00:00:00",
+      "backtest_start_ts": 1577836800000,
+      "backtest_end": "2026-10-12 00:00:00",
+      "backtest_end_ts": 1791763200000,
+      "backtest_days": 2476,
+      "backtest_run_start_ts": 1791915558,
+      "backtest_run_end_ts": 1791915568,
+      "trades_per_day": 0.0,
+      "market_change": 10.366713651860543,
+      "pairlist": [
+        "BTC/USDT"
+      ],
+      "stake_amount": "unlimited",
+      "stake_currency": "USDT",
+      "stake_currency_decimals": 3,
+      "starting_balance": 10000.0,
+      "dry_run_wallet": 10000.0,
+      "final_balance": 110685.43665238,
+      "rejected_signals": 0,
+      "timedout_entry_orders": 0,
+      "timedout_exit_orders": 0,
+      "canceled_trade_entries": 0,
+      "canceled_entry_orders": 0,
+      "replaced_entry_orders": 0,
+      "max_open_trades": 1,
+      "max_open_trades_setting": 1,
+      "timeframe": "1d",
+      "timeframe_detail": "",
+      "timerange": "20200101-20261013",
+      "enable_protections": false,
+      "strategy_name": "BtcAdaptiveStrategy",
+      "freqaimodel": null,
+      "freqai_identifier": null,
+      "stoploss": -0.99,
+      "trailing_stop": false,
+      "trailing_stop_positive": null,
+      "trailing_stop_positive_offset": 0.0,
+      "trailing_only_offset_is_reached": false,
+      "use_custom_stoploss": false,
+      "minimal_roi": {},
+      "use_exit_signal": true,
+      "exit_profit_only": false,
+      "exit_profit_offset": 0.0,
+      "ignore_roi_if_entry_signal": false,
+      "trading_mode": "spot",
+      "margin_mode": "",
+      "periodic_breakdown": {
+        "day": [
+          {
+            "date": "12/10/2026",
+            "date_ts": 1791763200000,
+            "profit_abs": 100685.43665238,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "week": [
+          {
+            "date": "12/10/2026",
+            "date_ts": 1791763200000,
+            "profit_abs": 100685.43665238,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "month": [
+          {
+            "date": "31/10/2026",
+            "date_ts": 1793404800000,
+            "profit_abs": 100685.43665238,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "year": [
+          {
+            "date": "31/12/2026",
+            "date_ts": 1798675200000,
+            "profit_abs": 100685.43665238,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ],
+        "weekday": [
+          {
+            "date": "Monday",
+            "date_ts": 0,
+            "profit_abs": 100685.43665238,
+            "wins": 1,
+            "draws": 0,
+            "losses": 0,
+            "trades": 1,
+            "profit_factor": 0.0
+          }
+        ]
+      },
+      "backtest_best_day": 0.07655506664248646,
+      "backtest_worst_day": 0.07655506664248646,
+      "backtest_best_day_abs": 100685.43665238,
+      "backtest_worst_day_abs": 100685.43665238,
+      "winning_days": 1,
+      "draw_days": 0,
+      "losing_days": 0,
+      "daily_profit": [
+        [
+          "2026-10-12",
+          100685.43665238
+        ]
+      ],
+      "wins": 1,
+      "losses": 0,
+      "draws": 0,
+      "winrate": 1.0,
+      "holding_avg": "2475 days, 0:00:00",
+      "holding_avg_s": 213840000.0,
+      "winner_holding_min": "2475d 00:00",
+      "winner_holding_min_s": 213840000.0,
+      "winner_holding_max": "2475d 00:00",
+      "winner_holding_max_s": 213840000.0,
+      "winner_holding_avg": "2475d 00:00",
+      "winner_holding_avg_s": 213840000.0,
+      "loser_holding_min": "0d 00:00",
+      "loser_holding_min_s": 0.0,
+      "loser_holding_max": "0d 00:00",
+      "loser_holding_max_s": 0.0,
+      "loser_holding_avg": "0d 00:00",
+      "loser_holding_avg_s": 0.0,
+      "max_consecutive_wins": 1,
+      "max_consecutive_losses": 0,
+      "max_drawdown_account": 0.0,
+      "max_relative_drawdown": 0.0,
+      "max_drawdown_abs": 0.0,
+      "drawdown_start": "2026-10-12 00:00:00",
+      "drawdown_start_ts": 1791763200000.0,
+      "drawdown_end": "2026-10-12 00:00:00",
+      "drawdown_end_ts": 1791763200000.0,
+      "drawdown_duration": "0 days 00:00:00",
+      "drawdown_duration_s": 0.0,
+      "max_drawdown_low": 0.0,
+      "max_drawdown_high": 0.0,
+      "csum_min": 110685.43665238,
+      "csum_max": 110685.43665238
+    }
+  },
+  "strategy_comparison": [
+    {
+      "key": "BtcAdaptiveStrategy",
+      "trades": 1,
+      "profit_mean": 0.07655506664248646,
+      "profit_mean_pct": 7.66,
+      "profit_total_abs": 100685.43665238,
+      "profit_total": 10.068543665238,
+      "profit_total_pct": 1006.85,
+      "duration_avg": "2475 days, 0:00:00",
+      "wins": 1,
+      "draws": 0,
+      "losses": 0,
+      "winrate": 1.0,
+      "cagr": 0.4253279203010969,
+      "expectancy": 100685.43665238,
+      "expectancy_ratio": 100.0,
+      "sortino": -100.0,
+      "sharpe": -100.0,
+      "calmar": -100.0,
+      "sqn": -100.0,
+      "profit_factor": 0.0,
+      "max_drawdown_account": 0.0,
+      "max_drawdown_abs": "0"
+    }
+  ]
+}

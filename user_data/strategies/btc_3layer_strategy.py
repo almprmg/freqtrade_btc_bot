@@ -26,11 +26,21 @@ Splits the wallet into three logical buckets:
      - Once cash is exhausted, layer 3 is dormant until a closed trade
        refills it.
 
-Each trade is tagged via enter_tag so the post-backtest analyzer can
-attribute PnL by layer:
+Each trade is tagged via enter_tag so the strategy (grid cap, grid anchor,
+grid-only ROI) and the post-backtest analyzer can tell the layers apart:
   enter_tag = "core:initial" | "core:rebalance_up"
             | "grid:buy_N" (N = grid level index)
             | "hedge:crash_deploy"
+The entry signal itself can only carry a generic "layer:auto" tag (the
+layer is decided later, in custom_stake_amount), so the decision is stashed
+per pair and written onto the trade's enter_tag in order_filled(). Trades
+still carrying "layer:auto" (opened before this fix) are classified by
+position: the oldest open trade on the pair is CORE, later ones are GRID.
+
+NOTE: live freqtrade opens at most ONE trade per pair (enter_positions drops
+pairs that already have an open trade; backtesting does the same unless
+--enable-position-stacking). Grid/hedge legs therefore only materialise in
+stacked backtests; in the live bot the single trade is the CORE.
 
 Mode is selected via ENV `L3_MODE` (default L3_BALANCED). See L3_MODES
 for the parameter combinations the sweep covers.
@@ -138,12 +148,13 @@ class Btc3LayerStrategy(IStrategy):
     can_short: bool = False
     process_only_new_candles: bool = True
 
-    # Per-trade ROI = take-profit for grid trades. Core trades never trip
-    # this (their accumulated drift is the rebalance signal, not per-trade
-    # ROI), so we use the highest grid_take across modes as the cap.
-    # Set sufficiently low so grid take fires; core trades close via the
-    # rebalance flow which closes oldest-trades, not via ROI.
-    minimal_roi: dict = {"0": GRID_TAKE}
+    # ROI is the take-profit of GRID legs only. A table-wide {"0": GRID_TAKE}
+    # also ROI-closed the 70% CORE trade at +10%, contradicting the design
+    # (core is long-term accumulation). The table is therefore empty and
+    # custom_roi() returns GRID_TAKE for grid legs and None (= never) for
+    # core/hedge trades. Do NOT set minimal_roi in the bot configs.
+    minimal_roi: dict = {}
+    use_custom_roi: bool = True
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 
@@ -176,19 +187,49 @@ class Btc3LayerStrategy(IStrategy):
     # ---- Helpers --------------------------------------------------------- #
 
     @staticmethod
-    def _layer_of(trade: Trade) -> str:
+    def _explicit_layer(trade: Trade) -> Optional[str]:
+        """Layer encoded in the enter_tag ("core:"/"grid:"/"hedge:"), else None."""
         tag = (trade.enter_tag or "").lower()
-        if tag.startswith("grid:"):
-            return "grid"
-        if tag.startswith("hedge:"):
-            return "hedge"
+        for layer in ("grid", "hedge", "core"):
+            if tag.startswith(layer + ":"):
+                return layer
+        return None
+
+    @classmethod
+    def _classify(cls, trades: list) -> dict:
+        """Split one pair's open trades into layers (oldest first). Untagged
+        trades: the first position on the pair is CORE, later ones GRID."""
+        ordered = sorted(trades, key=lambda t: (t.open_date_utc, getattr(t, "id", None) or 0))
+        layers: dict = {"core": [], "grid": [], "hedge": []}
+        for t in ordered:
+            layer = cls._explicit_layer(t)
+            if layer is None:
+                layer = "grid" if (layers["core"] or layers["hedge"]) else "core"
+            layers[layer].append(t)
+        return layers
+
+    def _layer_of(self, trade: Trade) -> str:
+        layer = self._explicit_layer(trade)
+        if layer is not None:
+            return layer
+        try:
+            same_pair = [t for t in Trade.get_open_trades() if t.pair == trade.pair]
+        except Exception:  # no persistence available (unit tests)
+            return "core"
+        for name, ts in self._classify(same_pair).items():
+            if any(t is trade or (getattr(t, "id", None) is not None
+                                  and t.id == getattr(trade, "id", None)) for t in ts):
+                return name
         return "core"
+
+    def _stash_layer_tag(self, pair: str, tag: str) -> None:
+        if not hasattr(self, "_l3_pending_tag"):
+            self._l3_pending_tag = {}
+        self._l3_pending_tag[pair] = tag
 
     def _portfolio_state(self, pair: str, current_rate: float) -> dict:
         open_trades = [t for t in Trade.get_open_trades() if t.pair == pair]
-        layers = {"core": [], "grid": [], "hedge": []}
-        for t in open_trades:
-            layers[self._layer_of(t)].append(t)
+        layers = self._classify(open_trades)
 
         def qty(ts):
             return sum((float(t.amount) for t in ts), 0.0)
@@ -260,6 +301,8 @@ class Btc3LayerStrategy(IStrategy):
             stake = min(core_deficit, free)
             if min_stake and stake < min_stake:
                 return 0.0
+            if stake > 0:
+                self._stash_layer_tag(pair, "core:rebalance_up" if st["core_trades"] else "core:initial")
             return float(stake) if stake > 0 else 0.0
 
         # 2) GRID layer: only open a new leg if the latest closed candle is
@@ -276,6 +319,8 @@ class Btc3LayerStrategy(IStrategy):
                 stake = min(grid_slice, free)
                 if min_stake and stake < min_stake:
                     return 0.0
+                if stake > 0:
+                    self._stash_layer_tag(pair, f"grid:buy_{len(st['grid_trades']) + 1}")
                 return float(stake) if stake > 0 else 0.0
 
         # 3) HEDGE / Crash deploy: if drawdown from rolling high exceeds
@@ -290,9 +335,16 @@ class Btc3LayerStrategy(IStrategy):
                 if min_stake and deploy < min_stake:
                     return 0.0
                 if deploy > 0:
+                    self._stash_layer_tag(pair, "hedge:crash_deploy")
                     return float(deploy)
 
         return 0.0  # nothing to do this bar
+
+    def custom_roi(self, pair: str, trade: Trade, current_time: datetime,
+                   trade_duration: int, entry_tag: Optional[str], side: str,
+                   **kwargs) -> Optional[float]:
+        """Per-trade ROI: grid legs take profit at GRID_TAKE; core/hedge never."""
+        return GRID_TAKE if self._layer_of(trade) == "grid" else None
 
     # ---- Override enter_tag based on layer decision --------------------- #
 
@@ -308,12 +360,18 @@ class Btc3LayerStrategy(IStrategy):
         side: str,
         **kwargs,
     ) -> bool:
-        # Re-derive what layer this entry belongs to so the post-hoc analyzer
-        # can attribute correctly. We mutate the entry_tag through the trade
-        # object metadata available downstream; Freqtrade keeps the tag set
-        # by populate_entry_trend on the trade row, but we can map at run
-        # time. (For analysis we'll classify by stake_amount + position rank.)
+        # The layer is written onto the trade in order_filled() (the Trade
+        # row does not exist yet here).
         return True
+
+    def order_filled(self, pair: str, trade: Trade, order, current_time: datetime,
+                     **kwargs) -> None:
+        """Retag the trade with the layer custom_stake_amount decided for it."""
+        if getattr(order, "ft_order_side", None) != trade.entry_side:
+            return
+        tag = getattr(self, "_l3_pending_tag", {}).pop(pair, None)
+        if tag and self._explicit_layer(trade) is None:
+            trade.enter_tag = tag
 
 
 # Expose modes for the sweep harness to enumerate.

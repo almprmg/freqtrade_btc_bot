@@ -39,6 +39,11 @@ import talib.abstract as ta
 from freqtrade.persistence import Trade
 from freqtrade.strategy import IStrategy
 
+try:  # cost-basis partial-exit sizing shared with dynrebal (C14b)
+    from _position_sizing import exit_stake
+except ImportError:  # pragma: no cover
+    from user_data.strategies._position_sizing import exit_stake
+
 
 MODE = os.environ.get("MA_MODE", "MA_BAL").upper()
 
@@ -82,7 +87,9 @@ class BtcMetaAdaptiveStrategy(IStrategy):
     can_short: bool = False
     process_only_new_candles: bool = True
 
-    minimal_roi: dict = {"0": 10.0}
+    # Never ROI-exit: {"0": 10.0} (+1000%) was reachable (C14b). Empty table ->
+    # min_roi_reached() is always False. Do NOT set minimal_roi in bot configs.
+    minimal_roi: dict = {}
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 
@@ -237,7 +244,7 @@ class BtcMetaAdaptiveStrategy(IStrategy):
             sell = min(drift, btc_value * 0.99)
             if min_stake and sell < min_stake:
                 return None
-            return -float(sell) if sell > 0 else None
+            return exit_stake(trade, sell, current_rate)
         return None
 
 

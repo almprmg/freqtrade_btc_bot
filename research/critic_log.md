@@ -31,3 +31,14 @@
 - Adversarial (before -> after): BTC 2022 -53.1/-53.1, 2025 -3.9/-4.3, 2026Q12 -11.7/-11.7; ETH -53.9/-53.2, -1.8/-2.7, -25.4/-25.4; SOL -86.2/-85.6, -22.1/-22.9, -27.0/-27.0. CATASTROPHIC both before and after (75% long-only by design).
 - Verdict: fix APPROVED as a correctness fix for the 3 existing dry-run bots. Strategy remains VETOED for real money / new wallets (unchanged).
 - 30/60/90d follow-up: after next live trim, check post-trim coin share ~75% in bot DB.
+
+## 2026-10-13 — FTBUGS: 10 behaviour bugs in the running freqtrade strategies (branch fix/freqtrade-strategy-bugs)
+- Scope: cost-basis trim sizing (9 strategies), reachable {"0": 10.0} never-ROI (11), 3Layer core ROI + layer tagging/grid cap, Adaptive NOSTOP rally trim + shield adds, DCA V1 once-per-candle guard, CalendarShield/AnalogV2 anomaly coin.
+- Method: before = origin/main strategies, after = branch, 2020-01-01 -> 2026-10-12, fee 0.1%/side, WF anomaly flags (regenerated to 2026-10-12, identical on the overlap), $10K ($200K DCA), daily MTM equity rebuilt from orders. Windows = in-path slices of the full-run equity (not fresh-start validator runs). Archive tag FTBUGS (decomposition runs: FTBUGS-decomp-sizingonly-*).
+- Sizing: post-trim coin share now lands on target in every strategy (RS 85/75/60%, R5 75%); before it fell to 2-58% after profitable trims. Return effect small and either sign (-15% BNB RS_SLOW, +59% DOGE RS_DEF, +-2% elsewhere).
+- Anomaly coin: ETH Calendar CAGR 47.3 -> 43.5%, MTM DD -52.4 -> -45.0%; ETH AnalogV2 52.0 -> 47.8%, DD -53.3 -> -40.7%; BNB Calendar 38.8 -> 35.1%, DD -68.1 -> -63.4% (sizing-only decomposition: 47.5 / 51.6 / 36.4%). XRP unchanged (no XRP flags; BTC fallback).
+- Adaptive NOSTOP: rally trim had sold the position to 0% repeatedly (132 trims); after: CAGR 28.9 -> 42.6% (shield 31.8 -> 46.1%), DD unchanged ~-59/-54%.
+- 3Layer: live freqtrade keeps ONE trade per pair, so grid/hedge legs never exist live; with the core no longer ROI-churned the plain bot is 70% BTC buy-and-hold: CAGR 25.6 -> 37.0%, MTM DD -53.7 -> -73.3%. Shield variant 33.7 -> 42.7%, DD -56.7 -> -60.5%.
+- DCA V1 / Rotation / MetaAdaptive ADA: backtest unchanged (DCA bug is live-loop only; ROI never reached in-sample).
+- Verdicts: every strategy keeps its adversarial class before -> after (no fix moves a verdict). Fixes APPROVED as correctness fixes for the existing dry-run bots. No strategy becomes deployable for real money by this change; plain 3Layer flagged for redesign (design not implementable in freqtrade's one-trade-per-pair model).
+- 30/60/90d follow-up: freqtrade_dca buys/day == 1; first live trim per bot lands on target; ETH/BNB calendar anomaly exits vs WF file.

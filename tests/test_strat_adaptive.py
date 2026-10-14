@@ -105,44 +105,52 @@ def test_adjust_trims_overweight(strat):
     assert adjust(strat, FakeTrade(10.0, 100.0), 100.0) == pytest.approx(-600.0)
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "NOSTOP does not disable TRIM_RALLY: trim_rally_pct=1.0 is only 'disabled' if a 100% "
-    "rally from the 90d low never happens, but crypto does it routinely (BTC Oct-2020 -> "
-    "Jan-2021 ~+280%). btc_adaptive_strategy.py adjust_trade_position: "
-    "`if last['rally_from_low'] >= P['trim_rally_pct']` -> sells 20% of the coin value even "
-    "when drift says hold/buy, and repeats on every call (no once-per-bar/cooldown guard), "
-    "so the position is ratcheted down while the rally lasts. Input: TREND_UP, at 85% "
-    "target, rally_from_low=1.5. Expected None, actual -170.0."))
+# Regression (was strict xfail): NOSTOP really disables TRIM_RALLY (trim_rally_pct = inf).
 def test_nostop_never_rally_trims(strat):
     attach_runtime(strat, row(rally_from_low=1.5), free=150.0)
     assert adjust(strat, FakeTrade(8.5, 100.0), 100.0) is None
 
 
-def test_adjust_in_shield_bear(strat, shield, request):
+def test_adjust_in_shield_bear(strat, shield):
     """WITH_SHIELD: _regime_shield.regime_allows_add says no adds in confirmed BEAR."""
     attach_runtime(strat, row(close=80.0, regime_confirmed="BEAR"), free=1000.0)
     out = adjust(strat, FakeTrade(0.0001, 100.0), 100.0)
     if not shield:
         assert out == pytest.approx(0.40 * 1000.01 - 0.01)   # regime-blind by design
         return
-    request.applymarker(pytest.mark.xfail(strict=True, reason=(
-        "WITH_SHIELD adaptive imports regime_allows_add but never calls it "
-        "(btc_adaptive_strategy.py adjust_trade_position), unlike BtcRebalanceStrategy. In "
-        "confirmed BEAR it still BUYS toward the TREND_DN target while the shield's exit "
-        "signal tries to close the trade. Input: BEAR, 0 coin, 1000 free. Expected None, "
-        "actual +400.")))
+    # Regression (was strict xfail): WITH_SHIELD calls regime_allows_add -> no adds in BEAR.
     assert out is None
 
 
-@pytest.mark.xfail(strict=True, reason=SIZING_XFAIL_REASON)
+# C14b regression (was strict xfail): trims are sized by cost basis via _position_sizing.
 def test_trim_in_profit_lands_on_target(strat):
     attach_runtime(strat, row(), free=0.0)
     trade = FakeTrade(1.0, 100.0)
     stake = adjust(strat, trade, 200.0)
-    assert stake == pytest.approx(-30.0)
+    assert stake == pytest.approx(-15.0)  # $30 market value = 15% of the $100 cost basis
     assert allocation_after_trim(stake, trade, 200.0, 0.0) == pytest.approx(0.85, abs=0.01)
 
 
-@pytest.mark.xfail(strict=True, reason=ROI_XFAIL_REASON)
+# Regression (was strict xfail): never-ROI strategies use minimal_roi = {}.
 def test_roi_never_exits(strat):
     assert not roi_would_exit(strat, FakeTrade(1.0, 100.0), profit=12.0)
+
+
+def test_rally_trim_once_per_candle():
+    """Modes with TRIM_RALLY enabled trim at most once per analysed candle
+    (adjust_trade_position runs on every process loop), and not while an
+    order is open."""
+    m = load_strategy(FILE, {"AD_MODE": "ADAPT_AGGR_BASELINE"})
+    s = make_strategy(m.BtcAdaptiveStrategy)
+    day1 = row(rally_from_low=0.5).assign(date=pd.Timestamp("2024-03-01", tz="UTC"))
+    attach_runtime(s, day1, free=150.0)               # at the 85% target
+    trade = FakeTrade(8.5, 100.0)
+    first = adjust(s, trade, 100.0)
+    assert first == pytest.approx(-0.20 * 850.0)
+    assert all(adjust(s, trade, 100.0) is None for _ in range(60))   # same candle
+    day2 = day1.assign(date=pd.Timestamp("2024-03-02", tz="UTC"))
+    attach_runtime(s, day2, free=150.0)
+    trade.has_open_orders = True
+    assert adjust(s, trade, 100.0) is None            # order still open
+    trade.has_open_orders = False
+    assert adjust(s, trade, 100.0) == pytest.approx(-0.20 * 850.0)
