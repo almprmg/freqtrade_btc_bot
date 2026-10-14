@@ -50,6 +50,24 @@ bot loop (live churn: duplicate fills seconds apart).
 Cooldown (all modes): no adjustment while the trade has an open order, or
 within DR_COOLDOWN_MIN minutes (default 60) of the last filled order.
 On 1d backtests this is a no-op (adjust is evaluated once per candle).
+
+Partial-sell sizing (fix C14b): freqtrade converts a NEGATIVE
+adjust_trade_position return into a coin amount against the position's COST
+BASIS, not its market value:
+    amount = |stake| * trade.amount / trade.stake_amount
+(freqtrade 2026.4: freqtradebot.py process_open_trade_positions /
+optimize/backtesting.py _get_adjust_trade_entry_for_candle). Returning the
+market-value overweight (e.g. -drift_usdt) therefore over-sells when the
+position is in profit (BTC 2021-02-12 trim left 49% BTC instead of 75%) and
+under-sells when it is at a loss. The strategy now computes the coin quantity
+it actually wants to sell (overweight_value / current_rate) and returns it as
+a fraction of trade.stake_amount — see `partial_exit_stake()`.
+
+ROI (fix C14b): the strategy must never ROI-exit. `minimal_roi = {}` means no
+ROI table entry ever matches, so IStrategy.min_roi_reached() returns False for
+any profit (an empty dict on the class is kept by StrategyResolver; the old
+{"0": 10.0} == +1000% was reachable for SOL 2021 and closed the trade).
+Do NOT set `minimal_roi` in the bot configs — config overrides the strategy.
 """
 from __future__ import annotations
 
@@ -110,6 +128,27 @@ def in_cooldown(has_open_orders: bool, last_fill: Optional[datetime],
     return now - last_fill < timedelta(minutes=cooldown_min)
 
 
+def partial_exit_stake(sell_value: float, current_rate: float,
+                       trade_amount: float, trade_stake_amount: float) -> float:
+    """Stake to return (as a positive number; caller negates) so that freqtrade
+    sells `sell_value` worth of coin at `current_rate`.
+
+    freqtrade sizes a negative adjust_trade_position return as
+    amount = |stake| * trade.amount / trade.stake_amount, i.e. as a fraction of
+    the cost basis. We want amount = sell_value / current_rate, hence
+    stake = (sell_value / current_rate) / trade.amount * trade.stake_amount.
+    """
+    if current_rate <= 0 or trade_amount <= 0 or trade_stake_amount <= 0 or sell_value <= 0:
+        return 0.0
+    fraction = min(float(sell_value) / float(current_rate) / float(trade_amount), 1.0)
+    return fraction * float(trade_stake_amount)
+
+
+def freqtrade_exit_amount(stake: float, trade_amount: float, trade_stake_amount: float) -> float:
+    """Mirror of freqtrade 2026.4's negative-stake -> amount conversion (no precision rounding)."""
+    return abs(float(stake)) * float(trade_amount) / float(trade_stake_amount)
+
+
 def _build_modes() -> dict[str, dict]:
     base: dict[str, dict] = {
         "target_pct": 0.75,
@@ -157,7 +196,8 @@ class BtcDynamicRebalanceStrategy(IStrategy):
     can_short: bool = False
     process_only_new_candles: bool = True
 
-    minimal_roi: dict = {"0": 10.0}
+    # Never ROI-exit (C14b): empty table -> min_roi_reached() is always False.
+    minimal_roi: dict = {}
     stoploss: float = -0.99
     use_custom_stoploss: bool = False
 
@@ -329,7 +369,11 @@ class BtcDynamicRebalanceStrategy(IStrategy):
             sell_usdt = min(rebalance_usdt, btc_value * 0.99)
             if min_stake and sell_usdt < min_stake:
                 return None
-            return -float(sell_usdt) if sell_usdt > 0 else None
+            # sell_usdt is a MARKET value; freqtrade expects a cost-basis stake
+            # for partial exits (see partial_exit_stake / module docstring).
+            stake = partial_exit_stake(sell_usdt, float(current_rate), btc_qty,
+                                       float(trade.stake_amount or 0.0))
+            return -stake if stake > 0 else None
         else:
             buy_usdt = min(-rebalance_usdt, usdt_free * 0.99)
             if max_stake and max_stake > 0:

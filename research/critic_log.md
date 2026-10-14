@@ -19,3 +19,15 @@
 - Red flags: "single-window darling" (2021) + leaked feature. Redundancy check: out-of-sample, the breaker LOWERS BTC return by ~180pp vs no breaker and does not reduce MTM DD (-40% both) -> the feature has no demonstrated OOS value.
 - Verdict: fix APPROVED (research-integrity bug fix). Restate BTC shield expectations to WF numbers (~+600%, CAGR ~35%, MTM DD ~-40%), not +923%/-18%. No new capital decisions on archive results that used anomaly_flags.feather for 2019-2023. Switching live bots to WF flags: low risk (2024+ flags are OOS in both files) but recommended for consistency; removing the breaker is a separate experiment, not approved here.
 - 30/60/90d follow-up: compare live anomaly exits vs WF file; re-run C12 grid when 2026 closes.
+
+## 2026-10-13 — C14b BtcDynamicRebalanceStrategy partial-sell sizing + unreachable ROI (DR_PROFIT_20, BTC $10K / ETH $1K / SOL $500)
+- Root cause (confirmed in freqtrade 2026.4 source): a negative `adjust_trade_position` return is converted to amount as `|stake| * trade.amount / trade.stake_amount` (freqtradebot.py process_open_trade_positions; optimize/backtesting.py _get_adjust_trade_entry_for_candle) = fraction of COST BASIS. The strategy returned the market-value overweight -> over-sold in profit (BTC 2021-02-12 left 48.95% BTC), under-sold at a loss (SOL 2023 trims left 78-84%).
+- Fix: `partial_exit_stake()` returns (sell_value/current_rate/trade.amount) * trade.stake_amount; `minimal_roi = {}` (no ROI entry ever matches; old {"0": 10.0} closed SOL via ROI in 2021). Tests `tests/test_dynrebal_sizing.py` (9 fail on origin/main, all 63 pass after).
+- Full run 2020-01-01 -> 2026-10-12 (data extended), MTM equity rebuilt from orders (matches freqtrade final balance exactly):
+  - BTC: +840.9% / CAGR 39.2% / MTM DD -54.0% / 27 orders / fees $188 / trim alloc 49-75% -> +737.6% / 36.8% / -64.4% / 33 / $141 / 75.0-75.1%
+  - ETH: +1367.7% / 48.7% / -64.9% / 52 / $52.6 / 47-76% -> +1330.8% / 48.1% / -67.8% / 51 / $35.5 / 75.0-75.1%
+  - SOL: +693.5% / 45.1% / -89.8% / 60 / $17.8 / 47-84%, 1 ROI exit -> +729.7% / 46.3% / -90.2% / 60 / $11.6 / 75.0-75.2%, 0 ROI exits
+- BTC/ETH "lost" return is the bug's accidental de-risking (cash raised near the 2021 tops), not edge; the fixed version does what the strategy says (75% exposure) and its DD is the honest 75%-of-coin drawdown.
+- Adversarial (before -> after): BTC 2022 -53.1/-53.1, 2025 -3.9/-4.3, 2026Q12 -11.7/-11.7; ETH -53.9/-53.2, -1.8/-2.7, -25.4/-25.4; SOL -86.2/-85.6, -22.1/-22.9, -27.0/-27.0. CATASTROPHIC both before and after (75% long-only by design).
+- Verdict: fix APPROVED as a correctness fix for the 3 existing dry-run bots. Strategy remains VETOED for real money / new wallets (unchanged).
+- 30/60/90d follow-up: after next live trim, check post-trim coin share ~75% in bot DB.
