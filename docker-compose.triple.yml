@@ -25,6 +25,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_triple]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_triple
+      BRIDGE_NAME: freqtrade_triple_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_TRIPLE_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_triple.sqlite

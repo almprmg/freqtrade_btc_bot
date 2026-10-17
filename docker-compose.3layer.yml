@@ -32,6 +32,8 @@ services:
     depends_on:
       - freqtrade_3layer
     environment:
+      BRIDGE_BOT_NAME: freqtrade_3layer
+      BRIDGE_NAME: freqtrade_3layer_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_3LAYER_SUBSCRIPTION_ID}
       BRIDGE_USER_ID: ${BRIDGE_3LAYER_USER_ID}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_3layer.sqlite

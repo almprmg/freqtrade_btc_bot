@@ -31,6 +31,8 @@ services:
     depends_on:
       - freqtrade_shield
     environment:
+      BRIDGE_BOT_NAME: freqtrade_shield
+      BRIDGE_NAME: freqtrade_shield_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SHIELD_SUBSCRIPTION_ID}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_shield.sqlite

@@ -32,6 +32,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_onchain]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_onchain
+      BRIDGE_NAME: freqtrade_onchain_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ONCHAIN_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_onchain.sqlite

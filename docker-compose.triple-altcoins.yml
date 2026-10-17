@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_bnb_triple]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_bnb_triple
+      BRIDGE_NAME: freqtrade_bnb_triple_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_BNB_TRIPLE_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_triple_bnb.sqlite
@@ -55,6 +57,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_ada_triple]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_ada_triple
+      BRIDGE_NAME: freqtrade_ada_triple_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADA_TRIPLE_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_triple_ada.sqlite
