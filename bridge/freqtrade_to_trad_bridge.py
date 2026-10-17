@@ -27,15 +27,26 @@ admin_audit_logs[type=bridge_state]) tracking the highest Freqtrade trade
 id we've imported per subscription. On every poll we only fetch
 Freqtrade trades with id > last_seen and trades that are still open (so
 their close gets picked up).
+
+Visibility (phase 0): every poll upserts this bot's row in `bot_deployments`
+(keyed on the SQLite path, which is unique — two bots sharing one trade DB
+can't both register) with last_heartbeat_at, status and last_error. It runs
+in its own transaction and never blocks trade sync, so the bridge works
+before the table exists. Trade opens/closes are written to `strategy_logs`
+(trade_opened with Freqtrade's enter_tag, trade_closed with its raw
+exit_reason) and failures as bridge_error, only when the error changes.
+The heartbeat itself is NOT logged to strategy_logs (it would be noise).
 """
 from __future__ import annotations
 
+import json
 import logging
 import os
 import sqlite3
 import time
 import uuid
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 import psycopg
@@ -48,6 +59,10 @@ FREQTRADE_DB = os.environ.get(
 TRAD_PG_DSN = os.environ["TRAD_PG_DSN"]
 POLL_INTERVAL = int(os.environ.get("POLL_INTERVAL_SECONDS", "30"))
 SYMBOL_DEFAULT = os.environ.get("BRIDGE_SYMBOL", "BTCUSDT")
+# Container name of the bot this bridge mirrors; falls back to the trade DB's
+# file stem (the container name can't be derived from inside the bridge).
+BOT_NAME = os.environ.get("BRIDGE_BOT_NAME") or Path(FREQTRADE_DB).stem
+BRIDGE_NAME = os.environ.get("BRIDGE_NAME") or None
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [bridge] %(message)s")
 log = logging.getLogger("bridge")
@@ -79,7 +94,7 @@ def fetch_freqtrade_trades(sqlite_path: str) -> list[dict]:
         """
         SELECT id, pair, is_open, open_date, close_date, amount, open_rate,
                close_rate, close_profit_abs, stake_amount, fee_open_cost,
-               fee_close_cost, exit_reason, realized_profit
+               fee_close_cost, exit_reason, realized_profit, enter_tag
         FROM trades
         ORDER BY id ASC
         """
@@ -151,6 +166,40 @@ def mirror_adjustment_orders(cur: psycopg.Cursor, ft: dict, symbol: str) -> int:
 
 def realized_of(ft: dict) -> float:
     return float(ft.get("realized_profit") or 0)
+
+
+def log_event(cur: psycopg.Cursor, level: str, event_type: str, message: str,
+              metadata: dict[str, Any]) -> None:
+    cur.execute(
+        """
+        INSERT INTO strategy_logs (subscription_id, level, event_type, message, metadata)
+        VALUES (%s, %s::log_level, %s, %s, %s::jsonb)
+        """,
+        (SUBSCRIPTION_ID, level, event_type, message,
+         json.dumps({"source": "freqtrade_bridge", "bot": BOT_NAME, **metadata}, default=str)),
+    )
+
+
+def trade_opened_event(ft: dict, trad_id: int, symbol: str) -> tuple[str, dict[str, Any]]:
+    tag = ft.get("enter_tag") or None
+    msg = (f"Freqtrade opened {symbol} long qty {float(ft['amount']):.6f} "
+           f"@ {float(ft['open_rate']):.8g}" + (f" (enter_tag {tag})" if tag else ""))
+    return msg, {"freqtrade_id": int(ft["id"]), "trade_id": trad_id, "symbol": symbol,
+                 "enter_tag": tag, "entry_price": float(ft["open_rate"]),
+                 "quantity": float(ft["amount"]), "opened_at": to_dt(ft["open_date"])}
+
+
+def trade_closed_event(ft: dict, trad_id: int, symbol: str,
+                       exit_reason: str) -> tuple[str, dict[str, Any]]:
+    raw = ft.get("exit_reason") or None
+    pnl = ft.get("close_profit_abs")
+    msg = (f"Freqtrade closed {symbol} @ {float(ft['close_rate'] or 0):.8g}, "
+           f"pnl {float(pnl or 0):.4f}" + (f" (exit_reason {raw})" if raw else ""))
+    return msg, {"freqtrade_id": int(ft["id"]), "trade_id": trad_id, "symbol": symbol,
+                 "exit_reason_raw": raw, "exit_reason": exit_reason,
+                 "enter_tag": ft.get("enter_tag") or None,
+                 "exit_price": ft.get("close_rate"), "pnl": pnl,
+                 "closed_at": to_dt(ft["close_date"])}
 
 
 def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
@@ -247,6 +296,10 @@ def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
         )
         new_id = cur.fetchone()[0]
         mirror_adjustment_orders(cur, ft, symbol)
+        log_event(cur, "info", "trade_opened", *trade_opened_event(ft, new_id, symbol))
+        if not is_open:
+            log_event(cur, "info", "trade_closed",
+                      *trade_closed_event(ft, new_id, symbol, exit_reason))
         log.info(
             "INSERT trade ft=%s -> trad=%s (%s, %s, qty=%.6f)",
             ft_id, new_id, symbol, "open" if is_open else "closed", qty,
@@ -305,6 +358,8 @@ def upsert_trade(cur: psycopg.Cursor, ft: dict) -> None:
             """,
             (exit_order_id, exit_px, pnl, fee_total, exit_reason, close_dt, trad_id),
         )
+        log_event(cur, "info", "trade_closed",
+                  *trade_closed_event(ft, trad_id, symbol, exit_reason))
         log.info("CLOSE trade ft=%s -> trad=%s pnl=%s", ft_id, trad_id, pnl)
 
 
@@ -332,33 +387,120 @@ def update_subscription_stats(cur: psycopg.Cursor) -> None:
     )
 
 
+def heartbeat(cur: psycopg.Cursor, error: str | None, synced_at: datetime | None) -> bool:
+    """Upsert this bot's bot_deployments row. False when the trade DB is
+    already registered to a different subscription (shared-SQLite duplicate).
+    """
+    cur.execute(
+        """
+        INSERT INTO bot_deployments (name, subscription_id, bridge_name, sqlite_path,
+                                     status, last_heartbeat_at, last_trade_sync_at, last_error)
+        VALUES (%s, %s, %s, %s, %s::bot_deployment_status, now(), %s, %s)
+        ON CONFLICT (sqlite_path) DO UPDATE
+        SET name = EXCLUDED.name,
+            subscription_id = EXCLUDED.subscription_id,
+            bridge_name = COALESCE(EXCLUDED.bridge_name, bot_deployments.bridge_name),
+            status = EXCLUDED.status,
+            last_heartbeat_at = now(),
+            last_trade_sync_at = COALESCE(EXCLUDED.last_trade_sync_at,
+                                          bot_deployments.last_trade_sync_at),
+            last_error = EXCLUDED.last_error
+        WHERE bot_deployments.subscription_id IS NULL
+           OR bot_deployments.subscription_id = EXCLUDED.subscription_id
+        RETURNING id
+        """,
+        (BOT_NAME, SUBSCRIPTION_ID, BRIDGE_NAME, FREQTRADE_DB,
+         "error" if error else "running", synced_at, error),
+    )
+    return cur.fetchone() is not None
+
+
+class Reporter:
+    """Heartbeat + bridge_error events, isolated from trade sync.
+
+    bridge_error is logged once per distinct error; recovery re-arms it.
+    """
+
+    def __init__(self) -> None:
+        self.last_error: str | None = None
+        self.heartbeat_warned = False
+
+    def report(self, conn: psycopg.Connection, error: str | None,
+               synced_at: datetime | None) -> None:
+        try:
+            with conn.transaction(), conn.cursor() as cur:
+                if not heartbeat(cur, error, synced_at):
+                    error = (f"trade DB {FREQTRADE_DB} is already registered to another "
+                             "subscription (two bots share one SQLite)")
+                    log.error(error)
+            self.heartbeat_warned = False
+        except Exception as exc:  # e.g. bot_deployments not migrated yet
+            if not self.heartbeat_warned:
+                log.warning("heartbeat skipped: %s", exc)
+                self.heartbeat_warned = True
+        if error == self.last_error:
+            return
+        try:
+            if error:
+                with conn.transaction(), conn.cursor() as cur:
+                    log_event(cur, "error", "bridge_error", f"Freqtrade bridge: {error}",
+                              {"error": error, "sqlite_path": FREQTRADE_DB})
+            self.last_error = error
+        except Exception:
+            log.exception("could not record bridge_error")
+
+
+def run_cycle(conn: psycopg.Connection, fts: list[dict]) -> int:
+    """Sync every trade, one transaction each; returns how many failed."""
+    failed = 0
+    for ft in fts:
+        try:
+            with conn.transaction(), conn.cursor() as cur:
+                upsert_trade(cur, ft)
+        except Exception:
+            failed += 1
+            log.exception("trade ft=%s failed to sync; skipped", ft.get("id"))
+    if fts:
+        with conn.transaction(), conn.cursor() as cur:
+            update_subscription_stats(cur)
+    return failed
+
+
 def main_loop() -> None:
     log.info(
-        "starting: sub_id=%s user_id=%s ft_db=%s poll=%ss",
-        SUBSCRIPTION_ID, USER_ID, FREQTRADE_DB, POLL_INTERVAL,
+        "starting: sub_id=%s user_id=%s bot=%s ft_db=%s poll=%ss",
+        SUBSCRIPTION_ID, USER_ID, BOT_NAME, FREQTRADE_DB, POLL_INTERVAL,
     )
+    reporter = Reporter()
     while True:
+        error: str | None = None
+        synced_at: datetime | None = None
         try:
-            fts = fetch_freqtrade_trades(FREQTRADE_DB)
-            if fts:
-                failed = 0
-                with psycopg.connect(TRAD_PG_DSN, autocommit=True) as conn:
-                    # One transaction per trade: a single bad row must not
-                    # roll back (and so block) every other trade's sync.
-                    for ft in fts:
-                        try:
-                            with conn.transaction(), conn.cursor() as cur:
-                                upsert_trade(cur, ft)
-                        except Exception:
-                            failed += 1
-                            log.exception("trade ft=%s failed to sync; skipped", ft.get("id"))
-                    with conn.transaction(), conn.cursor() as cur:
-                        update_subscription_stats(cur)
-                log.info("synced %d freqtrade trades (%d failed)", len(fts), failed)
+            if not os.path.exists(FREQTRADE_DB):
+                error = f"trade DB not found: {FREQTRADE_DB}"
+                fts: list[dict] = []
             else:
+                fts = fetch_freqtrade_trades(FREQTRADE_DB)
+            with psycopg.connect(TRAD_PG_DSN, autocommit=True) as conn:
+                # One transaction per trade: a single bad row must not
+                # roll back (and so block) every other trade's sync.
+                failed = run_cycle(conn, fts)
+                if failed:
+                    error = f"{failed} of {len(fts)} trades failed to sync"
+                elif error is None:
+                    synced_at = datetime.now(timezone.utc)
+                reporter.report(conn, error, synced_at)
+            if fts:
+                log.info("synced %d freqtrade trades (%d failed)", len(fts), failed)
+            elif error is None:
                 log.info("no freqtrade trades yet")
         except Exception as exc:
             log.exception("bridge cycle failed: %s", exc)
+            try:
+                with psycopg.connect(TRAD_PG_DSN, autocommit=True) as conn:
+                    reporter.report(conn, f"cycle failed: {exc}", None)
+            except Exception:
+                pass  # trad_pg itself unreachable; heartbeat goes stale, which is the signal
         time.sleep(POLL_INTERVAL)
 
 
