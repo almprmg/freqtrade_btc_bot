@@ -29,6 +29,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_avax]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_avax
+      BRIDGE_NAME: freqtrade_avax_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_AVAX_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_avax.sqlite
@@ -60,6 +62,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_bnb]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_bnb
+      BRIDGE_NAME: freqtrade_bnb_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_BNB_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_bnb.sqlite
@@ -91,6 +95,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_doge]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_doge
+      BRIDGE_NAME: freqtrade_doge_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_DOGE_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_doge.sqlite
@@ -122,6 +128,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_ada]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_ada
+      BRIDGE_NAME: freqtrade_ada_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADA_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_ada.sqlite

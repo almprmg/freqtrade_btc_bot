@@ -30,6 +30,8 @@ services:
     depends_on:
       - freqtrade_dynrebal_eth
     environment:
+      BRIDGE_BOT_NAME: freqtrade_dynrebal_eth
+      BRIDGE_NAME: freqtrade_dynrebal_eth_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ETH_SUBSCRIPTION_ID}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal_eth.sqlite
@@ -70,6 +72,8 @@ services:
     depends_on:
       - freqtrade_dynrebal_sol
     environment:
+      BRIDGE_BOT_NAME: freqtrade_dynrebal_sol
+      BRIDGE_NAME: freqtrade_dynrebal_sol_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SOL_SUBSCRIPTION_ID}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal_sol.sqlite

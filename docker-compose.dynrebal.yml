@@ -30,6 +30,8 @@ services:
     depends_on:
       - freqtrade_dynrebal
     environment:
+      BRIDGE_BOT_NAME: freqtrade_dynrebal
+      BRIDGE_NAME: freqtrade_dynrebal_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_DYNREBAL_SUBSCRIPTION_ID}
       BRIDGE_USER_ID: ${BRIDGE_DYNREBAL_USER_ID}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal.sqlite

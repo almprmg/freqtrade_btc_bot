@@ -30,6 +30,8 @@ services:
     depends_on:
       - freqtrade_adaptive
     environment:
+      BRIDGE_BOT_NAME: freqtrade_adaptive
+      BRIDGE_NAME: freqtrade_adaptive_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADAPTIVE_SUBSCRIPTION_ID}
       BRIDGE_USER_ID: ${BRIDGE_ADAPTIVE_USER_ID}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_adaptive.sqlite

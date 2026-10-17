@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_calendar]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_calendar
+      BRIDGE_NAME: freqtrade_calendar_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_CALENDAR_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_calendar.sqlite
