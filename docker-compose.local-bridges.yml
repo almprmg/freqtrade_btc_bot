@@ -44,6 +44,8 @@ services:
     depends_on:
       - pg_tunnel
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_ai_shield_bridge
       BRIDGE_SUBSCRIPTION_ID: 97
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_ai_shield.sqlite
@@ -58,6 +60,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_triple_btc_bridge
       BRIDGE_SUBSCRIPTION_ID: 98
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_btc.sqlite
@@ -72,6 +76,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_ai_shield_v2_bridge
       BRIDGE_SUBSCRIPTION_ID: 99
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_ai_shield_v2.sqlite
@@ -86,6 +92,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_calendar_btc_bridge
       BRIDGE_SUBSCRIPTION_ID: 100
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_calendar_btc.sqlite
@@ -100,6 +108,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_sol_vol_shield_bridge
       BRIDGE_SUBSCRIPTION_ID: 102
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_sol_vol_shield.sqlite
@@ -114,6 +124,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_triple_bnb_bridge
       BRIDGE_SUBSCRIPTION_ID: 103
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_bnb.sqlite
@@ -128,6 +140,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_triple_ada_bridge
       BRIDGE_SUBSCRIPTION_ID: 104
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_triple_ada.sqlite
@@ -142,6 +156,8 @@ services:
     restart: unless-stopped
     depends_on: [pg_tunnel]
     environment:
+      BRIDGE_BOT_NAME: local_pg_tunnel
+      BRIDGE_NAME: local_quantum_ai_bridge
       BRIDGE_SUBSCRIPTION_ID: 113
       BRIDGE_USER_ID: 10
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_local_quantum_ai.sqlite

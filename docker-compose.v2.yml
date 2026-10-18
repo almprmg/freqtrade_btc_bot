@@ -49,6 +49,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_rebalance_v2]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_rebalance_v2
+      BRIDGE_NAME: freqtrade_rebalance_v2_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_REBAL_V2_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_rebalance_v2.sqlite
@@ -84,6 +86,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_dynrebal_v2]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_dynrebal_v2
+      BRIDGE_NAME: freqtrade_dynrebal_v2_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_DYNREBAL_V2_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_dynrebal_v2.sqlite
@@ -119,6 +123,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_3layer_v2]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_3layer_v2
+      BRIDGE_NAME: freqtrade_3layer_v2_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_3LAYER_V2_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_3layer_v2.sqlite
@@ -154,6 +160,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_adaptive_v2]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_adaptive_v2
+      BRIDGE_NAME: freqtrade_adaptive_v2_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_ADAPTIVE_V2_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_adaptive_v2.sqlite
@@ -190,6 +198,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_shield_eth]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_shield_eth
+      BRIDGE_NAME: freqtrade_shield_eth_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SHIELD_ETH_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_shield_eth.sqlite
@@ -224,6 +234,8 @@ services:
     restart: unless-stopped
     depends_on: [freqtrade_shield_sol]
     environment:
+      BRIDGE_BOT_NAME: freqtrade_shield_sol
+      BRIDGE_NAME: freqtrade_shield_sol_bridge
       BRIDGE_SUBSCRIPTION_ID: ${BRIDGE_SHIELD_SOL_SUB}
       BRIDGE_USER_ID: ${BRIDGE_USER_ID:-10}
       FREQTRADE_SQLITE_PATH: /data/freqtrade/tradesv3_shield_sol.sqlite
