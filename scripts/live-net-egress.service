@@ -1,0 +1,14 @@
+[Unit]
+Description=Egress firewall for the isolated live trading network (br-live)
+# Docker owns DOCKER-USER; ufw must not run after us and reorder INPUT.
+After=docker.service ufw.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/srv/trad/pythone/freqtrade_btc_bot/scripts/live_net_egress.sh
+ExecStop=/srv/trad/pythone/freqtrade_btc_bot/scripts/live_net_egress.sh --remove
+
+[Install]
+WantedBy=multi-user.target

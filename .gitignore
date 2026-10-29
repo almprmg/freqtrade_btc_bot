@@ -33,3 +33,6 @@ rebalance_results/
 dynrebal_results/
 adaptive_results/
 multipair_results/
+# live bot: real exchange keys and runtime state never go to git
+live/*/secrets.json
+live/*/data/

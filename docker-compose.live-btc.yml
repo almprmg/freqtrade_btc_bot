@@ -1,0 +1,73 @@
+# LIVE-candidate BTC bot (Dynamic Rebalance 75/25, +-20%), isolated from the
+# testnet/dry-run fleet. Starts in dry_run (live/btc_rebalance/config.json).
+#
+# Isolation:
+#   - own network live_net (bridge br-live): no route to trad_pg, the fleet or
+#     any other container; no published ports.
+#   - egress limited to TCP 443 on public IPs, no access to the host
+#     (scripts/live_net_egress.sh, run by the live-net-egress systemd unit).
+#   - read-only root fs, non-root user, all capabilities dropped,
+#     no-new-privileges, pid/memory/cpu caps.
+#   - exchange keys only in live/btc_rebalance/secrets.json (server-only,
+#     0400, never in git/env/logs), passed as a second --config.
+#   - strategy files are a pinned copy (live/btc_rebalance/strategies), so a
+#     research edit in user_data/strategies can never change the live bot.
+#   - no Telegram, no REST API: nothing to log into. Stop = docker stop.
+#
+# Name does not start with freqtrade_ on purpose: fleet_watchdog.sh and the
+# anomaly refresh never touch it.
+#
+#   docker compose -f docker-compose.live-btc.yml up -d
+services:
+  live_btc_rebalance:
+    image: freqtradeorg/freqtrade@sha256:345ebbb4bd8934d31771f71f45112bf82695e7460361115f539c4a65062b833b  # 2026.4, pinned
+    container_name: live_btc_rebalance
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m
+      - /home/ftuser:size=64m
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 256
+    mem_limit: 768m
+    cpus: 1.0
+    environment:
+      DR_MODE: DR_PROFIT_20
+      WITH_SHIELD: "false"
+      DR_COOLDOWN_MIN: "60"
+    volumes:
+      - ./live/btc_rebalance/data:/freqtrade/user_data
+      - ./live/btc_rebalance/strategies:/freqtrade/strategies:ro
+      - ./live/btc_rebalance/config.json:/freqtrade/config.json:ro
+      - ./live/btc_rebalance/secrets.json:/run/secrets/exchange.json:ro
+    command: >
+      trade
+      --config /freqtrade/config.json
+      --config /run/secrets/exchange.json
+      --db-url sqlite:////freqtrade/user_data/live_btc_rebalance.sqlite
+      --logfile /freqtrade/user_data/logs/live_btc_rebalance.log
+      --strategy BtcDynamicRebalanceStrategy
+    healthcheck:
+      # freqtrade logs a heartbeat every 60s; a hung bot stops logging.
+      test: ["CMD-SHELL", "find /freqtrade/user_data/logs/live_btc_rebalance.log -mmin -5 | grep -q ."]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 180s
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "5"}
+    networks: [live_net]
+
+networks:
+  live_net:
+    name: live_net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-live
+      com.docker.network.bridge.enable_icc: "false"
+    ipam:
+      config:
+        - subnet: 172.31.250.0/24
