@@ -27,7 +27,7 @@ services:
     read_only: true
     tmpfs:
       - /tmp:size=64m
-      - /home/ftuser:size=64m
+      - /home/ftuser/.cache:size=64m,uid=1000,gid=1000
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     pids_limit: 256
