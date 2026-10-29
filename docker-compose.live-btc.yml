@@ -1,4 +1,4 @@
-# LIVE-candidate BTC bot (Dynamic Rebalance 75/25, +-20%), isolated from the
+# LIVE-candidate BTC bot (Dynamic Rebalance by market regime: 85% BTC above EMA200, 50% below; rebalance on regime flip or +-20%), isolated from the
 # testnet/dry-run fleet. Starts in dry_run (live/btc_rebalance/config.json).
 #
 # Isolation:
@@ -34,7 +34,7 @@ services:
     mem_limit: 768m
     cpus: 1.0
     environment:
-      DR_MODE: DR_PROFIT_20
+      DR_MODE: DR_REGIME_BAND
       WITH_SHIELD: "false"
       DR_COOLDOWN_MIN: "60"
     volumes:
