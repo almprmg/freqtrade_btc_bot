@@ -4,7 +4,7 @@
 # Isolation:
 #   - own network live_net (bridge br-live): no route to trad_pg, the fleet or
 #     any other container; no published ports.
-#   - egress limited to TCP 443 on public IPs, no access to the host
+#   - egress limited to TCP 443/9443 on public IPs, no access to the host
 #     (scripts/live_net_egress.sh, run by the live-net-egress systemd unit).
 #   - read-only root fs, non-root user, all capabilities dropped,
 #     no-new-privileges, pid/memory/cpu caps.

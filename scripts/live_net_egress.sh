@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Egress policy for the isolated live bot network (live_net / br-live).
 #
-#   allowed : TCP 443 to public IPs (Binance REST/WS)
+#   allowed : TCP 443 and 9443 to public IPs (Binance REST / WebSocket streams)
 #   dropped : everything else leaving br-live, any private/link-local range
 #             (other containers, trad_pg, cloud metadata), and the host itself
 #
@@ -28,10 +28,10 @@ rule() {  # rule CHAIN POS ARGS...
 [[ "${1:-}" == --remove ]] && MODE=remove
 iptables -N DOCKER-USER 2>/dev/null || true
 
-# Inserted at fixed positions so the final order is: private drop, 443 allow, drop.
+# Inserted at fixed positions so the final order is: private drop, 443/9443 allow, drop.
 pos=1
 for net in $PRIVATE; do rule DOCKER-USER $pos -i $IF -d "$net" -j DROP; pos=$((pos + 1)); done
-rule DOCKER-USER $pos -i $IF -p tcp --dport 443 -j RETURN; pos=$((pos + 1))
+rule DOCKER-USER $pos -i $IF -p tcp -m multiport --dports 443,9443 -j RETURN; pos=$((pos + 1))
 rule DOCKER-USER $pos -i $IF -j DROP
 # Nothing from the live network may reach the host (sshd, nginx, docker-proxy...).
 rule INPUT 1 -i $IF -j DROP
