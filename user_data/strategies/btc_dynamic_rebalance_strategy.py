@@ -31,7 +31,14 @@ Trigger families (selected via ENV `DR_MODE`):
     DR_RSI_OR_BB      — trigger if RSI extreme OR BB touch
 
   Dynamic target (target_pct itself changes):
-    DR_REGIME     — target=0.85 above EMA200, target=0.50 below
+    DR_REGIME     — target=0.85 above EMA200, target=0.50 below; rebalances
+                    toward it on EVERY loop past min_stake (churns, kept for
+                    the archive)
+    DR_REGIME_BAND — same 85/50 regime target, but rebalances only when the
+                    regime FLIPS or the portfolio moved +-20% since the last
+                    fill (2026-10-29: stress-tested on the 2022, 2024 and
+                    2025-26 drops; 2020-now +839% / max DD -58% vs 75/25
+                    +711% / -65% in the hourly simulation)
 
 In all modes the "rebalance" action means: bring BTC back to TARGET_PCT of
 total portfolio (full rebalance). Modes differ only in WHEN they fire.
@@ -97,6 +104,22 @@ COOLDOWN_MIN = float(os.environ.get("DR_COOLDOWN_MIN", "60"))
 
 ANCHOR_KEY = "dr_anchor_value"
 ANCHOR_NFILLS_KEY = "dr_anchor_nfills"
+# DR_REGIME_BAND: the target the position was last rebalanced to, and the
+# order we placed to get there (confirmed only once it fills).
+APPLIED_TARGET_KEY = "dr_applied_target"
+PENDING_TARGET_KEY = "dr_pending_target"
+PENDING_NFILLS_KEY = "dr_pending_nfills"
+NO_PENDING = -1.0  # freqtrade stores None as the string 'null': never write None
+
+
+def custom_float(trade, key: str) -> Optional[float]:
+    """Numeric custom_data value, or None when unset / cleared / not a number."""
+    raw = trade.get_custom_data(key)
+    try:
+        val = float(raw)
+    except (TypeError, ValueError):
+        return None
+    return None if val < 0 else val
 
 
 # ---- Pure helpers (unit-tested in tests/test_dynrebal_anchor.py) ---------- #
@@ -132,6 +155,19 @@ def in_cooldown(has_open_orders: bool, last_fill: Optional[datetime],
     return now - last_fill < timedelta(minutes=cooldown_min)
 
 
+def regime_target(close: float, ema_long: float, bull: float, bear: float) -> float:
+    """Bull (close above the long EMA) -> bull target, else bear target."""
+    return float(bull) if float(close) > float(ema_long) else float(bear)
+
+
+def regime_band_fires(applied_target: Optional[float], target: float,
+                      move: float, threshold: float) -> bool:
+    """Rebalance when the regime target changed or the portfolio left the +-band."""
+    if applied_target is not None and abs(float(applied_target) - float(target)) > 1e-9:
+        return True
+    return abs(float(move)) >= float(threshold) - 1e-9
+
+
 def _build_modes() -> dict[str, dict]:
     base: dict[str, dict] = {
         "target_pct": 0.75,
@@ -164,6 +200,8 @@ def _build_modes() -> dict[str, dict]:
         "DR_RSI_AND_PROFIT": {**base, "trigger_type": "rsi_and_profit", "profit_trigger_pct": 0.15},
         "DR_RSI_OR_BB": {**base, "trigger_type": "rsi_or_bb"},
         "DR_REGIME": {**base, "trigger_type": "regime_target"},
+        "DR_REGIME_BAND": {**base, "trigger_type": "regime_band", "profit_trigger_pct": 0.20,
+                           "regime_bull_target": 0.85, "regime_bear_target": 0.50},
     }
 
 
@@ -245,13 +283,13 @@ class BtcDynamicRebalanceStrategy(IStrategy):
     # ---- Dynamic target (only DR_REGIME uses it; others return base) ----- #
 
     def _dynamic_target(self, pair: str) -> float:
-        if P["trigger_type"] != "regime_target":
+        if P["trigger_type"] not in ("regime_target", "regime_band"):
             return float(P["target_pct"])
         df, _ = self.dp.get_analyzed_dataframe(pair=pair, timeframe=self.timeframe)
         if df is None or df.empty:
             return float(P["target_pct"])
         last = df.iloc[-1]
-        return float(P["regime_bull_target"]) if last["close"] > last["ema_long"] else float(P["regime_bear_target"])
+        return regime_target(last["close"], last["ema_long"], P["regime_bull_target"], P["regime_bear_target"])
 
     # ---- The conditional triggers ---------------------------------------- #
 
@@ -315,8 +353,8 @@ class BtcDynamicRebalanceStrategy(IStrategy):
             return None
 
         # Effective target: regime mode tilts target by regime; otherwise static.
-        if P["trigger_type"] == "regime_target":
-            target = float(P["regime_bull_target"]) if last["close"] > last["ema_long"] else float(P["regime_bear_target"])
+        if P["trigger_type"] in ("regime_target", "regime_band"):
+            target = regime_target(last["close"], last["ema_long"], P["regime_bull_target"], P["regime_bear_target"])
         else:
             target = float(P["target_pct"])
         target_btc_value = target * total
@@ -326,13 +364,35 @@ class BtcDynamicRebalanceStrategy(IStrategy):
         # order has filled since it was taken (entry or rebalance fill), valued
         # at that fill's price — free stake is unchanged since that fill.
         profit_pct = 0.0
-        if P["trigger_type"] in ("profit_only", "rsi_and_profit") and last_fill is not None:
+        if P["trigger_type"] in ("profit_only", "rsi_and_profit", "regime_band") and last_fill is not None:
             anchor = trade.get_custom_data(ANCHOR_KEY)
             if anchor is None or trade.get_custom_data(ANCHOR_NFILLS_KEY) != len(filled):
                 anchor = anchor_value(btc_qty, last_fill.safe_price, usdt_free)
                 trade.set_custom_data(ANCHOR_KEY, anchor)
                 trade.set_custom_data(ANCHOR_NFILLS_KEY, len(filled))
             profit_pct = portfolio_move(float(anchor), total)
+
+        if P["trigger_type"] == "regime_band":
+            # A placed rebalance counts only once it filled (a cancelled order is retried).
+            pending = custom_float(trade, PENDING_TARGET_KEY)
+            if pending is not None and len(filled) > int(custom_float(trade, PENDING_NFILLS_KEY) or 0):
+                trade.set_custom_data(APPLIED_TARGET_KEY, pending)
+                trade.set_custom_data(PENDING_TARGET_KEY, NO_PENDING)
+            applied = custom_float(trade, APPLIED_TARGET_KEY)
+            if applied is None:  # first look at this trade: the entry was sized at the regime target
+                applied = target
+                trade.set_custom_data(APPLIED_TARGET_KEY, applied)
+            if not regime_band_fires(applied, target, profit_pct, float(P["profit_trigger_pct"])):
+                return None
+            out = self._rebalance_order(trade, drift_usdt, btc_value, btc_qty, usdt_free,
+                                        current_rate, min_stake, max_stake)
+            if out is None:
+                # Already at target within min_stake: the regime change is applied.
+                trade.set_custom_data(APPLIED_TARGET_KEY, target)
+            else:
+                trade.set_custom_data(PENDING_TARGET_KEY, target)
+                trade.set_custom_data(PENDING_NFILLS_KEY, len(filled))
+            return out
 
         if not self._trigger_fires(last, profit_pct):
             return None
@@ -347,6 +407,13 @@ class BtcDynamicRebalanceStrategy(IStrategy):
                 if drift_usdt >= 0:
                     return None
 
+        return self._rebalance_order(trade, drift_usdt, btc_value, btc_qty, usdt_free,
+                                     current_rate, min_stake, max_stake)
+
+    def _rebalance_order(self, trade: Trade, drift_usdt: float, btc_value: float, btc_qty: float,
+                         usdt_free: float, current_rate: float, min_stake: Optional[float],
+                         max_stake: float) -> Optional[float]:
+        """adjust_trade_position return that moves the position back to target."""
         rebalance_usdt = drift_usdt * float(P["rebalance_fraction"])
         if rebalance_usdt > 0:
             sell_usdt = min(rebalance_usdt, btc_value * 0.99)

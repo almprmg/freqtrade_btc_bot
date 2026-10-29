@@ -1,0 +1,74 @@
+{
+  "$comment": "LIVE-candidate BTC/USDT Dynamic Rebalance (DR_REGIME_BAND: 85% BTC above the daily EMA200, 50% below; rebalance on a regime flip or a +-20% portfolio move). Starts in dry_run; going live = dry_run:false + real keys in secrets.json, owner-approved only. Exchange keys are NOT here: they come from the second --config (/run/secrets/exchange.json).",
+  "max_open_trades": 1,
+  "stake_currency": "USDT",
+  "stake_amount": "unlimited",
+  "tradable_balance_ratio": 1.0,
+  "fiat_display_currency": "USD",
+  "timeframe": "1d",
+  "dry_run": true,
+  "dry_run_wallet": 1000,
+  "cancel_open_orders_on_exit": false,
+  "trading_mode": "spot",
+  "margin_mode": "",
+  "unfilledtimeout": {
+    "entry": 10,
+    "exit": 10,
+    "exit_timeout_count": 0,
+    "unit": "minutes"
+  },
+  "entry_pricing": {
+    "price_side": "same",
+    "use_order_book": false,
+    "order_book_top": 1,
+    "price_last_balance": 0.0,
+    "check_depth_of_market": {
+      "enabled": false
+    }
+  },
+  "exit_pricing": {
+    "price_side": "same",
+    "use_order_book": false,
+    "order_book_top": 1
+  },
+  "exchange": {
+    "name": "binance",
+    "ccxt_config": {
+      "enableRateLimit": true
+    },
+    "ccxt_async_config": {
+      "enableRateLimit": true
+    },
+    "pair_whitelist": [
+      "BTC/USDT"
+    ],
+    "pair_blacklist": []
+  },
+  "pairlists": [
+    {
+      "method": "StaticPairList"
+    }
+  ],
+  "telegram": {
+    "enabled": false,
+    "token": "",
+    "chat_id": ""
+  },
+  "api_server": {
+    "enabled": false,
+    "listen_ip_address": "127.0.0.1",
+    "listen_port": 8080,
+    "username": "",
+    "password": ""
+  },
+  "bot_name": "live_btc_rebalance",
+  "initial_state": "running",
+  "force_entry_enable": false,
+  "internals": {
+    "process_throttle_secs": 30,
+    "heartbeat_interval": 60
+  },
+  "strategy": "BtcDynamicRebalanceStrategy",
+  "strategy_path": "/freqtrade/strategies/",
+  "user_data_dir": "/freqtrade/user_data"
+}
